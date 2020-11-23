@@ -3,6 +3,7 @@ import { groupCollectionsByBiobankId } from '../utils/grouping'
 import filterDefinitions from '../utils/filterDefinitions'
 
 export default {
+
   filterDefinitions,
   bookmarkMappedToState: state => state.bookmarkMappedToState,
   loading: ({ collectionInfo, biobankIds }) => !(biobankIds && collectionInfo),
@@ -89,6 +90,4 @@ export default {
     if (state.error.message) {
       return state.error.message
     }
-    return 'Something went wrong'
-  }
 }

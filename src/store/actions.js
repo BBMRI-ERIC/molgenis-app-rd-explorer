@@ -13,11 +13,14 @@ export const COLLECTION_QUALITY_INFO_API_PATH = '/api/v2/eu_bbmri_eric_col_qual_
 export const BIOBANK_QUALITY_INFO_API_PATH = '/api/v2/eu_bbmri_eric_bio_qual_info'
 
 const NETWORK_API_PATH = '/api/v2/eu_bbmri_eric_networks'
+
 const NEGOTIATOR_API_PATH = '/api/v2/sys_negotiator_NegotiatorConfig'
 const NEGOTIATOR_CONFIG_API_PATH = '/api/v2/sys_negotiator_NegotiatorEntityConfig?attrs=*,biobankId(refEntityType)'
-/**/
+const ORDERMAG_API_PATH = '/api/v2/eu_bbmri_eric_biobank_size'
+    /**/
 
 /* Query Parameters */
+
 export const COLLECTION_ATTRIBUTE_SELECTOR = 'collections(id,description,materials,diagnosis_available,name,type,order_of_magnitude(*),size,sub_collections(*),parent_collection,quality(*),data_categories)'
 export const COLLECTION_REPORT_ATTRIBUTE_SELECTOR = '*,diagnosis_available(label),data_use(label),biobank(id,name,juridical_person,country,url,contact),contact(title_before_name,first_name,last_name,title_after_name,email,phone),sub_collections(name,id,sub_collections(*),parent_collection,order_of_magnitude,materials,data_categories)'
 /**/
@@ -163,7 +166,4 @@ export default {
     const options = {
       body: JSON.stringify(await helpers.createNegotiatorQueryBody(state, getters, helpers.getLocationHref()))
     }
-    return api.post('/plugin/directory/export', options)
-      .then(helpers.setLocationHref, error => commit('SetError', error))
-  }
 }
