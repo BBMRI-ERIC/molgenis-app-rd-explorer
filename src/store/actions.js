@@ -43,7 +43,7 @@ export default {
     // We need to get id's to use in RSQL later, because we can't do a join on this table
     GetCollectionIdsForQuality({ state, commit }) {
         const collectionQuality = state.route.query.collection_quality ? state.route.query.collection_quality : null
-        const qualityIds = state.filters.selections.collection_quality ? ? collectionQuality
+        const qualityIds = state.filters.selections.collection_quality ?? collectionQuality
 
         if (qualityIds && qualityIds.length > 0) {
             api.get(`${COLLECTION_QUALITY_INFO_API_PATH}?attrs=collection(id)&q=assess_level_col=in=(${qualityIds})`).then(response => {
@@ -56,7 +56,7 @@ export default {
     // Same as collections above
     GetBiobankIdsForQuality({ state, commit }) {
         const biobankQuality = state.route.query.biobank_quality ? state.route.query.biobank_quality : null
-        const qualityIds = state.filters.selections.biobank_quality ? ? biobankQuality
+        const qualityIds = state.filters.selections.biobank_quality ?? biobankQuality
 
         if (qualityIds && qualityIds.length > 0) {
             api.get(`${BIOBANK_QUALITY_INFO_API_PATH}?attrs=biobank(id)&q=assess_level_bio=in=(${qualityIds})`).then(response => {
