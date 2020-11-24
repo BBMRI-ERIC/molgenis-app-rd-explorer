@@ -30,6 +30,17 @@ const filterDefinitions = (state) => [
     humanReadableString: 'Covid-19 service(s):'
   },
   {
+    component: 'CheckboxFilter',
+    name: 'external_sources',
+    label: 'External Sources',
+    type: 'checkbox-filter',
+    maxVisibleOptions: 10,
+    table: 'eu_bbmri_eric_external_sources',
+    options: genericFilterOptions('eu_bbmri_eric_external_sources'),
+    initiallyCollapsed: !state.route.query.external_sources,
+    filters: state.filters.selections.external_sources
+  },
+  {
     component: 'MultiFilter',
     name: 'diagnosis_available',
     label: 'Diagnosis available',

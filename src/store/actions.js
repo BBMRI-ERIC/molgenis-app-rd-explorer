@@ -15,6 +15,9 @@ export const BIOBANK_QUALITY_INFO_API_PATH = '/api/v2/eu_bbmri_eric_bio_qual_inf
 const NETWORK_API_PATH = '/api/v2/eu_bbmri_eric_networks'
 const NEGOTIATOR_API_PATH = '/api/v2/sys_negotiator_NegotiatorConfig'
 const NEGOTIATOR_CONFIG_API_PATH = '/api/v2/sys_negotiator_NegotiatorEntityConfig?attrs=*,biobankId(refEntityType)'
+
+// const EXTERNAL_SOURCES_API_PATH = '/api/v2/eu_bbmri_eric_external_sources'
+const EXTERNAL_RESOURCES_API_PATH = '/api/ejprd/external_sources'
 /**/
 
 /* Query Parameters */
@@ -165,5 +168,33 @@ export default {
     }
     return api.post('/plugin/directory/export', options)
       .then(helpers.setLocationHref, error => commit('SetError', error))
+  },
+  GetExternalCatalogsResources ({ commit, getters }) {
+    const externalSourcesFilter = getters.externalCatalogsResourcesFilters.external_sources
+    const diagnosisAvailableFilter = getters.externalCatalogsResourcesFilters.diagnosis_available
+    commit('SetExternalCatalogResources', {})
+    if (externalSourcesFilter && diagnosisAvailableFilter) {
+      externalSourcesFilter.forEach(source => {
+        console.log('Getting resources from ' + source)
+        // if (source in currentExternalCatalogResources) {
+        //   console.log('Resources already present: using cache')
+        //   console.log(currentExternalCatalogResources)
+        //   newExternalCatalogsResources[source] = currentExternalCatalogResources[source]
+        //   commit('SetExternalCatalogResources', newExternalCatalogsResources)
+        // } else {
+        console.log('Resources not present: querying source')
+        const diagnosisAvailableParam = diagnosisAvailableFilter.join(',')
+        const url = `${EXTERNAL_RESOURCES_API_PATH}/${source}?diagnosisAvailable=${diagnosisAvailableParam}`
+        api.get(url)
+          .then(response => {
+            console.log('Query success for ' + source)
+            commit('AddExternalCatalogResources', { catalog: source, resources: response.catalogs[0] })
+          }, error => {
+            console.log('Query failed')
+            commit('SetError', error)
+          })
+        // }
+      })
+    }
   }
 }

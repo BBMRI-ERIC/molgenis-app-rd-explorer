@@ -33,5 +33,6 @@ export default {
     selections: {},
     labels: {} // for human readable string
   },
-  filterLabelCache: []
+  filterLabelCache: [],
+  externalCatalogsResources: {}
 }
