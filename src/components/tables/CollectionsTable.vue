@@ -5,8 +5,8 @@
         <th scope="col">Collection</th>
         <th scope="col">Type</th>
         <th scope="col">Materials</th>
-        <th scope="col">Standards</th>
-        <th scope="col">#Samples</th>
+        <th scope="col">#Donors</th>
+        <th scope="col">Order Mag. Donors</th>
       </tr>
     </thead>
     <tbody>
@@ -28,7 +28,8 @@
 
             <span v-else-if="column === 'type'">{{ getCollectionType(collection) }}</span>
             <span v-else-if="column === 'materials'">{{ getCollectionMaterials(collection) }}</span>
-            <span v-else-if="column === 'size'">{{ getCollectionSize(collection) }}</span>
+            <span v-else-if="column === 'number_of_donors'">{{ getCollectionNumberDonors(collection) }}</span>
+            <span v-else-if="column === 'order_mag_donors'">{{ getCollectionOrderMagDonors(collection) }}</span>
           </td>
         </tr>
         <tr v-if="hasSubCollections(collection)" :key="collection.id">
@@ -80,7 +81,7 @@ export default {
   },
   data () {
     return {
-      columns: ['name', 'type', 'materials', 'quality', 'size'],
+      columns: ['name', 'type', 'materials', 'number_of_donors', 'order_mag_donors'],
       quality_logo: { height: 4, width: 9 }
     }
   },
@@ -104,6 +105,15 @@ export default {
     },
     getCollectionSize (collection) {
       return collection.size || collection.order_of_magnitude.size
+    },
+    getCollectionNumberDonors (collection) {
+      return collection.number_of_donors
+    },
+    getCollectionRessourceTypes (collection) {
+      return collection.ressource_types.label
+    },
+    getCollectionOrderMagDonors (collection) {
+      return collection.order_of_magnitude_donors.size
     }
   },
   components: {
