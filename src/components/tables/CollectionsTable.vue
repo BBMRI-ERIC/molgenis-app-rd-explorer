@@ -113,7 +113,7 @@ export default {
       return collection.ressource_types.label
     },
     getCollectionOrderMagDonors (collection) {
-      return collection.order_of_magnitude_donors.size
+      return collection.order_of_magnitude_donors[0].size
     }
   },
   components: {
