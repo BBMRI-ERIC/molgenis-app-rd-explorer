@@ -147,6 +147,18 @@ const filterDefinitions = (state) => [{
         filters: state.filters.selections.ressource_types,
         maxVisibleOptions: 25,
         humanReadableString: 'Ressource type(s):'
+    },
+    {
+        component: 'CheckboxFilter',
+        name: 'order_of_magnitude_donors',
+        label: 'Number Donors',
+        type: 'order_of_magnitude_donors',
+        table: 'eu_bbmri_eric_biobank_size',
+        options: genericFilterOptions('eu_bbmri_eric_biobank_size'),
+        initiallyCollapsed: !state.route.query.order_of_magnitude_donors,
+        filters: state.filters.selections.order_of_magnitude_donors,
+        maxVisibleOptions: 25,
+        humanReadableString: 'Donor number(s):'
     }
 ]
 
