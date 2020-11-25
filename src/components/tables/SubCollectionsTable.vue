@@ -7,6 +7,7 @@
       <th scope="col">Materials</th>
       <th scope="col">Standards</th>
       <th scope="col">#Samples</th>
+      <th scope="col">#Donor</th>
     </tr>
     </thead>
     <tbody>
@@ -24,6 +25,7 @@
               <quality-column :qualities="subCollection[column]" :spacing=0></quality-column>
             </span>
           <span v-else-if="column === 'size'">{{ subCollection[column] }}</span>
+          <span v-else-if="column === 'number_of_donors'">{{ subCollection[column]}}</span>
         </td>
       </tr>
       <tr v-if="subCollection.sub_collections.length" :key="'subsubs-'+subCollection.id">
@@ -85,7 +87,7 @@ export default {
   },
   data () {
     return {
-      columns: ['name', 'type', 'materials', 'quality', 'size'],
+      columns: ['name', 'type', 'materials', 'quality', 'size','number_of_donors'],
       visible: this.subCollections.reduce((result, subCollection) => {
         result[subCollection.id] = false
         return result
