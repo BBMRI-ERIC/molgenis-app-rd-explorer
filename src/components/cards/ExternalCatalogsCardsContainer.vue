@@ -78,15 +78,10 @@ export default {
       'externalCatalogsResources'
     ]),
     isAnyFilterActive () {
-      console.log(this.externalCatalogsResources)
-      // console.log('external_sources' in this.externalCatalogsResourcesFilters &&
-      //   'diagnosis_available' in this.externalCatalogsResourcesFilters &&
-      //   this.externalCatalogsResourcesFilters.external_sources.length > 0 &&
-      //   this.externalCatalogsResourcesFilters.diagnosis_available.length > 0)
-      return 'external_sources' in this.externalCatalogsResourcesFilters &&
-        'diagnosis_available' in this.externalCatalogsResourcesFilters &&
-        this.externalCatalogsResourcesFilters.external_sources.length > 0 &&
-        this.externalCatalogsResourcesFilters.diagnosis_available.length > 0
+      return 'externalSources' in this.externalCatalogsResourcesFilters &&
+        'diagnosisAvailable' in this.externalCatalogsResourcesFilters &&
+        this.externalCatalogsResourcesFilters.externalSources.length > 0 &&
+        this.externalCatalogsResourcesFilters.diagnosisAvailable.length > 0
     }
   },
   components: {

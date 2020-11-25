@@ -98,10 +98,10 @@ export default {
   externalCatalogsResourcesFilters: state => {
     const externalResourcesFilter = {}
     if (state.filters.selections.diagnosis_available && state.filters.selections.diagnosis_available.length > 0) {
-      externalResourcesFilter.diagnosis_available = state.filters.selections.diagnosis_available
+      externalResourcesFilter.diagnosisAvailable = state.filters.selections.diagnosis_available
     }
     if (state.filters.selections.external_sources && state.filters.selections.external_sources.length > 0) {
-      externalResourcesFilter.external_sources = state.filters.selections.external_sources
+      externalResourcesFilter.externalSources = state.filters.selections.external_sources
     }
     return externalResourcesFilter
   }

@@ -170,30 +170,24 @@ export default {
       .then(helpers.setLocationHref, error => commit('SetError', error))
   },
   GetExternalCatalogsResources ({ commit, getters }) {
-    const externalSourcesFilter = getters.externalCatalogsResourcesFilters.external_sources
-    const diagnosisAvailableFilter = getters.externalCatalogsResourcesFilters.diagnosis_available
+    const externalSourcesFilter = getters.externalCatalogsResourcesFilters.externalSources
+    const diagnosisAvailableFilter = getters.externalCatalogsResourcesFilters.diagnosisAvailable
+    const currentExternalCatalogResources = getters.externalCatalogsResources
     commit('SetExternalCatalogResources', {})
     if (externalSourcesFilter && diagnosisAvailableFilter) {
       externalSourcesFilter.forEach(source => {
-        console.log('Getting resources from ' + source)
-        // if (source in currentExternalCatalogResources) {
-        //   console.log('Resources already present: using cache')
-        //   console.log(currentExternalCatalogResources)
-        //   newExternalCatalogsResources[source] = currentExternalCatalogResources[source]
-        //   commit('SetExternalCatalogResources', newExternalCatalogsResources)
-        // } else {
-        console.log('Resources not present: querying source')
-        const diagnosisAvailableParam = diagnosisAvailableFilter.join(',')
-        const url = `${EXTERNAL_RESOURCES_API_PATH}/${source}?diagnosisAvailable=${diagnosisAvailableParam}`
-        api.get(url)
-          .then(response => {
-            console.log('Query success for ' + source)
-            commit('AddExternalCatalogResources', { catalog: source, resources: response.catalogs[0] })
-          }, error => {
-            console.log('Query failed')
-            commit('SetError', error)
-          })
-        // }
+        if (source in currentExternalCatalogResources) {
+          commit('AddExternalCatalogResources', { catalog: source, resources: currentExternalCatalogResources[source] })
+        } else {
+          const diagnosisAvailableParam = diagnosisAvailableFilter.join(',')
+          const url = `${EXTERNAL_RESOURCES_API_PATH}/${source}?diagnosisAvailable=${diagnosisAvailableParam}`
+          api.get(url)
+            .then(response => {
+              commit('AddExternalCatalogResources', { catalog: source, resources: response.catalogs[0] })
+            }, error => {
+              commit('SetError', error)
+            })
+        }
       })
     }
   }
