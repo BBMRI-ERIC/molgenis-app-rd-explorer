@@ -23,6 +23,7 @@ export const createRSQLQuery = (state) => transformToRSQL({
     createInQuery('diagnosis_available', state.filters.selections.diagnosis_available || []),
     createInQuery('id', state.collectionIdsWithSelectedQuality),
     createInQuery('network', state.filters.selections.collection_network || []),
+    createInQuery('order_of_magnitude_donors', state.filters.selections.order_of_magnitude_donors || []),
     state.filters.selections.search ? [{
       operator: 'OR',
       operands: ['name', 'id', 'acronym', 'biobank.name', 'biobank.id', 'biobank.acronym']
