@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 import { genericFilterOptions, diagnosisAvailableFilterOptions } from './filterOptions'
 
+
 const filterDefinitions = (state) => [{
         name: 'search',
         label: 'Search',

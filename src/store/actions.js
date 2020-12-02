@@ -15,7 +15,11 @@ export const BIOBANK_QUALITY_INFO_API_PATH = '/api/v2/eu_bbmri_eric_bio_qual_inf
 const NETWORK_API_PATH = '/api/v2/eu_bbmri_eric_networks'
 const NEGOTIATOR_API_PATH = '/api/v2/sys_negotiator_NegotiatorConfig'
 const NEGOTIATOR_CONFIG_API_PATH = '/api/v2/sys_negotiator_NegotiatorEntityConfig?attrs=*,biobankId(refEntityType)'
-    /**/
+
+// const EXTERNAL_SOURCES_API_PATH = '/api/v2/eu_bbmri_eric_external_sources'
+const EXTERNAL_RESOURCES_API_PATH = '/api/ejprd/external_sources'
+/**/
+
 
 /* Query Parameters */
 export const COLLECTION_ATTRIBUTE_SELECTOR = 'collections(id,description,materials,diagnosis_available,name,type,order_of_magnitude(*),size,sub_collections(*),parent_collection,quality(*),data_categories,order_of_magnitude_donors(*),number_of_donors)'
@@ -168,4 +172,30 @@ export default {
         return api.post('/plugin/directory/export', options)
             .then(helpers.setLocationHref, error => commit('SetError', error))
     }
+    return api.post('/plugin/directory/export', options)
+      .then(helpers.setLocationHref, error => commit('SetError', error))
+  },
+  GetExternalCatalogsResources ({ commit, getters }) {
+    const externalSourcesFilter = getters.externalCatalogsResourcesFilters.externalSources
+    const diagnosisAvailableFilter = getters.externalCatalogsResourcesFilters.diagnosisAvailable
+    const currentExternalCatalogResources = getters.externalCatalogsResources
+    commit('SetExternalCatalogResources', {})
+    if (externalSourcesFilter && diagnosisAvailableFilter) {
+      externalSourcesFilter.forEach(source => {
+        if (source in currentExternalCatalogResources) {
+          commit('AddExternalCatalogResources', { catalog: source, resources: currentExternalCatalogResources[source] })
+        } else {
+          const diagnosisAvailableParam = diagnosisAvailableFilter.join(',')
+          const url = `${EXTERNAL_RESOURCES_API_PATH}/${source}?diagnosisAvailable=${diagnosisAvailableParam}`
+          api.get(url)
+            .then(response => {
+              commit('AddExternalCatalogResources', { catalog: source, resources: response.catalogs[0] })
+            }, error => {
+              commit('SetError', error)
+            })
+        }
+      })
+    }
+  }
+}
 }

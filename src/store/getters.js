@@ -92,4 +92,21 @@ export default {
         }
         return 'Something went wrong'
     }
+    return 'Something went wrong'
+  },
+  externalCatalogsResources: state => state.externalCatalogsResources,
+  foundExternalCatalogs: (_, { externalCatalogsResources }) => externalCatalogsResources.length,
+  foundExternalResources: (_, { externalCatalogsResources }) => externalCatalogsResources.reduce(
+    (accumulator, catalog) => accumulator + catalog.resources.length, 0),
+  externalCatalogsResourcesFilters: state => {
+    const externalResourcesFilter = {}
+    if (state.filters.selections.diagnosis_available && state.filters.selections.diagnosis_available.length > 0) {
+      externalResourcesFilter.diagnosisAvailable = state.filters.selections.diagnosis_available
+    }
+    if (state.filters.selections.external_sources && state.filters.selections.external_sources.length > 0) {
+      externalResourcesFilter.externalSources = state.filters.selections.external_sources
+    }
+    return externalResourcesFilter
+  }
 }
+

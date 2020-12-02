@@ -11,11 +11,14 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-12">
+      <b-tabs content-class="mt-3" fill>
+        <b-tab title="Internal Resources" active>
           <biobank-cards-container></biobank-cards-container>
-        </div>
-      </div>
+        </b-tab>
+        <b-tab title="External Resources">
+          <external-catalogs-cards-container />
+        </b-tab>
+      </b-tabs>
     </div>
 
     <cart-selection-toast
@@ -55,6 +58,7 @@
 <script>
 import { CartSelectionToast } from '@molgenis-ui/components-library'
 import BiobankCardsContainer from './cards/BiobankCardsContainer'
+import ExternalCatalogsCardsContainer from './cards/ExternalCatalogsCardsContainer'
 import FilterContainer from './filters/FilterContainer'
 import ResultHeader from './ResultHeader'
 import { mapGetters, mapActions, mapState } from 'vuex'
@@ -63,6 +67,7 @@ export default {
   name: 'biobank-explorer-container',
   components: {
     BiobankCardsContainer,
+    ExternalCatalogsCardsContainer,
     FilterContainer,
     ResultHeader,
     CartSelectionToast
@@ -73,7 +78,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['rsql', 'biobankRsql', 'loading', 'foundCollectionIds', 'collectionsInPodium', 'selectedBiobankQuality', 'selectedCollectionQuality']),
+    ...mapGetters(['rsql', 'biobankRsql', 'loading', 'foundCollectionIds', 'collectionsInPodium', 'selectedBiobankQuality', 'selectedCollectionQuality', 'externalCatalogsResourcesFilters']),
     ...mapState(['isPodium']),
     negotiatorButtonText () {
       return this.isPodium ? 'Send to Podium' : 'Send to the negotiator'
@@ -112,6 +117,10 @@ export default {
     isPodium: {
       immediate: true,
       handler: 'GetPodiumCollections'
+    },
+    externalCatalogsResourcesFilters: {
+      immediate: true,
+      handler: 'GetExternalCatalogsResources'
     }
   },
   methods: {
@@ -120,7 +129,8 @@ export default {
       'GetBiobankIds',
       'GetPodiumCollections',
       'GetBiobankIdsForQuality',
-      'GetCollectionIdsForQuality'
+      'GetCollectionIdsForQuality',
+      'GetExternalCatalogsResources'
     ]),
     hideModal () {
       this.$bvModal.hide('podium-modal')
