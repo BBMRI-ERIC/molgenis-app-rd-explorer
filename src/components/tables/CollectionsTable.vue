@@ -6,7 +6,7 @@
         <th scope="col">Type</th>
         <th scope="col">Materials</th>
         <th scope="col">#Donors</th>
-        <th scope="col">Order Mag. Donors</th>
+        <!-- <th scope="col">Order Mag. Donors</th> -->
       </tr>
     </thead>
     <tbody>
@@ -81,7 +81,7 @@ export default {
   },
   data () {
     return {
-      columns: ['name', 'type', 'materials', 'number_of_donors', 'order_mag_donors'],
+      columns: ['name', 'type', 'materials', 'number_of_donors'],
       quality_logo: { height: 4, width: 9 }
     }
   },
@@ -113,7 +113,7 @@ export default {
       return collection.ressource_types.label
     },
     getCollectionOrderMagDonors (collection) {
-      return collection.order_of_magnitude_donors[0].size
+      return collection.order_of_magnitude_donors.size
     }
   },
   components: {
