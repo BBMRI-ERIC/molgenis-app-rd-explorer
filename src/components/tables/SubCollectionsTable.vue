@@ -3,10 +3,10 @@
     <thead>
     <tr class="sub-table-row">
       <th scope="col">Subcollection</th>
-      <th scope="col">Type</th>
-      <th scope="col">Materials</th>
-      <th scope="col">Standards</th>
-      <th scope="col">#Samples</th>
+      <th scope="col">ICD/ORPHA</th>
+      <!-- <th scope="col">Materials</th> -->
+      <!-- <th scope="col">Standards</th> -->
+      <!-- <th scope="col">#Samples</th> -->
       <th scope="col">#Donor</th>
     </tr>
     </thead>
@@ -24,7 +24,7 @@
           <span v-else-if="column === 'quality'">
               <quality-column :qualities="subCollection[column]" :spacing=0></quality-column>
             </span>
-          <span v-else-if="column === 'size'">{{ subCollection[column] }}</span>
+          <span v-else-if="column === 'code'">{{ getCollectionCodes(subCollection) }}</span>
           <span v-else-if="column === 'number_of_donors'">{{ subCollection[column]}}</span>
         </td>
       </tr>
@@ -87,7 +87,7 @@ export default {
   },
   data () {
     return {
-      columns: ['name', 'type', 'materials', 'quality', 'size','number_of_donors'],
+      columns: ['name', 'code', 'number_of_donors'],
       visible: this.subCollections.reduce((result, subCollection) => {
         result[subCollection.id] = false
         return result
@@ -100,6 +100,15 @@ export default {
     },
     getCollectionType (collection) {
       return utils.getUniqueIdArray(collection.type.map(type => type.label)).join(', ')
+    },
+    getCollectionCodes (collection) {
+      const codes = []
+      const diag = collection.diagnosis_available
+      diag.forEach(function(item) { 
+        codes.push(item.id)
+      })
+        
+      return codes
     },
     toggleVisible (id) {
       this.visible[id] = !this.visible[id]
