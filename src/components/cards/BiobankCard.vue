@@ -29,7 +29,7 @@
             <small>{{ collectionTypes }}</small>
             <br /> -->
             <small>
-              <b>Ressource type:</b>
+              <b>Ressource Type:</b>
             </small>
             <small>{{ biobank['ressource_types']['label'] }}</small>
             <br />
