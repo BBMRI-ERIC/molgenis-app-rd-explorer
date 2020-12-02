@@ -23,20 +23,20 @@
         </div>
         <div class="col-md-7" v-if="!loading">
           <p>
-            <small>
+            <!-- <small>
               <b>Collection types:</b>
             </small>
             <small>{{ collectionTypes }}</small>
-            <br />
+            <br /> -->
             <small>
               <b>Ressource type:</b>
             </small>
             <small>{{ biobank['ressource_types']['label'] }}</small>
             <br />
             <small>
-              <b>Juridical person:</b>
+              <b>Donors:</b>
             </small>
-            <small>{{ biobank['juridical_person'] }}</small>
+            <small>{{ getCollectionMag }}</small>
             <template v-if="availableCovidTypes">
               <br />
               <small>
@@ -110,6 +110,13 @@ export default {
     }
   },
   computed: {
+    getCollectionMag () {
+      // const collections = Object.keys(this.biobank.collections)
+      const collections = this.biobank.collections.filter(
+        collection => !collection.parent_collection
+      )
+      return collections[0].order_of_magnitude_donors.size
+    },
     sortedCollections () {
       return sortCollectionsByName(this.biobank.collections)
     },
