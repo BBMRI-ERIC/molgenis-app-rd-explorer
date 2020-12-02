@@ -1,6 +1,7 @@
 export const INITIAL_STATE = window.__INITIAL_STATE__ || {}
 
 export default {
+
   bookmarkMappedToState: false,
   negotiatorCollectionEntityId: '',
   negotiatorBiobankEntityId: '',
@@ -36,3 +37,4 @@ export default {
   filterLabelCache: [],
   externalCatalogsResources: {}
 }
+
