@@ -91,9 +91,7 @@ export default {
             return state.error.message
         }
         return 'Something went wrong'
-    }
-    return 'Something went wrong'
-  },
+        },
   externalCatalogsResources: state => state.externalCatalogsResources,
   foundExternalCatalogs: (_, { externalCatalogsResources }) => externalCatalogsResources.length,
   foundExternalResources: (_, { externalCatalogsResources }) => externalCatalogsResources.reduce(

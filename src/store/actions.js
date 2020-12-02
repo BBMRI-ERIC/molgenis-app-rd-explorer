@@ -171,10 +171,7 @@ export default {
         }
         return api.post('/plugin/directory/export', options)
             .then(helpers.setLocationHref, error => commit('SetError', error))
-    }
-    return api.post('/plugin/directory/export', options)
-      .then(helpers.setLocationHref, error => commit('SetError', error))
-  },
+    },
   GetExternalCatalogsResources ({ commit, getters }) {
     const externalSourcesFilter = getters.externalCatalogsResourcesFilters.externalSources
     const diagnosisAvailableFilter = getters.externalCatalogsResourcesFilters.diagnosisAvailable
@@ -197,5 +194,4 @@ export default {
       })
     }
   }
-}
 }
