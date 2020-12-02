@@ -1,7 +1,7 @@
 {
   "name": "molgenis-app-biobank-explorer",
   "license": "LGPL-3.0",
-  "version": "3.2.0",
+  "version": "3.2.5",
   "description": "Vue application for the biobank explorer; A card detail view on BBMRI-ERIC biobank / collection data",
   "authors": [
     "mkslofstra <mariska-karina@hotmail.com>",
@@ -11,12 +11,13 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "unit": "vue-cli-service test:unit --collectCoverage",
+    "check-ie": "es-check es5 'dist/js/*.js' --verbose",
     "test:unit": "vue-cli-service test:unit --collectCoverage",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "build:preview": "yarn build --mode test",
     "preversion": "yarn install; yarn test:unit",
-    "postversion": "yarn build; curl -v --user ${REGISTRY_CRED_USR}:${REGISTRY_CRED_PSW} --upload-file dist/$npm_package_name.zip  https://${LOCAL_REGISTRY}/repository/appstore/$npm_package_name/$npm_package_version/$npm_package_name.zip"
+    "postversion": "yarn build; curl -v --user ${REGISTRY_CRED_USR}:${REGISTRY_CRED_PSW} --upload-file dist/$npm_package_name.v$npm_package_version.zip  https://${LOCAL_REGISTRY}/repository/appstore/$npm_package_name/$npm_package_version/$npm_package_name.v$npm_package_version.zip"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
@@ -52,6 +53,7 @@
     "babel-eslint": "^10.1.0",
     "chai": "^4.1.2",
     "chromedriver": "^84.0.1",
+    "es-check": "^5.1.2",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
