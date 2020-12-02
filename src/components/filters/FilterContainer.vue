@@ -1,9 +1,11 @@
 <template>
   <div id="filter-container">
+
     <FilterCard name="search" label="Search" description="Search by name, id, acronym" :collapsed="!this.$store.state.route.query.search">
       <StringFilter name="Search" v-model="search"></StringFilter>
     </FilterCard>
     <FilterCard
+
       v-for="filter in filters"
       :key="filter.name"
       :name="filter.name"
@@ -42,6 +44,7 @@ export default {
     }
   },
   computed: {
+
     ...mapGetters(['showCountryFacet', 'getActiveFilters', 'filterDefinitions', 'bookmarkMappedToState']),
     search: {
       get () {
@@ -59,6 +62,7 @@ export default {
       }
     },
     filters () {
+
       return this.filterDefinitions.filter((facet) => {
         // config option showCountryFacet is used to toggle Country facet
         return !(this.showCountryFacet === false && facet.name === 'country')
@@ -70,6 +74,7 @@ export default {
     filterChange (name, value) {
       this.UpdateFilter({ name, value, router: this.$router })
     }
+
   }
 }
 </script>
