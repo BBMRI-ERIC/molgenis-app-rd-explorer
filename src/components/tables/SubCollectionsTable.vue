@@ -101,14 +101,14 @@ export default {
     getCollectionType (collection) {
       return utils.getUniqueIdArray(collection.type.map(type => type.label)).join(', ')
     },
-    getCollectionCodes (collection) {
-      const codes = []
-      // const diag = collection.diagnosis_available
-      collection.diagnosis_available.forEach (function (item) {
-        codes.push(item.id)
-      })
-      return codes
-    },
+    // getCollectionCodes (collection) {
+    //   const codes = []
+    //   const diag = collection.diagnosis_available
+    //   diag.forEach (function (item) {
+    //     codes.push(item.id)
+    //   })
+    //   return codes
+    // },
     toggleVisible (id) {
       this.visible[id] = !this.visible[id]
     }
