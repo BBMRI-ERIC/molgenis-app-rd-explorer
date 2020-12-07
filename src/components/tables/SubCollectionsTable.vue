@@ -103,11 +103,10 @@ export default {
     },
     getCollectionCodes (collection) {
       const codes = []
-      const diag = collection.diagnosis_available
-      diag.forEach (function(item) {
+      // const diag = collection.diagnosis_available
+      collection.diagnosis_available.forEach (function (item) {
         codes.push(item.id)
       })
-        
       return codes
     },
     toggleVisible (id) {
