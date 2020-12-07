@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { genericFilterOptions, diagnosisAvailableFilterOptions } from './filterOptions'
+import { genericFilterOptions, diagnosisAvailableFilterOptions, resscourceTypesAvailableFilterOptions } from './filterOptions'
 
 const filterDefinitions = (state) => [
   {
@@ -7,6 +7,22 @@ const filterDefinitions = (state) => [
     label: 'Search',
     type: 'string-filter',
     humanReadableString: 'Text search is'
+  },
+  {
+    component: 'MultiFilter',
+    name: 'ressource_types',
+    label: 'Ressource Types',
+    type: 'multi-filter',
+    table: 'eu_bbmri_eric_ressource_types',
+    options: resscourceTypesAvailableFilterOptions('eu_bbmri_eric_ressource_types'),
+    // initiallyCollapsed: true,
+    filters: state.filters.selections.ressource_types,
+    maxVisibleOptions: 25,
+    humanReadableString: 'Ressource type(s):',
+    collapsed: false,
+    collapsable: false,
+    headerClass: 'bg-warning text-white',
+    all: true
   },
   {
     headerClass: 'bg-warning text-white',

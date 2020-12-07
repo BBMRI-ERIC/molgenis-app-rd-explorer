@@ -7,7 +7,7 @@
       <!-- <th scope="col">Materials</th> -->
       <!-- <th scope="col">Standards</th> -->
       <!-- <th scope="col">#Samples</th> -->
-      <th scope="col">#Donor</th>
+      <th scope="col">#Donors</th>
     </tr>
     </thead>
     <tbody>
@@ -101,15 +101,14 @@ export default {
     getCollectionType (collection) {
       return utils.getUniqueIdArray(collection.type.map(type => type.label)).join(', ')
     },
-    getCollectionCodes (collection) {
-      const codes = []
-      const diag = collection.diagnosis_available
-      diag.forEach(function (item) {
-        codes.push(item.id)
-      })
-
-      return codes
-    },
+    // getCollectionCodes (collection) {
+    //   const codes = []
+    //   const diag = collection.diagnosis_available
+    //   diag.forEach (function(item) {
+    //     codes.push(item.id)
+    //   })
+    //   return codes
+    // },
     toggleVisible (id) {
       this.visible[id] = !this.visible[id]
     }

@@ -4,6 +4,11 @@
     <FilterCard name="search" label="Search" description="Search by name, id, acronym" :collapsed="!this.$store.state.route.query.search">
       <StringFilter name="Search" v-model="search"></StringFilter>
     </FilterCard>
+
+    <FilterCard name="search" label="Search anja!" description="Search by " v-bind:collapsed=false v-bind:collapsable=false canRemove=true removeFilter="onRemoveFilter" >
+      <StringFilter name="Search" v-model="search" placeholder="Input anjaa"></StringFilter>
+    </FilterCard>
+
     <FilterCard
 
       v-for="filter in filters"
@@ -11,7 +16,8 @@
       :name="filter.name"
       :label="filter.label"
       :headerClass="filter.headerClass"
-      :collapsed="filter.initiallyCollapsed"
+      :collapsed="filter.collapsed"
+      :collapsable="filter.collapsable"
     >
       <component
         v-if="bookmarkMappedToState"
@@ -31,13 +37,15 @@
 /** Components used for filters */
 import CovidFilter from '../filters/CovidFilter'
 import CovidNetworkFilter from '../filters/CovidNetworkFilter'
-import { StringFilter, FilterCard, CheckboxFilter, MultiFilter } from '@molgenis-ui/components-library'
+import FilterCard from '../filters/FilterCard_test1'
+import CheckboxFilter from '../filters/CheckboxFilter_test1'
+import { StringFilter, MultiFilter, NumberFilter, RangeFilter, DateTimeFilter } from '@molgenis-ui/components-library'
 /** */
 
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
-  components: { StringFilter, CheckboxFilter, MultiFilter, FilterCard, CovidFilter, CovidNetworkFilter },
+  components: { StringFilter, CheckboxFilter, MultiFilter, FilterCard, CovidFilter, CovidNetworkFilter, NumberFilter, RangeFilter, DateTimeFilter },
   data () {
     return {
       debounce: undefined

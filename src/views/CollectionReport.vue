@@ -12,7 +12,19 @@
           <div class="container p-0">
             <div class="row">
               <div class="col-md-8">
-                <report-description :description="collection.description" :maxLength="500"></report-description>
+                <div>
+                  <b-card
+                    header = "Biobank"
+                    header-text-variant="white"
+                    header-bg-variant="info"
+                    border-variant="info"
+                    :title="getTitle"
+                    style="max-width: 40rem;"
+                    class="rounded-lg"
+                  >
+                    <report-description :description="collection.description" :maxLength="500"></report-description>
+                  </b-card>
+                </div>
 
                 <!-- main collection information -->
                 <table class="mg-report-details-list mb-3">
@@ -97,6 +109,9 @@ export default {
     collectionId () {
       const splittedUrl = this.$route.fullPath.split('/')
       return splittedUrl[splittedUrl.length - 1]
+    },
+    getTitle () {
+      return this.collection.name
     }
   },
   // needed because if we route back the component is not destroyed but its props are updated for other collection

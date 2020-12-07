@@ -36,9 +36,7 @@ export const COLLECTION_REPORT_ATTRIBUTE_SELECTOR =
 /**/
 
 export default {
-  GetNegotiatorEntities ({
-    commit
-  }) {
+  GetNegotiatorEntities ({ commit }) {
     api.get(NEGOTIATOR_CONFIG_API_PATH).then(response => {
       commit('SetNegotiatorEntities', response)
     })
