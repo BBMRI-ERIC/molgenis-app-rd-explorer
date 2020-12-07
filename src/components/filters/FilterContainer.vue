@@ -5,8 +5,8 @@
       <StringFilter name="Search" v-model="search"></StringFilter>
     </FilterCard>
 
-    <FilterCard name="search" label="Search anja!" description="Search by " v-bind:collapsed=false v-bind:collapsable=false canRemove=true removeFilter="onRemoveFilter" >
-      <StringFilter name="Search" v-model="search" placeholder="Input anjaa"></StringFilter>
+    <FilterCard name="search" label="Search - Adaption" description="Adapted Search" v-bind:collapsed=false v-bind:collapsable=false canRemove=true removeFilter="onRemoveFilter" >
+      <StringFilter name="Search" v-model="search" placeholder="Input - adaption"></StringFilter>
     </FilterCard>
 
     <FilterCard
