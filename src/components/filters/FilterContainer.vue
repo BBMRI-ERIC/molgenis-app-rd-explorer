@@ -9,7 +9,6 @@
       <StringFilter name="Search" v-model="search" placeholder="Input anjaa"></StringFilter>
     </FilterCard>
 
-
     <FilterCard
 
       v-for="filter in filters"
@@ -39,13 +38,13 @@
 import CovidFilter from '../filters/CovidFilter'
 import CovidNetworkFilter from '../filters/CovidNetworkFilter'
 import FilterCard from '../filters/FilterCard_test1'
-import { StringFilter, CheckboxFilter, MultiFilter,NumberFilter,RangeFilter, DateTimeFilter } from '@molgenis-ui/components-library'
+import { StringFilter, CheckboxFilter, MultiFilter, NumberFilter, RangeFilter, DateTimeFilter } from '@molgenis-ui/components-library'
 /** */
 
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
-  components: { StringFilter, CheckboxFilter, MultiFilter, FilterCard, CovidFilter, CovidNetworkFilter,NumberFilter,RangeFilter,DateTimeFilter },
+  components: { StringFilter, CheckboxFilter, MultiFilter, FilterCard, CovidFilter, CovidNetworkFilter, NumberFilter, RangeFilter, DateTimeFilter },
   data () {
     return {
       debounce: undefined
