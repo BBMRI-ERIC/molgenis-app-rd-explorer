@@ -5,7 +5,7 @@
       <StringFilter name="Search" v-model="search"></StringFilter>
     </FilterCard>
 
-    <FilterCard name="search" label="Search anja" description="Search by " v-bind:collapsed=false v-bind:collapsable=false canRemove=true removeFilter="onRemoveFilter" >
+    <FilterCard name="search" label="Search anja!" description="Search by " v-bind:collapsed=false v-bind:collapsable=false canRemove=true removeFilter="onRemoveFilter" >
       <StringFilter name="Search" v-model="search" placeholder="Input anjaa"></StringFilter>
     </FilterCard>
 
@@ -38,6 +38,7 @@
 import CovidFilter from '../filters/CovidFilter'
 import CovidNetworkFilter from '../filters/CovidNetworkFilter'
 import FilterCard from '../filters/FilterCard_test1'
+import CheckboxFilter from '../filters/CheckboxFilter_test1'
 import { StringFilter, CheckboxFilter, MultiFilter, NumberFilter, RangeFilter, DateTimeFilter } from '@molgenis-ui/components-library'
 /** */
 
