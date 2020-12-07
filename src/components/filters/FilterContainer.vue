@@ -39,7 +39,7 @@ import CovidFilter from '../filters/CovidFilter'
 import CovidNetworkFilter from '../filters/CovidNetworkFilter'
 import FilterCard from '../filters/FilterCard_test1'
 import CheckboxFilter from '../filters/CheckboxFilter_test1'
-import { StringFilter, CheckboxFilter, MultiFilter, NumberFilter, RangeFilter, DateTimeFilter } from '@molgenis-ui/components-library'
+import { StringFilter, MultiFilter, NumberFilter, RangeFilter, DateTimeFilter } from '@molgenis-ui/components-library'
 /** */
 
 import { mapGetters, mapMutations } from 'vuex'
