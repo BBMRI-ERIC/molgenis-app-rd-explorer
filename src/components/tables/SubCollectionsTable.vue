@@ -104,7 +104,7 @@ export default {
     getCollectionCodes (collection) {
       const codes = []
       const diag = collection.diagnosis_available
-      diag.forEach(function(item) { 
+      diag.forEach (function(item) {
         codes.push(item.id)
       })
         
