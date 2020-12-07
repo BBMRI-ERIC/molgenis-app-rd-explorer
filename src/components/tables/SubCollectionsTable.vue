@@ -7,7 +7,7 @@
       <!-- <th scope="col">Materials</th> -->
       <!-- <th scope="col">Standards</th> -->
       <!-- <th scope="col">#Samples</th> -->
-      <th scope="col">#Donor</th>
+      <th scope="col">#Donors</th>
     </tr>
     </thead>
     <tbody>

@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { genericFilterOptions, diagnosisAvailableFilterOptions } from './filterOptions'
+import { genericFilterOptions, diagnosisAvailableFilterOptions, resscourceTypesAvailableFilterOptions } from './filterOptions'
 
 const filterDefinitions = (state) => [
   {
@@ -7,6 +7,22 @@ const filterDefinitions = (state) => [
     label: 'Search',
     type: 'string-filter',
     humanReadableString: 'Text search is'
+  },
+  {
+    component: 'MultiFilter',
+    name: 'ressource_types',
+    label: 'Ressource Types',
+    type: 'multi-filter',
+    table: 'eu_bbmri_eric_ressource_types',
+    options: resscourceTypesAvailableFilterOptions('eu_bbmri_eric_ressource_types'),
+    // initiallyCollapsed: true,
+    filters: state.filters.selections.ressource_types,
+    maxVisibleOptions: 25,
+    humanReadableString: 'Ressource type(s):',
+    collapsed: false,
+    collapsable: false,
+    headerClass: 'bg-warning text-white',
+    all: true
   },
   {
     headerClass: 'bg-warning text-white',
@@ -28,6 +44,17 @@ const filterDefinitions = (state) => [
     all: true,
     maxVisibleOptions: 25,
     humanReadableString: 'Covid-19 service(s):'
+  },
+  {
+    component: 'CheckboxFilter',
+    name: 'external_sources',
+    label: 'External Sources',
+    type: 'checkbox-filter',
+    maxVisibleOptions: 10,
+    table: 'eu_bbmri_eric_external_sources',
+    options: genericFilterOptions('eu_bbmri_eric_external_sources'),
+    initiallyCollapsed: !state.route.query.external_sources,
+    filters: state.filters.selections.external_sources
   },
   {
     component: 'MultiFilter',
@@ -144,7 +171,7 @@ const filterDefinitions = (state) => [
     type: 'checkbox-filter',
     table: 'eu_bbmri_eric_ressource_types',
     options: genericFilterOptions('eu_bbmri_eric_ressource_types'),
-    // nitiallyCollapsed: !state.route.query.ressource_types,
+    // InitiallyCollapsed: !state.route.query.ressource_types,
     filters: state.filters.selections.ressource_types,
     maxVisibleOptions: 25,
     humanReadableString: 'Ressource type(s):'

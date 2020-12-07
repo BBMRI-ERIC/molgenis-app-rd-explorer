@@ -18,11 +18,13 @@
 
       <div class="row" v-if="biobankDataAvailable && !this.isLoading">
         <div class="col">
-          <report-title type="Biobank" :name="biobank.name"></report-title>
+          <!-- <i v-if="biobank['ressource_types']['label'] == 'Biobank'" class="fa fa-table mr-1" style="color:green" aria-hidden="true" aria-labelledby="biobank-name"></i> -->
+          <report-title v-if="biobank['ressource_types']['label'] == 'Biobank'" type="Biobank" :name="biobank.name"></report-title>
+          <report-title v-if="biobank['ressource_types']['label'] == 'Registry'" type="Registry" :name="biobank.name"></report-title>
           <div class="container">
             <div class="row">
               <div class="col-md-8">
-                <p><b>Id: </b>{{ biobank.id }}</p>
+                <p><b>Host Institution: </b>{{ biobank.juridical_person }}</p>
                 <report-description :description="biobank.description" :maxLength="500"></report-description>
                     <p v-if="availableCovidTypes">
                       <report-details-list :reportDetails="availableCovidTypes"></report-details-list>
