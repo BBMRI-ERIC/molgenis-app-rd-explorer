@@ -70,7 +70,6 @@ export default {
       }
     },
     filters () {
-
       return this.filterDefinitions.filter((facet) => {
         // config option showCountryFacet is used to toggle Country facet
         return !(this.showCountryFacet === false && facet.name === 'country')
