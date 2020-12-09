@@ -1,16 +1,28 @@
 <template>
   <div id="filter-container">
 
-    <FilterCard name="search" label="Search" description="Search by name, id, acronym" :collapsed="!this.$store.state.route.query.search">
+    <FilterCard
+      name="search"
+      label="Search"
+      description="Search by name, id, acronym"
+      :collapsed="!this.$store.state.route.query.search"
+    >
       <StringFilter name="Search" v-model="search"></StringFilter>
     </FilterCard>
 
-    <FilterCard name="search" label="Search - Adaption" description="Adapted Search" v-bind:collapsed=false v-bind:collapsable=false canRemove=true removeFilter="onRemoveFilter" >
+    <FilterCard
+      name="search-adaption"
+      label="Search - Adaption"
+      description="Adapted Search"
+      :collapsed="false"
+      :collapsable="false"
+      canRemove
+      removeFilter="onRemoveFilter"
+    >
       <StringFilter name="Search" v-model="search" placeholder="Input - adaption"></StringFilter>
     </FilterCard>
 
     <FilterCard
-
       v-for="filter in filters"
       :key="filter.name"
       :name="filter.name"
@@ -27,8 +39,7 @@
         @input="(value) => filterChange(filter.name, value)"
         :returnTypeAsObject="true"
         :bulkOperation="true"
-      >
-      </component>
+      />
     </FilterCard>
   </div>
 </template>
