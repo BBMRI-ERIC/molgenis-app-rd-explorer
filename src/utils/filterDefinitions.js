@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { genericFilterOptions, diagnosisAvailableFilterOptions, resscourceTypesAvailableFilterOptions } from './filterOptions'
+import { genericFilterOptions, diagnosisAvailableFilterOptions, ressourceTypesAvailableFilterOptions } from './filterOptions'
 
 const filterDefinitions = (state) => [
   {
@@ -14,7 +14,7 @@ const filterDefinitions = (state) => [
     label: 'Ressource Types',
     type: 'multi-filter',
     table: 'eu_bbmri_eric_ressource_types',
-    options: resscourceTypesAvailableFilterOptions('eu_bbmri_eric_ressource_types'),
+    options: ressourceTypesAvailableFilterOptions('eu_bbmri_eric_ressource_types'),
     // initiallyCollapsed: true,
     filters: state.filters.selections.ressource_types,
     maxVisibleOptions: 25,
@@ -166,7 +166,7 @@ const filterDefinitions = (state) => [
   },
   {
     component: 'CheckboxFilter',
-    name: 'ressource_types',
+    name: 'ressource_types_checkbox', // Avoid console error
     label: 'Ressource Types',
     type: 'checkbox-filter',
     table: 'eu_bbmri_eric_ressource_types',

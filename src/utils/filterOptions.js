@@ -42,7 +42,7 @@ export const diagnosisAvailableFilterOptions = (tableName) => {
   })
 }
 
-export const resscourceTypesAvailableFilterOptions = (tableName) => {
+export const ressourceTypesAvailableFilterOptions = (tableName) => {
   // destructure the query part from the multi-filter
   return ({ query, queryType }) => new Promise((resolve) => {
     let url = `/api/v2/${tableName}`
@@ -58,7 +58,7 @@ export const resscourceTypesAvailableFilterOptions = (tableName) => {
       }
     }
     api.get(url).then(response => {
-      const filterOptions = response.items.map((obj) => { return { text: `[ ${obj.code} ] - ${obj.label || obj.name}`, value: obj.id } })
+      const filterOptions = response.items.map((obj) => { return { text: obj.label, value: obj.id } })
       resolve(filterOptions)
     })
   })

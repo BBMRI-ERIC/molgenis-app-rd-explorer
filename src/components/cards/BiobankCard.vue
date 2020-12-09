@@ -5,8 +5,18 @@
         <div class="col-md-5" v-if="!loading">
           <h5>
             <router-link :to="'/biobank/' + biobank.id">
-              <i v-if="biobank['ressource_types']['label'] == 'Biobank'" class="fa fa-table mr-1" style="color:green" aria-hidden="true" aria-labelledby="biobank-name"></i>
-              <i v-if="biobank['ressource_types']['label'] == 'Registry'" class="fa fa-table mr-1" style="color:blue" aria-hidden="true" aria-labelledby="biobank-name"></i>
+              <span
+                v-if="biobank['ressource_types']['id'] == 'BIOBANK'"
+                class="fa fa-table mr-1"
+                style="color:green"
+                aria-hidden="true"
+                aria-labelledby="biobank-name"/>
+              <span
+                v-if="biobank['ressource_types']['id'] == 'REGISTRY'"
+                class="fa fa-table mr-1"
+                style="color:blue"
+                aria-hidden="true"
+                aria-labelledby="biobank-name"/>
             </router-link>
             <span id="biobank-name">{{ biobank.name }}</span>
           </h5>
@@ -23,24 +33,33 @@
         </div>
         <div class="col-md-7" v-if="!loading">
           <p>
-            <!-- <small>
-              <b>Collection types:</b>
-            </small>
-            <small>{{ collectionTypes }}</small>
-            <br /> -->
-            <small>
-              <b>Ressource Type:</b>
+            <small class="mr-2">
+              <span class="font-weight-bold">Ressource Type:</span>
             </small>
             <small>{{ biobank['ressource_types']['label'] }}</small>
-            <br />
-            <small>
-              <b>Donors:</b>
-            </small>
-            <small>{{ getCollectionMag }}</small>
+            <template v-if="biobank['ressource_types']['id'] == 'BIOBANK'">
+              <br />
+              <small class="mr-2">
+                <span class="font-weight-bold">Collection types:</span>
+              </small>
+              <small>{{ collectionTypes }}</small>
+              <br />
+              <small class="mr-2">
+                <span class="font-weight-bold">Juridical person:</span>
+              </small>
+              <small>{{ biobank['juridical_person'] }}</small>
+            </template>
+            <template v-if="biobank['ressource_types']['id'] == 'REGISTRY'">
+              <br/>
+              <small>
+                <span class="font-weight-bold">Donors:</span>
+              </small>
+              <small>{{ getCollectionMag }}</small>
+            </template>
             <template v-if="availableCovidTypes">
               <br />
-              <small>
-                <b>Covid-19:</b>
+              <small class="mr-2">
+                <span class="font-weight-bold">Covid-19:</span>
               </small>
               <small :key="type + index" v-for="(type, index) of availableCovidTypes">{{type}}</small>
             </template>
