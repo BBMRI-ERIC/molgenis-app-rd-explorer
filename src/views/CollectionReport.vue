@@ -12,17 +12,19 @@
           <div class="container p-0">
             <div class="row">
               <div class="col-md-8">
+                <report-description :description="collection.description" :maxLength="500"></report-description>
+
                 <div>
                   <b-card
-                    header = "Biobank"
-                    header-text-variant="white"
-                    header-bg-variant="info"
-                    border-variant="info"
+                    :header ="getHeader"
                     :title="getTitle"
                     style="max-width: 40rem;"
                     class="rounded-lg"
                   >
-                    <report-description :description="collection.description" :maxLength="500"></report-description>
+                  <b-card-text>
+                    <b> Description: </b>
+                    {{getDescription}}
+                  </b-card-text>
                   </b-card>
                 </div>
 
@@ -112,6 +114,12 @@ export default {
     },
     getTitle () {
       return this.collection.name
+    },
+    getHeader () {
+      return 'RD-Connect ID: ' + this.collection.id.split(':')[3]
+    },
+    getDescription () {
+      return this.collection.biobank.description
     }
   },
   // needed because if we route back the component is not destroyed but its props are updated for other collection
