@@ -15,7 +15,9 @@
           v-for="column in columns"
           :key="column.uuid"
         >
-          <a v-if="column == 'url'" :href=resource[column]>{{ resource[column] }}</a>
+          <a v-if="column == 'homepage'" :href=resource[column]>{{ resource[column] }}</a>
+          <span v-else-if="column == 'type' && resource[column] == 'PatientRegistryDataset'">Registry</span>
+          <span v-else-if="column == 'type' && resource[column] == 'BiobankDataset'">Biobank</span>
           <span v-else>{{ resource[column] }}</span>
         </td>
       </tr>
@@ -60,7 +62,7 @@ export default {
   computed: {},
   data () {
     return {
-      columns: ['type', 'uuid', 'name', 'url']
+      columns: ['type', 'uuid', 'name', 'homepage']
     }
   }
 }
