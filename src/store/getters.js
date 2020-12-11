@@ -113,7 +113,9 @@ export default {
     }
     return 'Something went wrong'
   },
-  externalCatalogsResources: state => state.externalCatalogsResources,
+  externalCatalogsResources: state => {
+    return state.externalCatalogsResources
+  },
   foundExternalCatalogs: (_, { externalCatalogsResources }) =>
     externalCatalogsResources.length,
   foundExternalResources: (_, { externalCatalogsResources }) =>

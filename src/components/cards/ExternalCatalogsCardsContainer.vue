@@ -10,11 +10,11 @@
         v-model="currentPage"
         :per-page="pageSize"
       ></b-pagination> -->
-      <external-resource-card
-        v-for="(resource, name) in externalCatalogsResources"
-        :key="name"
-        :externalResource="resource">
-      </external-resource-card>
+      <external-catalog-card
+        v-for="catalog in externalCatalogsResources"
+        :key="catalog.name"
+        :externalCatalog="catalog">
+      </external-catalog-card>
       <!-- <biobank-card
         v-for="biobank in biobanksShown"
         :key="biobank.id || biobank"
@@ -45,7 +45,7 @@
     </div>
     <div v-else class="status-text">
       <span>
-        If you want to query external resources you should check at least one external sources and a diagnosis available in the menu
+        Select the external catalogs in the menù and search for a specific disease to query external catalogs
       </span>
     </div>
   </div>
@@ -64,7 +64,7 @@
 </style>
 
 <script>
-import ExternalResourceCard from './ExternalResourceCard'
+import ExternalCatalogCard from './ExternalCatalogCard'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -85,10 +85,9 @@ export default {
     }
   },
   components: {
-    ExternalResourceCard
+    ExternalCatalogCard
   },
   mounted () {
-
   }
 }
 </script>

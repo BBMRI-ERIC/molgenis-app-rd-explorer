@@ -62,7 +62,7 @@ export default {
   computed: {},
   data () {
     return {
-      columns: ['type', 'uuid', 'name', 'homepage']
+      columns: ['type', 'id', 'name', 'homepage']
     }
   }
 }
