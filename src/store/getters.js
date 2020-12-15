@@ -136,8 +136,13 @@ export default {
       state.filters.selections.external_sources &&
       state.filters.selections.external_sources.length > 0
     ) {
-      externalResourcesFilter.externalSources =
-        state.filters.selections.external_sources
+      externalResourcesFilter.externalSources = []
+      state.filters.selections.external_sources.forEach((source, index) => {
+        externalResourcesFilter.externalSources.push({
+          id: source,
+          label: 'external_sources' in state.filters.labels ? state.filters.labels.external_sources[index] : ''
+        })
+      })
     }
     return externalResourcesFilter
   }

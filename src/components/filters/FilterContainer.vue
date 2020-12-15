@@ -28,7 +28,7 @@
       :name="filter.name"
       :label="filter.label"
       :headerClass="filter.headerClass"
-      :collapsed="filter.collapsed"
+      :collapsed="filter.initiallyCollapsed"
       :collapsable="filter.collapsable"
     >
       <component

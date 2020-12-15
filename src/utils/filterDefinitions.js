@@ -19,7 +19,7 @@ const filterDefinitions = (state) => [
     filters: state.filters.selections.ressource_types,
     maxVisibleOptions: 25,
     humanReadableString: 'Ressource type(s):',
-    collapsed: false,
+    initiallyCollapsed: false,
     collapsable: false,
     headerClass: 'bg-warning text-white',
     all: true
