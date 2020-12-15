@@ -10,47 +10,29 @@
           :style="iconStyle"
           class="mr-2 text-white"
         />
-        <b><span class="text-white" id="catalog-name">{{ externalCatalog.name }}</span></b>
+        <b><span class="text-white" id="catalog-name">{{ externalCatalog.label || catalogData.name }}</span></b>
       </h5>
     </div>
-    <b-collapse id="collapse-4" v-model="visible" class="mt-2">
-      <external-resource-card
-        v-for="(resource, name) in externalCatalog.resources"
-        :key="name"
-        :resource="resource"
-      >
-      </external-resource-card>
+    <b-collapse
+      v-if="dataLoaded"
+      id="collapse-4"
+      v-model="visible"
+      class="mt-2">
+        <b-pagination
+          size="md"
+          align="center"
+          v-model="currentPage"
+          v-on:input="changePage"
+          :total-rows="catalogData.page.totalElements"
+          :per-page="catalogData.page.size"
+        ></b-pagination>
+        <external-resource-card
+          v-for="(resource, name) in catalogData.resources"
+          :key="name"
+          :resource="resource"
+        ></external-resource-card>
     </b-collapse>
   </div>
-  <!-- <div class="card external-resource-card">
-    <div
-      class="card-header external-resource-card-header"
-      @click.prevent="collapsed = !collapsed"
-    >
-      <div class="row">
-        <div class="col-md-5">
-          <h5>
-            <span><b>Catalog: </b></span>
-            <span id="catalog-name">{{ externalCatalog.name }}</span>
-          </h5>
-        </div>
-        <div class="col-md-7">
-          <p>
-            <b>Homepage:</b>
-            {{ externalCatalog.url }}
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="card-body table-card" v-if="!collapsed">
-      <external-resource-card
-        v-for="(resource, name) in externalCatalog.resources"
-        :key="name"
-        :resource="resource"
-      >
-      </external-resource-card>
-    </div>
-  </div> -->
 </template>
 
 <style>
@@ -84,6 +66,7 @@
 <script>
 import 'array-flat-polyfill'
 import ExternalResourceCard from './ExternalResourceCard'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'external-catalog-card',
@@ -99,15 +82,35 @@ export default {
   },
   data () {
     return {
-      visible: !this.initCollapsed
+      visible: !this.initCollapsed,
+      currentPage: 1
     }
   },
   computed: {
+    ...mapGetters([
+      'externalCatalogsResources'
+    ]),
     iconStyle () {
       return {
         transform: `rotate(${this.visible ? 90 : 0}deg)`,
         transition: 'transform 0.2s'
       }
+    },
+    catalogData () {
+      if (this.externalCatalogsResources) {
+        return this.externalCatalogsResources[this.externalCatalog.id] || []
+      } else {
+        return {}
+      }
+    },
+    dataLoaded () {
+      return Object.keys(this.catalogData).length > 0
+    }
+  },
+  methods: {
+    ...mapActions(['GetExternalCatalogsResources']),
+    changePage (page) {
+      this.GetExternalCatalogsResources({ catalog: this.externalCatalog.id, skip: page - 1 })
     }
   },
   components: {
