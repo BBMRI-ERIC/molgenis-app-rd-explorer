@@ -113,37 +113,30 @@ export default {
     }
     return 'Something went wrong'
   },
-  externalCatalogsResources: state => {
-    return state.externalCatalogsResources
+  externalResources: state => {
+    return state.externalResources
   },
-  foundExternalCatalogs: (_, { externalCatalogsResources }) =>
-    externalCatalogsResources.length,
-  foundExternalResources: (_, { externalCatalogsResources }) =>
-    externalCatalogsResources.reduce(
-      (accumulator, catalog) => accumulator + catalog.resources.length,
-      0
-    ),
-  externalCatalogsResourcesFilters: state => {
-    const externalResourcesFilter = {}
+  externalResourcesFilters: state => {
+    const filters = {}
     if (
       state.filters.selections.diagnosis_available &&
       state.filters.selections.diagnosis_available.length > 0
     ) {
-      externalResourcesFilter.diagnosisAvailable =
+      filters.diagnosisAvailable =
         state.filters.selections.diagnosis_available
     }
     if (
       state.filters.selections.external_sources &&
       state.filters.selections.external_sources.length > 0
     ) {
-      externalResourcesFilter.externalSources = []
+      filters.externalSources = []
       state.filters.selections.external_sources.forEach((source, index) => {
-        externalResourcesFilter.externalSources.push({
+        filters.externalSources.push({
           id: source,
           label: 'external_sources' in state.filters.labels ? state.filters.labels.external_sources[index] : ''
         })
       })
     }
-    return externalResourcesFilter
+    return filters
   }
 }

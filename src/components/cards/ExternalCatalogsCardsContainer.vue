@@ -2,7 +2,7 @@
   <div class="external-resource-cards-container">
     <div v-if="isAnyFilterActive">
       <external-catalog-card
-        v-for="catalog in externalCatalogsResourcesFilters.externalSources"
+        v-for="catalog in externalResourcesFilters.externalSources"
         :key="catalog.id"
         :externalCatalog="catalog">
       </external-catalog-card>
@@ -38,14 +38,14 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'externalCatalogsResourcesFilters',
-      'externalCatalogsResources'
+      'externalResourcesFilters',
+      'externalResources'
     ]),
     isAnyFilterActive () {
-      return 'externalSources' in this.externalCatalogsResourcesFilters &&
-        'diagnosisAvailable' in this.externalCatalogsResourcesFilters &&
-        this.externalCatalogsResourcesFilters.externalSources.length > 0 &&
-        this.externalCatalogsResourcesFilters.diagnosisAvailable.length > 0
+      return 'externalSources' in this.externalResourcesFilters &&
+        'diagnosisAvailable' in this.externalResourcesFilters &&
+        this.externalResourcesFilters.externalSources.length > 0 &&
+        this.externalResourcesFilters.diagnosisAvailable.length > 0
     }
   },
   components: {

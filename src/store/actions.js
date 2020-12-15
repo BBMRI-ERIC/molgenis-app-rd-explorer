@@ -293,10 +293,10 @@ export default {
       skip = 0
     }
     const externalSourcesFilter =
-      getters.externalCatalogsResourcesFilters.externalSources
+      getters.externalResourcesFilters.externalSources
     const diagnosisAvailableFilter =
-      getters.externalCatalogsResourcesFilters.diagnosisAvailable
-    const currentExternalCatalogResources = getters.externalCatalogsResources
+      getters.externalResourcesFilters.diagnosisAvailable
+    const currentExternalCatalogResources = getters.externalResources
     if (externalSourcesFilter && diagnosisAvailableFilter) {
       externalSourcesFilter.forEach(source => {
         if (catalog === undefined || catalog === source.id) {

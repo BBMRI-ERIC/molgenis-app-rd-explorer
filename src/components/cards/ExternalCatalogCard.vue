@@ -88,7 +88,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'externalCatalogsResources'
+      'externalResources'
     ]),
     iconStyle () {
       return {
@@ -97,8 +97,8 @@ export default {
       }
     },
     catalogData () {
-      if (this.externalCatalogsResources) {
-        return this.externalCatalogsResources[this.externalCatalog.id] || []
+      if (this.externalResources) {
+        return this.externalResources[this.externalCatalog.id] || []
       } else {
         return {}
       }
