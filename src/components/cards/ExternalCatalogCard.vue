@@ -32,6 +32,12 @@
           :resource="resource"
         ></external-resource-card>
     </b-collapse>
+    <div v-else class="status-text">
+      <h4>
+        Loading data...
+        <i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>
+      </h4>
+    </div>
   </div>
 </template>
 
