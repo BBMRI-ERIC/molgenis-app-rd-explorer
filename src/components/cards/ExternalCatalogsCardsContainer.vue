@@ -1,51 +1,15 @@
 <template>
   <div class="external-resource-cards-container">
     <div v-if="isAnyFilterActive">
-    <!-- <div v-if="!loading && foundBiobanks > 0"> -->
-      <!-- <b-pagination
-        v-if="foundBiobanks > pageSize"
-        size="md"
-        align="center"
-        :total-rows="foundBiobanks"
-        v-model="currentPage"
-        :per-page="pageSize"
-      ></b-pagination> -->
-      <external-resource-card
-        v-for="(resource, name) in externalCatalogsResources"
-        :key="name"
-        :externalResource="resource">
-      </external-resource-card>
-      <!-- <biobank-card
-        v-for="biobank in biobanksShown"
-        :key="biobank.id || biobank"
-        :biobank="biobank"
-        :initCollapsed="!isAnyFilterActive">
-      </biobank-card> -->
-
-      <!-- <b-pagination
-        v-if="foundBiobanks > pageSize"
-        size="md"
-        align="center"
-        :total-rows="foundBiobanks"
-        v-model="currentPage"
-        :per-page="pageSize"
-      ></b-pagination> -->
-    <!-- </div> -->
-
-    <!-- <div v-else-if="!loading && foundBiobanks === 0" class="status-text">
-      <h4>No biobanks were found</h4>
-    </div>
-
-    <div v-else class="status-text">
-      <h4>
-        Loading Biobanks...
-        <i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>
-      </h4>
-    </div> -->
+      <external-catalog-card
+        v-for="catalog in externalResourcesFilters.externalSources"
+        :key="catalog.id"
+        :externalCatalog="catalog">
+      </external-catalog-card>
     </div>
     <div v-else class="status-text">
       <span>
-        If you want to query external resources you should check at least one external sources and a diagnosis available in the menu
+        Select the external catalogs in the menù and search for a specific disease to query external catalogs
       </span>
     </div>
   </div>
@@ -64,7 +28,7 @@
 </style>
 
 <script>
-import ExternalResourceCard from './ExternalResourceCard'
+import ExternalCatalogCard from './ExternalCatalogCard'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -74,21 +38,20 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'externalCatalogsResourcesFilters',
-      'externalCatalogsResources'
+      'externalResourcesFilters',
+      'externalResources'
     ]),
     isAnyFilterActive () {
-      return 'externalSources' in this.externalCatalogsResourcesFilters &&
-        'diagnosisAvailable' in this.externalCatalogsResourcesFilters &&
-        this.externalCatalogsResourcesFilters.externalSources.length > 0 &&
-        this.externalCatalogsResourcesFilters.diagnosisAvailable.length > 0
+      return 'externalSources' in this.externalResourcesFilters &&
+        'diagnosisAvailable' in this.externalResourcesFilters &&
+        this.externalResourcesFilters.externalSources.length > 0 &&
+        this.externalResourcesFilters.diagnosisAvailable.length > 0
     }
   },
   components: {
-    ExternalResourceCard
+    ExternalCatalogCard
   },
   mounted () {
-
   }
 }
 </script>

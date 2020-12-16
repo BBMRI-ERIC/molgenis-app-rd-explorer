@@ -78,7 +78,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['rsql', 'biobankRsql', 'loading', 'foundCollectionIds', 'collectionsInPodium', 'selectedBiobankQuality', 'selectedCollectionQuality', 'externalCatalogsResourcesFilters']),
+    ...mapGetters(['rsql', 'biobankRsql', 'loading', 'foundCollectionIds', 'collectionsInPodium', 'selectedBiobankQuality', 'selectedCollectionQuality', 'externalResourcesFilters']),
     ...mapState(['isPodium']),
     negotiatorButtonText () {
       return this.isPodium ? 'Send to Podium' : 'Send to the negotiator'
@@ -118,7 +118,7 @@ export default {
       immediate: true,
       handler: 'GetPodiumCollections'
     },
-    externalCatalogsResourcesFilters: {
+    externalResourcesFilters: {
       immediate: true,
       handler: 'GetExternalCatalogsResources'
     }

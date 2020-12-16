@@ -1,20 +1,35 @@
 <template>
   <div class="card external-resource-card">
-    <div class="card-header external-resource-card-header" @click.prevent="collapsed = !collapsed">
+    <div class="card-header external-resource-card-header">
       <div class="row">
         <div class="col-md-5">
           <h5>
-            <!-- <router-link :to="'/biobank/' + externalResource.id">
-              <i class="fa fa-table" aria-hidden="true" aria-labelledby="externalResource-name"></i>
-            </router-link> -->
-            <span><b>Catalog: </b></span>
-            <span id="biobank-name">{{ externalResource.name }}</span>
+            <a
+              :href="resource.homepage"
+              target="_blank"
+              v-if="resource.type == 'BiobankDataset'"
+              class="fa fa-table mr-1"
+              style="color:green"
+              aria-hidden="true"
+              aria-labelledby="biobank-name"/>
+            <a
+              :href="resource.homepage"
+              target="_blank"
+              v-if="resource.type == 'PatientRegistryDataset'"
+              class="fa fa-table mr-1"
+              style="color:blue"
+              aria-hidden="true"
+              aria-labelledby="biobank-name"/>
+            <span id="resource-name">{{ resource.name }}</span>
           </h5>
         </div>
         <div class="col-md-7">
           <p>
-              <b>URL:</b>
-            {{ externalResource.url }}
+            <small class="mr-2">
+              <span class="font-weight-bold">Ressource Type:</span>
+            </small>
+            <small v-if="resource.type == 'BiobankDataset'">Biobank</small>
+            <small v-if="resource.type == 'PatientRegistryDataset'">Registry</small>
           </p>
         </div>
         <!-- <div v-else class="col-md-12 text-center">
@@ -22,15 +37,16 @@
         </div> -->
       </div>
     </div>
-    <div class="card-body table-card" v-if="!collapsed">
-      <external-resource-table v-if="externalResource.resources.length > 0" :resources="externalResource.resources"></external-resource-table>
-    </div>
   </div>
 </template>
 
 <style>
-.table-card {
-  padding: 0.1rem;
+.collapsed > .when-visible {
+  display: none;
+}
+
+:not(.collapsed) > .when-hidden {
+  display: none;
 }
 
 .external-resource-card {
@@ -45,41 +61,21 @@
   cursor: pointer;
   background-color: #e4e4e4;
 }
-.biobank-icon:hover {
-  cursor: pointer;
-}
-
-.covid-icon {
-  height: 1.5rem;
-  width: auto;
-}
 </style>
 
 <script>
-import 'array-flat-polyfill'
-import ExternalResourceTable from '../tables/ExternalResourceTable'
-
 export default {
   name: 'external-resource-card',
   props: {
-    externalResource: {
-      type: [Object, String]
-    },
-    initCollapsed: {
-      type: Boolean,
-      required: false,
-      default: true
+    resource: {
+      type: Object,
+      required: true
     }
   },
+  computed: {},
   data () {
     return {
-      collapsed: this.initCollapsed
     }
-  },
-  components: {
-    ExternalResourceTable
-  },
-  mounted () {
   }
 }
 </script>

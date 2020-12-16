@@ -121,8 +121,10 @@ export default {
     getters
   }) {
     commit('SetCollectionInfo', undefined)
+    // let url =
+    //   '/api/data/eu_bbmri_eric_collections?filter=id,biobank,name,label&size=10000&sort=biobank_label'
     let url =
-      '/api/data/eu_bbmri_eric_collections?filter=id,biobank,name,label&size=10000&sort=biobank_label'
+      '/api/data/eu_bbmri_eric_collections?filter=id,biobank,name,label&size=10000'
     if (getters.rsql) {
       url = `${url}&q=${encodeRsqlValue(getters.rsql)}`
     }
@@ -286,34 +288,39 @@ export default {
   GetExternalCatalogsResources ({
     commit,
     getters
-  }) {
+  }, { catalog, skip }) {
+    if (skip === undefined) {
+      skip = 0
+    }
     const externalSourcesFilter =
-      getters.externalCatalogsResourcesFilters.externalSources
+      getters.externalResourcesFilters.externalSources
     const diagnosisAvailableFilter =
-      getters.externalCatalogsResourcesFilters.diagnosisAvailable
-    const currentExternalCatalogResources = getters.externalCatalogsResources
-    commit('SetExternalCatalogResources', {})
+      getters.externalResourcesFilters.diagnosisAvailable
+    const currentExternalCatalogResources = getters.externalResources
     if (externalSourcesFilter && diagnosisAvailableFilter) {
       externalSourcesFilter.forEach(source => {
-        if (source in currentExternalCatalogResources) {
-          commit('AddExternalCatalogResources', {
-            catalog: source,
-            resources: currentExternalCatalogResources[source]
-          })
-        } else {
-          const diagnosisAvailableParam = diagnosisAvailableFilter.join(',')
-          const url = `${EXTERNAL_RESOURCES_API_PATH}/${source}?diagnosisAvailable=${diagnosisAvailableParam}`
-          api.get(url).then(
-            response => {
-              commit('AddExternalCatalogResources', {
-                catalog: source,
-                resources: response.catalogs[0]
-              })
-            },
-            error => {
-              commit('SetError', error)
-            }
-          )
+        if (catalog === undefined || catalog === source.id) {
+          commit('RemoveExternalCatalogResources', source.id)
+          if (source.id in currentExternalCatalogResources && currentExternalCatalogResources[source.id].page.number === skip) {
+            commit('AddExternalCatalogResources', {
+              catalog: source.id,
+              resources: currentExternalCatalogResources[source.id]
+            })
+          } else {
+            const diagnosisAvailableParam = diagnosisAvailableFilter.join(',')
+            const url = `${EXTERNAL_RESOURCES_API_PATH}/${source.id}?diagnosisAvailable=${diagnosisAvailableParam}&limit=10&skip=${skip}`
+            api.get(url).then(
+              response => {
+                commit('AddExternalCatalogResources', {
+                  catalog: source.id,
+                  resources: response
+                })
+              },
+              error => {
+                commit('SetError', error)
+              }
+            )
+          }
         }
       })
     }

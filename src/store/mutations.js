@@ -176,13 +176,13 @@ export default {
       state.negotiatorBiobankEntityId = negotiatorEntities.biobankEntityId
     }
   },
-  SetExternalCatalogResources (state, externalCatalogsResources) {
-    state.externalCatalogsResources = externalCatalogsResources
+  SetExternalCatalogResources (state, externalResources) {
+    state.externalResources = externalResources
   },
   AddExternalCatalogResources (state, { catalog, resources }) {
-    Vue.set(state.externalCatalogsResources, catalog, resources)
+    Vue.set(state.externalResources, catalog, resources)
   },
   RemoveExternalCatalogResources (state, catalog) {
-    Vue.delete(state.externalCatalogsResources, catalog)
+    Vue.delete(state.externalResources, catalog)
   }
 }

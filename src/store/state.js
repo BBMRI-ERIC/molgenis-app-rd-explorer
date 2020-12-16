@@ -35,5 +35,5 @@ export default {
     labels: {} // for human readable string
   },
   filterLabelCache: [],
-  externalCatalogsResources: {}
+  externalResources: {}
 }
