@@ -7,33 +7,51 @@
 
       <div class="row" v-if="this.collection && !this.isLoading">
         <div class="col">
-          <report-title type="Collection" :name="collection.name"></report-title>
 
           <div class="container p-0">
             <div class="row">
               <div class="col-md-8">
-                <report-description :description="collection.description" :maxLength="500"></report-description>
+                <!-- <report-description :description="collection.description" :maxLength="500"></report-description> -->
 
                 <div>
                   <b-card
-                    :header ="getHeader"
-                    :title="getTitle"
                     style="max-width: 40rem;"
                     class="rounded-lg"
                   >
                   <b-card-text>
+                    <div>
+                      <b-table
+                      borderless
+                      :items="[{one : 'ID', two : collection.biobank.id, three : 'last', four : getActivity}]"
+                      :fields="[one, two, three, four]"
+                      thead-class="d-none">
+                      <template v-slot:cell(one)>
+                      <div class = "text-right"><strong>{{"ID:"}}</strong></div>
+                      <col :style="{ width : '10px'}">
+                      </template>
+                      <template v-slot:cell(two)>
+                      <div class = "text-left">{{collection.biobank.id}}</div>
+                      </template>
+                      <template v-slot:cell(three)>
+                      <div class ="text-right"><strong>{{"Last Activity:"}}</strong></div>
+                      <col :style="{ width : '50px'}">
+                      </template>
+                      </b-table>
+                    </div>
+                    <div style="text-align:center">
+                      <report-title type="Collection" :name="collection.name"></report-title>
+                    </div>
                     <b> Description: </b>
                     {{getDescription}}
                   </b-card-text>
                   </b-card>
                 </div>
-
                 <!-- main collection information -->
                 <table class="mg-report-details-list mb-3">
-                  <tr>
+                  <!-- <tr>
                     <th scope="row" class="pr-1">Id:</th>
                     <td>{{ collection.id }}</td>
-                  </tr>
+                  </tr> -->
                   <tr v-if="collection.url">
                     <th scope="row" class="pr-1">Website:</th>
                     <td><span><a target="_blank" :href="collection.url">{{ collection.url }}</a></span></td>
@@ -53,8 +71,57 @@
                 </table>
 
                 <!-- Recursive set of subcollections -->
-                <div v-if="collection.sub_collections && collection.sub_collections.length" class="mt-2">
-                  <h5>Sub collections</h5>
+                <div style="text-align:center" v-if="collection.sub_collections && collection.sub_collections.length" class="mt-2">
+                  <h2><strong>Disease Matrix</strong></h2>
+                  <b-table
+                  bordered
+                  hover
+                  small
+                  striped
+                  :items=getItemList
+                  :fields="[
+                    {
+                      key: 'name',
+                      sortable: true
+                    },
+                    {
+                      key: 'materials',
+                      sortable: true
+                    },
+                    {
+                      key: 'data',
+                      sortable: true
+                    }
+                  ]">
+                  <template #cell(data) = "data_types">
+                  <div>
+                  <span class = "lead">
+                  <span
+                    v-for=" index in data_types.value"
+                    class="badge"
+                    :key="index"
+                    :class="'badge-primary'"
+                    >{{index}}
+                  </span>
+                  </span>
+                  </div>
+                  </template>
+                  <template #cell(materials) = "material_types">
+                  <div>
+                  <span class = "lead">
+                  <span
+                    v-for=" index in material_types.value"
+                    class="badge"
+                    :key="index"
+                    :class="'badge-danger'"
+                    >{{index}}
+                  </span>
+                  </span>
+                  </div>
+                  </template>
+                  </b-table>
+                </div>
+                <div>
                   <report-sub-collection v-for="subCollection in subCollections" :collection="subCollection" :key="subCollection.id" :level="1"></report-sub-collection>
                 </div>
               </div>
@@ -73,11 +140,12 @@
 import { mapActions, mapState } from 'vuex'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
-import ReportDescription from '@/components/report-components/ReportDescription'
+// import ReportDescription from '@/components/report-components/ReportDescription'
 import ReportTitle from '@/components/report-components/ReportTitle'
 import ReportListRow from '@/components/report-components/ReportListRow'
 import ReportSubCollection from '@/components/report-components/ReportSubCollection'
 import CollectionReportInfoCard from '@/components/cards/CollectionReportInfoCard'
+import moment from 'moment'
 
 import { mapDetailsTableContent, mapCollectionsData, collectionReportInformation } from '@/utils/templateMapper'
 
@@ -86,7 +154,6 @@ export default {
   components: {
     ReportListRow,
     ReportTitle,
-    ReportDescription,
     ReportSubCollection,
     CollectionReportInfoCard,
     Loading
@@ -105,6 +172,9 @@ export default {
     info () {
       return collectionReportInformation(this.collection)
     },
+    get_items () {
+      return [{ id: 1, last_activation: 2 }]
+    },
     subCollections () {
       return this.collection && this.collection.sub_collections && this.collection.sub_collections.length ? mapCollectionsData(this.collection.sub_collections) : []
     },
@@ -116,10 +186,16 @@ export default {
       return this.collection.name
     },
     getHeader () {
-      return 'RD-Connect ID: ' + this.collection.id.split(':')[3]
+      return 'ID: ' + this.collection.biobank.id
     },
     getDescription () {
       return this.collection.biobank.description
+    },
+    getActivity () {
+      return moment(this.collection.sub_collections[0].timestamp).format('MM/DD/YYYY hh:mm')
+    },
+    getItemList () {
+      return this.subCollections.map(x => ({ name: x.name, materials: x.content.Materials.value, data: x.content.Data.value }))
     }
   },
   // needed because if we route back the component is not destroyed but its props are updated for other collection
