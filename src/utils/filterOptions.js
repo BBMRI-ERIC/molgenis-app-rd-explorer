@@ -36,7 +36,7 @@ export const diagnosisAvailableFilterOptions = (tableName) => {
       }
     }
     api.get(url).then(response => {
-      const filterOptions = response.items.map((obj) => { return { text: `[ ${obj.code} ] - ${obj.label || obj.name}`, value: obj.id } })
+      const filterOptions = response.items.map((obj) => { return { text: `[ ${obj.code} ] -  ${tableName} - ${obj.label || obj.name}`, value: obj.id } })
       resolve(filterOptions)
     })
   })
@@ -52,14 +52,23 @@ export const resscourceTypesAvailableFilterOptions = (tableName) => {
       if (queryType === 'in') {
         url = `${url}?q=${encodeRsqlValue(`id=in=(${query})`)}`
       } else if (isCodeRegex.test(query)) {
-        url = `${url}?q=${encodeRsqlValue(createRessourceTypeCodeQuery(query))}&sort=code`
+        url = `${url}?q=${encodeRsqlValue(createRessourceTypeCodeQuery(query))}&sort=label`
       } else {
         url = `${url}?q=${encodeRsqlValue(createRessourceTypeLabelQuery(query))}`
       }
     }
     api.get(url).then(response => {
-      const filterOptions = response.items.map((obj) => { return { text: `[ ${obj.code} ] - ${obj.label || obj.name}`, value: obj.id } })
+      const filterOptions = response.items.map((obj) => { return { text: `[ ${obj.label} ] - ${obj.id} - -  ${tableName}`, value: obj.id } })
       resolve(filterOptions)
     })
   })
 }
+
+export const optionsT = () => Promise.resolve(
+  [
+    { text: 'Orange', value: 'orange' },
+    { text: 'Apple', value: 'apple' },
+    { text: 'Pineapple', value: 'pineapple' },
+    { text: 'Grape', value: 'grape' }
+  ]
+)
