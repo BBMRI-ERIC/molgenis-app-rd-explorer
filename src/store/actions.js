@@ -28,10 +28,10 @@ const EXTERNAL_RESOURCES_API_PATH = '/api/ejprd/external_sources'
 
 /* Query Parameters */
 export const COLLECTION_ATTRIBUTE_SELECTOR =
-  'collections(id,description,materials,diagnosis_available,name,type,order_of_magnitude(*),size,sub_collections(*),parent_collection,quality(*),data_categories,order_of_magnitude_donors(*),number_of_donors)'
+  'collections(id,description,materials,diagnosis_available,name,type,order_of_magnitude(*),size,sub_collections(*),parent_collection,quality(*),data_categories,order_of_magnitude_donors(*),number_of_donors,timestamp)'
 // export const COLLECTION_REPORT_ATTRIBUTE_SELECTOR = '*,diagnosis_available(label),data_use(label),biobank(id,name,juridical_person,country,url,contact),contact(title_before_name,first_name,last_name,title_after_name,email,phone),sub_collections(name,id,sub_collections(*),parent_collection,order_of_magnitude,materials,data_categories)'
 export const COLLECTION_REPORT_ATTRIBUTE_SELECTOR =
-  '*,diagnosis_available(label),biobank(id,name,juridical_person,country,url,contact,description),contact(title_before_name,first_name,last_name,title_after_name,email,phone),sub_collections(name,id,sub_collections(*),parent_collection,order_of_magnitude,materials,data_categories,number_of_donors,order_of_magnitude_donors)'
+  '*,diagnosis_available(label),biobank(id,name,juridical_person,country,url,contact,description),contact(title_before_name,first_name,last_name,title_after_name,email,phone),sub_collections(name,id,sub_collections(*),parent_collection,order_of_magnitude,materials,data_categories,number_of_donors,order_of_magnitude_donors,timestamp)'
 
 /**/
 
