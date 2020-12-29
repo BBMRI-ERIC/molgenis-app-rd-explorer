@@ -31,17 +31,21 @@
             </ul>
           </template>
           <template v-if="info.biobank">
-            <h5>Biobank</h5>
+            <h3 style="text-align:center">{{info.biobank.ressource_types}}</h3>
             <ul class="right-content-list">
               <li>
-                <div>
+                <!-- <div>
                   {{ info.biobank.name }}
+                </div> -->
+                <div>
+                  <span class="font-weight-bold">Host:</span> {{ info.biobank.juridical_person }}
                 </div>
                 <div>
-                  {{ info.biobank.juridical_person }}
+                  <span class="font-weight-bold">Country:</span> {{ info.biobank.country }}
                 </div>
                 <div>
-                  {{ info.biobank.country }}
+                  <span class="font-weight-bold">Partner charter: </span>
+                  <span class="badge badge-info"> {{ info.biobank.partnerCharter }}</span>
                 </div>
               </li>
               <li>
@@ -64,22 +68,10 @@
                   </a>
                 </div>
               </li>
-              <li>
-                <div class="container p-0">
-                  <div class="row">
-                    <div class="col pr-0">
-                      <span class="font-weight-bold">Partner charter:</span>
-                    </div>
-                    <div class="col p-0">
-                      <span class="badge badge-info"> {{ info.biobank.partnerCharter }}</span>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li>
+              <!-- <li>
                 <span class="font-weight-bold mr-2">Biobank id:</span>
                 <span class="biobank-id">{{ info.biobank.id }}</span>
-              </li>
+              </li> -->
             </ul>
           </template>
           <template v-if="info.networks && info.networks.length > 0">
