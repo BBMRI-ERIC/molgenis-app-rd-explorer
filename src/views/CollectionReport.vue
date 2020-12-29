@@ -1,23 +1,20 @@
 <template>
-  <div class="container mg-collection-report-card">
-    <loading :active="isLoading" loader="dots" :is-full-page="true" color="var(--secondary)" background-color="var(--light)"></loading>
+  <!-- <div class="container mg-collection-report-card"> -->
     <div class="container-fluid">
+      <loading :active="isLoading" loader="dots" :is-full-page="true" color="var(--secondary)" background-color="var(--light)"></loading>
       <!-- Back to previous page buttons -->
       <button class="btn btn-link pl-0" @click="back"><i class="fa fa-angle-left" aria-hidden="true"></i> Back</button>
 
       <div class="row" v-if="this.collection && !this.isLoading">
         <div class="col">
-
           <div class="container p-0">
             <div class="row">
               <div class="col-md-8">
-                <collection-selector class="mb-2" v-if="isTopLevelCollection" :collection="collection" />
-
-                <report-description :description="collection.description" :maxLength="500"></report-description>
+                <!-- <report-description :description="collection.description" :maxLength="500"></report-description> -->
 
                 <div>
                   <b-card
-                    style="max-width: 40rem;"
+                    style="max-width: 50rem;"
                     class="rounded-lg"
                   >
                   <b-card-text>
@@ -40,14 +37,31 @@
                       </template>
                       </b-table>
                     </div>
-                    <div style="text-align:center">
-                      <report-title type="Collection" :name="collection.name"></report-title>
+                    <div class="row">
+                      <div class="col-sm-2">
+                      <h2>
+                        <b-badge
+                          v-if="collection.biobank.ressource_types.label == 'Registry'" variant="primary"
+                          >
+                        {{collection.biobank.ressource_types.label}}
+                        </b-badge>
+                        <b-badge
+                          v-if="collection.biobank.ressource_types.label == 'Biobank'" variant="success"
+                        >
+                        {{collection.biobank.ressource_types.label}}
+                        </b-badge>
+                      </h2>
+                      </div>
+                      <div class="col-sm-8" style="text-align:center">
+                        <report-title type="Collection" :name="collection.name"></report-title>
+                      </div>
                     </div>
                     <b> Description: </b>
                     {{getDescription}}
                   </b-card-text>
                   </b-card>
                 </div>
+                <collection-selector class="mb-2" v-if="isTopLevelCollection" :collection="collection" />
                 <!-- main collection information -->
                 <table class="mg-report-details-list mb-3">
                   <!-- <tr>
@@ -104,9 +118,9 @@
                   <span class = "lead">
                   <span
                     v-for=" index in data_types.value"
-                    class="badge"
+                    class="m-1 badge"
                     :key="index"
-                    :class="'badge-primary'"
+                    :class="'badge-secondary'"
                     >{{index}}
                   </span>
                   </span>
@@ -117,7 +131,7 @@
                   <span class = "lead">
                   <span
                     v-for=" index in material_types.value"
-                    class="badge"
+                    class="m-1 badge"
                     :key="index"
                     :class="'badge-danger'"
                     >{{index}}
@@ -128,7 +142,7 @@
                   </b-table>
                 </div>
                 <div>
-                  <report-sub-collection v-for="subCollection in subCollections" :collection="subCollection" :key="subCollection.id" :level="1"></report-sub-collection>
+                  <!-- <report-sub-collection v-for="subCollection in subCollections" :collection="subCollection" :key="subCollection.id" :level="1"></report-sub-collection>
                 <div v-if="collection.sub_collections && collection.sub_collections.length" class="mt-2">
                   <h5>Sub collections</h5>
                   <report-sub-collection
@@ -136,13 +150,11 @@
                     :collection="subCollection"
                     :key="subCollection.id"
                     :level="1"
-                  ></report-sub-collection>
-                </div>
+                  ></report-sub-collection> -->
               </div>
-
-              <!-- Right side card -->
-              <collection-report-info-card :info="info"></collection-report-info-card>
             </div>
+          <!-- Right side card -->
+          <collection-report-info-card :info="info"></collection-report-info-card>
           </div>
         </div>
       </div>
@@ -157,7 +169,7 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 // import ReportDescription from '@/components/report-components/ReportDescription'
 import ReportTitle from '@/components/report-components/ReportTitle'
 import ReportListRow from '@/components/report-components/ReportListRow'
-import ReportSubCollection from '@/components/report-components/ReportSubCollection'
+// import ReportSubCollection from '@/components/report-components/ReportSubCollection'
 import CollectionReportInfoCard from '@/components/cards/CollectionReportInfoCard'
 import moment from 'moment'
 import CollectionSelector from '@/components/filters/CollectionSelector'
@@ -168,10 +180,9 @@ export default {
   components: {
     ReportListRow,
     ReportTitle,
-    ReportSubCollection,
-    CollectionReportInfoCard,
     Loading,
-    CollectionSelector
+    CollectionSelector,
+    CollectionReportInfoCard
   },
   methods: {
     ...mapActions(['GetCollectionReport']),
@@ -212,7 +223,13 @@ export default {
       return this.collection.biobank.description
     },
     getActivity () {
-      return moment(this.collection.sub_collections[0].timestamp).format('MM/DD/YYYY hh:mm')
+      if (this.collection.sub_collections.length) {
+        const date = moment(this.collection.sub_collections[0].timestamp).format('MM/DD/YYYY hh:mm')
+        return date
+      } else {
+        const date = 'N/A'
+        return date
+      }
     },
     getItemList () {
       return this.subCollections.map(x => ({ name: x.name, materials: x.content.Materials.value, data: x.content.Data.value }))
@@ -235,5 +252,12 @@ export default {
 <style scoped>
 >>> .mg-report-details-list th {
   vertical-align: top;
+}
+>>> .badge {
+  transition: transform 0.1s;
+  box-shadow: 0 0 0 1px white;
+}
+>>> .badge:hover {
+  transform: scale(1.4);
 }
 </style>
