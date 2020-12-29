@@ -1,7 +1,7 @@
 import FilterContainer from '@/components/filters/FilterContainer'
 import Vuex from 'vuex'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import { mockState } from '../../mockState'
+import { mockState } from '../../mockData'
 import filterDefinitions from '../../../../../src/utils/filterDefinitions'
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -17,7 +17,7 @@ describe('FilterContainer', () => {
 
     getters = {
       showCountryFacet: () => true,
-      getActiveFilters: () => [],
+      activeFilters: () => [],
       bookmarkMappedToState: () => true,
       filterDefinitions
     }

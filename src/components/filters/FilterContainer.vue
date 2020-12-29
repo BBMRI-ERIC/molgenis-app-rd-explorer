@@ -22,7 +22,7 @@
       <component
         v-if="bookmarkMappedToState"
         :is="filter.component"
-        :value="getActiveFilters[filter.name]"
+        :value="activeFilters[filter.name]"
         v-bind="filter"
         @input="(value) => filterChange(filter.name, value)"
         :returnTypeAsObject="true"
@@ -52,11 +52,10 @@ export default {
     }
   },
   computed: {
-
-    ...mapGetters(['showCountryFacet', 'getActiveFilters', 'filterDefinitions', 'bookmarkMappedToState']),
+    ...mapGetters(['showCountryFacet', 'activeFilters', 'filterDefinitions', 'bookmarkMappedToState']),
     search: {
       get () {
-        return this.getActiveFilters.search
+        return this.activeFilters.search
       },
       set (search) {
         if (this.debounce) {

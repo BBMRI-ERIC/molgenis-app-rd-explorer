@@ -43,9 +43,6 @@ export const createBiobankRSQLQuery = (state) => transformToRSQL({
   ])
 })
 
-const BIOBANK_ID_REGEX = /api\/data\/eu_bbmri_eric_biobanks\/([^/]+)$/
-export const getBiobankId = (link) => link.match(BIOBANK_ID_REGEX)[1]
-
 const createNegotiatorQueryBody = async (state, getters, url) => {
   const result = {
     /* Remove the nToken from the URL to prevent duplication on the negotiator side when a query is edited more than once */
@@ -54,17 +51,15 @@ const createNegotiatorQueryBody = async (state, getters, url) => {
     humanReadable: await getHumanReadableString(state, getters),
     nToken: state.nToken
   }
-  if (getters.rsql) {
-    result.rsql = getters.rsql
-  }
-  if (getters.biobankRsql) {
-    result.biobankId = state.negotiatorBiobankEntityId
-    result.biobankRsql = getters.biobankRsql
-  }
+
+  const collections = state.isPodium ? getters.collectionsInPodium : getters.selectedCollections
+  result.rsql = transformToRSQL({ operator: 'AND', operands: createInQuery('id', collections.map(sc => sc.value)) })
+  result.humanReadable += result.humanReadable.length ? ' and with custom collection selection.' : 'Custom collection selection.'
+
   return result
 }
 
-const getHumanReadableString = async (state, { filterDefinitions, getActiveFilters }) => {
+const getHumanReadableString = async (state, { filterDefinitions, activeFilters }) => {
   let humanReadableString = ''
   const additionText = ' and '
 
@@ -73,8 +68,8 @@ const getHumanReadableString = async (state, { filterDefinitions, getActiveFilte
 
   for (const fd of filterDefinitions) {
     filterNegotiatorLabelsDictionary[fd.name] = fd.humanReadableString
-    if (!filterLabels[fd.name] && getActiveFilters[fd.name] && fd.name !== 'search') {
-      const url = `/api/v2/${fd.table}?attrs=*&q=${encodeRsqlValue(`id=in=(${getActiveFilters[fd.name].join(',')})`)}`
+    if (!filterLabels[fd.name] && activeFilters[fd.name] && fd.name !== 'search') {
+      const url = `/api/v2/${fd.table}?attrs=*&q=${encodeRsqlValue(`id=in=(${activeFilters[fd.name].join(',')})`)}`
       const { items } = await api.get(url)
 
       filterLabels[fd.name] = fd.name === 'diagnosis_available' ? items.map((obj) => `[ ${obj.code} ] - ${obj.label || obj.name}`) : items.map((obj) => obj.label || obj.name)
@@ -132,6 +127,5 @@ export default {
   createNegotiatorQueryBody,
   getHumanReadableString,
   setLocationHref,
-  getLocationHref,
-  getBiobankId
+  getLocationHref
 }
