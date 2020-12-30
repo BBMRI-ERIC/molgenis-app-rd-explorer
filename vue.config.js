@@ -25,7 +25,7 @@ const htmlTemplate = () => {
   if (process.env.NODE_ENV === 'test') return 'public/preview.html'
 }
 
-const PROXY_TARGET = 'http://localhost:81' // 'https://master.dev.molgenis.org'
+const PROXY_TARGET = 'http://localhost:82' // 'https://master.dev.molgenis.org'
 
 const apiDevServerProxyConf = {
   target: PROXY_TARGET,
