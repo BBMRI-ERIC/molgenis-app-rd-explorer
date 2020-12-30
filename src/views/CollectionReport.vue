@@ -14,30 +14,15 @@
 
                 <div>
                   <b-card
-                    style="max-width: 50rem;"
-                    class="rounded-lg"
+                    class="rounded-xl"
+                    style="max-width: 50rem; background-color: #e2e3ce"
                   >
                   <b-card-text>
-                    <div>
-                      <b-table
-                      borderless
-                      :items="[{one : 'ID', two : collection.biobank.id, three : 'last', four : getActivity}]"
-                      :fields="[one, two, three, four]"
-                      thead-class="d-none">
-                      <template v-slot:cell(one)>
-                      <div class = "text-right"><strong>{{"ID:"}}</strong></div>
-                      <col :style="{ width : '10px'}">
-                      </template>
-                      <template v-slot:cell(two)>
-                      <div class = "text-left">{{collection.biobank.id}}</div>
-                      </template>
-                      <template v-slot:cell(three)>
-                      <div class ="text-right"><strong>{{"Last Activity:"}}</strong></div>
-                      <col :style="{ width : '50px'}">
-                      </template>
-                      </b-table>
+                    <div class="row" style="height: 40px;">
+                      <div class="col-sm-6" style="text-align:left" position="relative" top="-5px"> <b>ID: </b> {{collection.biobank.id}}</div>
+                      <div class="col-sm-6" style="text-align:right"> <b>Last Activity: </b>{{getActivity}}</div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="background-color: #ffffff">
                       <div class="col-sm-2">
                       <h2>
                         <b-badge
@@ -53,7 +38,8 @@
                       </h2>
                       </div>
                       <div class="col-sm-8" style="text-align:center">
-                        <report-title type="Collection" :name="collection.name"></report-title>
+                        <!-- <report-title type="Collection" :name="collection.name"></report-title> -->
+                        <h1 style="color:#a6cc74"> {{collection.name}} </h1>
                       </div>
                     </div>
                     <b> Description: </b>
@@ -142,7 +128,7 @@
                   </b-table>
                 </div>
                 <div>
-                  <!-- <report-sub-collection v-for="subCollection in subCollections" :collection="subCollection" :key="subCollection.id" :level="1"></report-sub-collection>
+                  <report-sub-collection v-for="subCollection in subCollections" :collection="subCollection" :key="subCollection.id" :level="1"></report-sub-collection>
                 <div v-if="collection.sub_collections && collection.sub_collections.length" class="mt-2">
                   <h5>Sub collections</h5>
                   <report-sub-collection
@@ -150,7 +136,8 @@
                     :collection="subCollection"
                     :key="subCollection.id"
                     :level="1"
-                  ></report-sub-collection> -->
+                  ></report-sub-collection>
+                </div>
               </div>
             </div>
           <!-- Right side card -->
@@ -167,7 +154,7 @@ import { mapActions, mapState } from 'vuex'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 // import ReportDescription from '@/components/report-components/ReportDescription'
-import ReportTitle from '@/components/report-components/ReportTitle'
+// import ReportTitle from '@/components/report-components/ReportTitle'
 import ReportListRow from '@/components/report-components/ReportListRow'
 // import ReportSubCollection from '@/components/report-components/ReportSubCollection'
 import CollectionReportInfoCard from '@/components/cards/CollectionReportInfoCard'
@@ -179,7 +166,6 @@ export default {
   name: 'CollectionReport',
   components: {
     ReportListRow,
-    ReportTitle,
     Loading,
     CollectionSelector,
     CollectionReportInfoCard
@@ -259,5 +245,9 @@ export default {
 }
 >>> .badge:hover {
   transform: scale(1.4);
+}
+
+>>> .rounded-xl {
+  border-radius: 20px;
 }
 </style>
