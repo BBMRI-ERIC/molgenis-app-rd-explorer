@@ -14,6 +14,7 @@
         <th scope="col">Type</th>
         <th scope="col">Materials</th>
         <th scope="col">#Donors</th>
+        <th scope="col">FilterInfo</th>
         <!-- <th scope="col">Order Mag. Donors</th> -->
       </tr>
     </thead>
@@ -53,6 +54,7 @@
             <span v-else-if="column === 'materials'">{{ getCollectionMaterials(collection) }}</span>
             <span v-else-if="column === 'number_of_donors'">{{ getCollectionNumberDonors(collection) }}</span>
             <span v-else-if="column === 'order_mag_donors'">{{ getCollectionOrderMagDonors(collection) }}</span>
+            <span v-else-if="column === 'filters'">{{getFilterInfo()}}</span>
           </td>
         </tr>
         <tr v-if="hasSubCollections(collection)" :key="collection.id">
@@ -104,7 +106,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['selectedCollections']),
+    ...mapGetters(['selectedCollections', 'filterDefinitions']),
     selectedAllCollections: {
       get () {
         return this.parentCollections
@@ -142,7 +144,7 @@ export default {
   },
   data () {
     return {
-      columns: ['name', 'type', 'materials', 'number_of_donors'],
+      columns: ['name', 'type', 'materials', 'number_of_donors', 'filters'],
       quality_logo: { height: 4, width: 9 }
     }
   },
@@ -185,6 +187,9 @@ export default {
     },
     getCollectionOrderMagDonors (collection) {
       return collection.order_of_magnitude_donors.size
+    },
+    getFilterInfo () {
+      return this.filterDefinitions['1']
     }
   }
 }
