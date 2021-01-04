@@ -52,9 +52,11 @@
             </span>
             <span v-else-if="column === 'type'">{{ getCollectionType(collection) }}</span>
             <span v-else-if="column === 'materials'">{{ getCollectionMaterials(collection) }}</span>
-            <span v-else-if="column === 'number_of_donors'">{{ getCollectionNumberDonors(collection) }}</span>
+            <span v-else-if="column === 'number_of_donors'"><button v-on:click="setFilterInfo">
+                  Visible:
+                </button> </span>
             <span v-else-if="column === 'order_mag_donors'">{{ getCollectionOrderMagDonors(collection) }}</span>
-            <span v-else-if="column === 'filters'">{{getFilterInfo()}}</span>
+            <span v-else-if="column === 'filter'">{{getFilterInfo()}}</span>
           </td>
         </tr>
         <tr v-if="hasSubCollections(collection)" :key="collection.id">
@@ -85,7 +87,7 @@
 <script>
 import utils from '../../utils'
 import SubCollectionsTable from './SubCollectionsTable'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapState } from 'vuex'
 import QualityColumn from './QualityColumn'
 
 export default {
@@ -106,7 +108,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['selectedCollections', 'filterDefinitions']),
+    ...mapGetters(['selectedCollections', 'filterDefinitions', 'activeFilters']),
+    ...mapState(['filters']),
     selectedAllCollections: {
       get () {
         return this.parentCollections
@@ -144,12 +147,12 @@ export default {
   },
   data () {
     return {
-      columns: ['name', 'type', 'materials', 'number_of_donors', 'filters'],
+      columns: ['name', 'type', 'materials', 'number_of_donors', 'filter'],
       quality_logo: { height: 4, width: 9 }
     }
   },
   methods: {
-    ...mapMutations(['AddCollectionToSelection', 'RemoveCollectionFromSelection']),
+    ...mapMutations(['AddCollectionToSelection', 'RemoveCollectionFromSelection', 'UpdateAllFilters']),
     collectionSelected (collectionId) {
       return this.selectedCollections.map(sc => sc.value).indexOf(collectionId) >= 0
     },
@@ -189,7 +192,11 @@ export default {
       return collection.order_of_magnitude_donors.size
     },
     getFilterInfo () {
-      return this.filterDefinitions['1']
+      return this.filterDefinitions['6']
+    },
+    setFilterInfo () {
+      this.filterDefinitions['6'].label = 'Changed Label'
+      // this.UpdateAllFilters(this.state, this.filters.selections)
     }
   }
 }
