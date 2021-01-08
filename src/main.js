@@ -57,7 +57,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(i18n, {
   lng: INITIAL_STATE.lng,
   fallbackLng: INITIAL_STATE.fallbackLng,
-  namespace: 'biobank-explorer',
+  namespace: 'rd-explorer',
   callback () {
     /* eslint-disable no-new */
     new Vue({

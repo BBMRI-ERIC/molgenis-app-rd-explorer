@@ -32,6 +32,6 @@ export default {
     this.GetNegotiatorEntities()
     this.GetQualityStandardInformation()
   },
-  name: 'biobank-explorer'
+  name: 'rd-explorer'
 }
 </script>

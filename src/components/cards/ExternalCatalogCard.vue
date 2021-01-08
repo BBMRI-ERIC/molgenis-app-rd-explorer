@@ -51,12 +51,11 @@
 }
 
 .external-catalog-card-header {
-  background-color: #004275
+  background-color: #004275 !important;
 }
 
 .external-catalog-card-header:hover {
   cursor: pointer;
-  background-color: #004275;
 }
 
 .biobank-icon:hover {
