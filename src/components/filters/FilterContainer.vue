@@ -5,49 +5,44 @@
       <StringFilter name="Search" v-model="search"></StringFilter>
     </FilterCard> -->
 
-    <FilterCard name="search" label="Search - Adaption" description="Adapted Search" :collapsed="false" :collapsable="false" :canRemove="true" removeFilter="onRemoveFilter" >
+    <FilterCard name="search" label="Search - Adaption" description="Adapted Search" :collapsed="false" :collapsable="false" :canRemove="true" >
       <StringFilter name="Search" v-model="search" placeholder="Input - adaption"></StringFilter>
     </FilterCard>
 
-    <FilterCard
+    <!-- <FilterCard
   name="fruit-card"
   label="Fruit"
   headerClass="bg-info text-white"
   description="Example with checkbox filter"
   v-bind:collapsed="false"
   v-bind:collapsable="false"
-  v-bind:canRemove="true"
-  v-on:removeFilter="onRemoveFilter">
+  v-bind:canRemove="true">
   <CheckboxFilter
     v-bind:maxVisibleOptions="null"
     v-bind:bulkOperation="true"
     v-bind:options="options"
     v-model="model">
   </CheckboxFilter>
-</FilterCard>
+</FilterCard> -->
 
     <FilterCard
-
       v-for="filter in filters"
       :key="filter.name"
       :name="filter.name"
       :label="filter.label"
       :headerClass="filter.headerClass"
-      :collapsed="filter.collapsed"
+      :collapsed="filter.initiallyCollapsed"
       :collapsable="filter.collapsable"
-      v-bind:canRemove="true"
-      v-on:removeFilter="onRemoveFilter"
     >
       <component
         v-if="bookmarkMappedToState"
         :is="filter.component"
         :value="activeFilters[filter.name]"
         v-bind="filter"
-        @input="() => filterChange(filter.name, value)"
+        @input="(value) => filterChange(filter.name, value)"
         :returnTypeAsObject="true"
         :bulkOperation="true"
-      >
-      </component>
+      />
     </FilterCard>
   </div>
 </template>
@@ -106,7 +101,7 @@ export default {
   methods: {
     ...mapMutations(['UpdateFilter', 'SetFilterObjects', 'UpdateCountry']),
     filterChange (name, value) {
-      console.log(this.foundBiobanks)
+      console.log(name, value)
       if (name === 'country') {
         console.log('CountryFilter')
         console.log(name, value)
