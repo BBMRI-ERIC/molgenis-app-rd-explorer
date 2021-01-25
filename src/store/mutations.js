@@ -63,6 +63,22 @@ export default {
       Vue.set(state.filters.labels, key, leftoverLabels)
     }
   },
+  UpdateCountry (state, { name, value }) {
+    console.log('Hello')
+    console.log(state.biobanks)
+    console.log(name)
+    console.log(value)
+    const filterValues = []
+    const filterTexts = []
+
+    for (const item of value) {
+      filterValues.push(item.value)
+      filterTexts.push(item.text)
+    }
+
+    Vue.set(state.filters.selections, name, [...new Set(filterValues)])
+    Vue.set(state.filters.labels, name, [...new Set(filterTexts)])
+  },
   /**
    * Reset all filters in the state
    */
@@ -73,6 +89,9 @@ export default {
     biobanks.forEach(biobank => {
       Vue.set(state.biobanks, biobank.id, fixCollectionTree(biobank))
     })
+  },
+  SetFilterObjects (state) {
+    Vue.set(state.filterObjects, filterDefinitions)
   },
   SetBiobankIds (state, biobankIds) {
     state.biobankIds = biobankIds
