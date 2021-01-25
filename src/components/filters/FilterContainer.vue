@@ -1,11 +1,11 @@
 <template>
-  <div id="filter-container">
+  <div id="filter-container" v-if="!loading">
 
     <FilterCard name="search" label="Search" description="Search by name, id, acronym" :collapsed="!this.$store.state.route.query.search">
       <StringFilter name="Search" v-model="search"></StringFilter>
     </FilterCard>
 
-    <FilterCard name="search" label="Search - Adaption" description="Adapted Search" v-bind:collapsed=false v-bind:collapsable=false canRemove=true removeFilter="onRemoveFilter" >
+    <FilterCard name="search" label="Search - Adaption" description="Adapted Search" :collapsed="false" :collapsable="false" :canRemove="true" removeFilter="onRemoveFilter" >
       <StringFilter name="Search" v-model="search" placeholder="Input - adaption"></StringFilter>
     </FilterCard>
 
@@ -37,9 +37,10 @@
 /** Components used for filters */
 import CovidFilter from '../filters/CovidFilter'
 import CovidNetworkFilter from '../filters/CovidNetworkFilter'
-import FilterCard from '../filters/FilterCard_test1'
-import CheckboxFilter from '../filters/CheckboxFilter_test1'
-import { StringFilter, MultiFilter, NumberFilter, RangeFilter, DateTimeFilter } from '@molgenis-ui/components-library'
+import state from '../../store/state'
+// import FilterCard from '../filters/FilterCard_test1'
+// import CheckboxFilter from '../filters/CheckboxFilter_test1'
+import { StringFilter, MultiFilter, NumberFilter, RangeFilter, DateTimeFilter, CheckboxFilter, FilterCard } from '@molgenis-ui/components-library'
 /** */
 
 import { mapGetters, mapMutations } from 'vuex'
@@ -52,7 +53,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['showCountryFacet', 'activeFilters', 'filterDefinitions', 'bookmarkMappedToState']),
+    ...mapGetters(['showCountryFacet', 'activeFilters', 'filterDefinitions', 'bookmarkMappedToState', 'loading']),
     search: {
       get () {
         return this.activeFilters.search
@@ -69,18 +70,30 @@ export default {
       }
     },
     filters () {
-      return this.filterDefinitions.filter((facet) => {
+      console.log('Filters: ')
+      if (state.filterObjects.length === 0) {
+        console.log('Filter set')
+        state.filterObjects = this.filterDefinitions
+        // this.SetFilterObjects(state)
+      }
+      console.log(state.filterObjects)
+      return state.filterObjects.filter((facet) => {
         // config option showCountryFacet is used to toggle Country facet
         return !(this.showCountryFacet === false && facet.name === 'country')
       }).filter((item) => item.component)
     }
   },
   methods: {
-    ...mapMutations(['UpdateFilter']),
+    ...mapMutations(['UpdateFilter', 'SetFilterObjects', 'UpdateCountry']),
     filterChange (name, value) {
-      this.UpdateFilter({ name, value, router: this.$router })
+      if (name === 'country') {
+        console.log('CountryFilter')
+        console.log(name, value)
+        this.UpdateCountry({ name, value })
+      } else {
+        this.UpdateFilter({ name, value, router: this.$router })
+      }
     }
-
   }
 }
 </script>
