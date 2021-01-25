@@ -1,6 +1,9 @@
 <template>
   <div class="biobank-cards-container">
     <div v-if="!loading && foundBiobanks > 0">
+      <!-- <p>
+        Biobanks: {{biobanks[0].collections[0].materials[0].id}}
+      </p> -->
       <b-pagination
         v-if="foundBiobanks > pageSize"
         size="md"
@@ -53,7 +56,7 @@
 
 <script>
 import BiobankCard from './BiobankCard'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'biobank-cards-container',
@@ -64,7 +67,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['GetBiobanks'])
+    ...mapActions(['GetBiobanks']),
+    ...mapMutations(['UpdateFilter']),
+    filterChange (name, value) {
+      this.UpdateFilter({ name, value, router: this.$router })
+    }
   },
   computed: {
     ...mapGetters([
