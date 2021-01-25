@@ -1,13 +1,30 @@
 <template>
   <div id="filter-container" v-if="!loading">
 
-    <FilterCard name="search" label="Search" description="Search by name, id, acronym" :collapsed="!this.$store.state.route.query.search">
+    <!-- <FilterCard name="search" label="Search" description="Search by name, id, acronym" :collapsed="!this.$store.state.route.query.search">
       <StringFilter name="Search" v-model="search"></StringFilter>
-    </FilterCard>
+    </FilterCard> -->
 
     <FilterCard name="search" label="Search - Adaption" description="Adapted Search" :collapsed="false" :collapsable="false" :canRemove="true" removeFilter="onRemoveFilter" >
       <StringFilter name="Search" v-model="search" placeholder="Input - adaption"></StringFilter>
     </FilterCard>
+
+    <FilterCard
+  name="fruit-card"
+  label="Fruit"
+  headerClass="bg-info text-white"
+  description="Example with checkbox filter"
+  v-bind:collapsed="false"
+  v-bind:collapsable="false"
+  v-bind:canRemove="true"
+  v-on:removeFilter="onRemoveFilter">
+  <CheckboxFilter
+    v-bind:maxVisibleOptions="null"
+    v-bind:bulkOperation="true"
+    v-bind:options="options"
+    v-model="model">
+  </CheckboxFilter>
+</FilterCard>
 
     <FilterCard
 
@@ -18,13 +35,15 @@
       :headerClass="filter.headerClass"
       :collapsed="filter.collapsed"
       :collapsable="filter.collapsable"
+      v-bind:canRemove="true"
+      v-on:removeFilter="onRemoveFilter"
     >
       <component
         v-if="bookmarkMappedToState"
         :is="filter.component"
         :value="activeFilters[filter.name]"
         v-bind="filter"
-        @input="(value) => filterChange(filter.name, value)"
+        @input="() => filterChange(filter.name, value)"
         :returnTypeAsObject="true"
         :bulkOperation="true"
       >
@@ -35,6 +54,7 @@
 
 <script>
 /** Components used for filters */
+// import { options, model } from './filterOptions'
 import CovidFilter from '../filters/CovidFilter'
 import CovidNetworkFilter from '../filters/CovidNetworkFilter'
 import state from '../../store/state'
@@ -53,7 +73,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['showCountryFacet', 'activeFilters', 'filterDefinitions', 'bookmarkMappedToState', 'loading']),
+    ...mapGetters(['showCountryFacet', 'activeFilters', 'filterDefinitions', 'bookmarkMappedToState', 'foundBiobanks', 'loading']),
     search: {
       get () {
         return this.activeFilters.search
@@ -86,6 +106,7 @@ export default {
   methods: {
     ...mapMutations(['UpdateFilter', 'SetFilterObjects', 'UpdateCountry']),
     filterChange (name, value) {
+      console.log(this.foundBiobanks)
       if (name === 'country') {
         console.log('CountryFilter')
         console.log(name, value)
@@ -96,4 +117,27 @@ export default {
     }
   }
 }
+
+// export const onRemoveFilter = () => console.log('hhhhhh')
+
+// export const options = () => Promise.resolve(
+//   [
+//     { text: 'Orange', value: 'orange' },
+//     { text: 'Apple', value: 'apple' },
+//     { text: 'Pineapple', value: 'pineapple' },
+//     { text: 'Grape', value: 'grape' }
+//   ]
+// )
+
+// export const model = []
+
+// export const selections = {
+//   search: 'test',
+//   name: 'John',
+//   age: [32, 45],
+//   fruit: ['orange', 'apple'],
+//   color: ['red', 'green'],
+//   datetime: [new Date('10/01/1980'), new Date('03/12/2020')]
+// }
+
 </script>

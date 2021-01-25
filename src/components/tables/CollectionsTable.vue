@@ -108,7 +108,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['selectedCollections', 'filterDefinitions', 'activeFilters']),
+    ...mapGetters(['selectedCollections', 'filterDefinitions', 'activeFilters', 'foundCollectionIds', 'foundBiobanks', 'collectionBiobankDictionary']),
     ...mapState(['filters']),
     selectedAllCollections: {
       get () {
