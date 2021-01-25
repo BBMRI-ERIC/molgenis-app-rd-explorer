@@ -23,8 +23,8 @@ const createDiagnosisLabelQuery = (query) => transformToRSQL({ selector: 'label'
 const createDiagnosisCodeQuery = (query) => transformToRSQL({ selector: 'code', comparison: '=like=', arguments: query.toUpperCase() })
 /** */
 
-// const createRessourceTypeLabelQuery = (query) => transformToRSQL({ selector: 'label', comparison: '=like=', arguments: query })
-// const createRessourceTypeCodeQuery = (query) => transformToRSQL({ selector: 'id', comparison: '=like=', arguments: query.toUpperCase() })
+const createRessourceTypeLabelQuery = (query) => transformToRSQL({ selector: 'label', comparison: '=like=', arguments: query })
+const createRessourceTypeCodeQuery = (query) => transformToRSQL({ selector: 'id', comparison: '=like=', arguments: query.toUpperCase() })
 
 export const diagnosisAvailableFilterOptions = (tableName) => {
   // destructure the query part from the multi-filter
@@ -49,23 +49,6 @@ export const diagnosisAvailableFilterOptions = (tableName) => {
 }
 
 export const onRemoveFilter = () => alert('remove me please')
-
-    if (query) {
-      // initial load, values are ids
-      if (queryType === 'in') {
-        url = `${url}?q=${encodeRsqlValue(`id=in=(${query})`)}`
-      } else if (isCodeRegex.test(query)) {
-        url = `${url}?q=${encodeRsqlValue(createRessourceTypeCodeQuery(query))}&sort=label`
-      } else {
-        url = `${url}?q=${encodeRsqlValue(createRessourceTypeLabelQuery(query))}`
-      }
-    }
-    api.get(url).then(response => {
-      const filterOptions = response.items.map((obj) => { return { text: `[ ${obj.label} ]`, value: obj.id } })
-      resolve(filterOptions)
-    })
-  })
-}
 
 export const newFilterFunc = (testVar) => {
   return () => new Promise((resolve) => {
@@ -132,24 +115,24 @@ export const options = () => {
 
 export const model = []
 
-// export const resscourceTypesAvailableFilterOptions = (tableName) => {
-//   // destructure the query part from the multi-filter
-//   return ({ query, queryType }) => new Promise((resolve) => {
-//     let url = `/api/v2/${tableName}`
+export const resscourceTypesAvailableFilterOptions = (tableName) => {
+  // destructure the query part from the multi-filter
+  return ({ query, queryType }) => new Promise((resolve) => {
+    let url = `/api/v2/${tableName}`
 
-//     if (query) {
-//       // initial load, values are ids
-//       if (queryType === 'in') {
-//         url = `${url}?q=${encodeRsqlValue(`id=in=(${query})`)}`
-//       } else if (isCodeRegex.test(query)) {
-//         url = `${url}?q=${encodeRsqlValue(createRessourceTypeCodeQuery(query))}&sort=label`
-//       } else {
-//         url = `${url}?q=${encodeRsqlValue(createRessourceTypeLabelQuery(query))}`
-//       }
-//     }
-//     api.get(url).then(response => {
-//       const filterOptions = response.items.map((obj) => { return { text: `[ ${obj.label} ] - ${obj.id} - -  ${tableName}`, value: obj.id } })
-//       resolve(filterOptions)
-//     })
-//   })
-// }
+    if (query) {
+      // initial load, values are ids
+      if (queryType === 'in') {
+        url = `${url}?q=${encodeRsqlValue(`id=in=(${query})`)}`
+      } else if (isCodeRegex.test(query)) {
+        url = `${url}?q=${encodeRsqlValue(createRessourceTypeCodeQuery(query))}&sort=label`
+      } else {
+        url = `${url}?q=${encodeRsqlValue(createRessourceTypeLabelQuery(query))}`
+      }
+    }
+    api.get(url).then(response => {
+      const filterOptions = response.items.map((obj) => { return { text: `[ ${obj.label} ] - ${obj.id} - -  ${tableName}`, value: obj.id } })
+      resolve(filterOptions)
+    })
+  })
+}
