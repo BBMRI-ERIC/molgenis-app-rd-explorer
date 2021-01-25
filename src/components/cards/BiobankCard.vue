@@ -124,7 +124,13 @@ export default {
       const collections = this.biobank.collections.filter(
         collection => !collection.parent_collection
       )
-      return collections[0].order_of_magnitude_donors.size
+      let numbers = 0
+      if (this.biobank.ressource_types.label === 'Registry') {
+        numbers = collections[0].order_of_magnitude_donors.size
+      } else if (this.biobank.ressource_types.label === 'Biobank') {
+        numbers = collections[0].size
+      }
+      return numbers
     },
     sortedCollections () {
       return sortCollectionsByName(this.biobank.collections)
