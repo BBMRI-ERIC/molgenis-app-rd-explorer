@@ -54,7 +54,7 @@
             <span v-else-if="column === 'materials'">{{ getCollectionMaterials(collection) }}</span>
             <span v-else-if="column === 'number_of_donors'">{{ getCollectionNumberDonors(collection) }}</span>
             <span v-else-if="column === 'order_mag_donors'">{{ getCollectionOrderMagDonors(collection) }}</span>
-            <span v-else-if="column === 'filters'">{{getFilterInfo()}}</span>
+            <span v-else-if="column === 'filters'">{{getFilterInfo('a')}}</span>
           </td>
         </tr>
         <tr v-if="hasSubCollections(collection)" :key="collection.id">
@@ -85,7 +85,7 @@
 <script>
 import utils from '../../utils'
 import SubCollectionsTable from './SubCollectionsTable'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapState } from 'vuex'
 import QualityColumn from './QualityColumn'
 
 export default {
@@ -106,7 +106,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['selectedCollections', 'filterDefinitions']),
+    ...mapGetters(['selectedCollections', 'filterDefinitions', 'activeFilters', 'foundCollectionIds', 'foundBiobanks', 'collectionBiobankDictionary']),
+    ...mapState(['filters']),
     selectedAllCollections: {
       get () {
         return this.parentCollections
@@ -188,8 +189,8 @@ export default {
     getCollectionOrderMagDonors (collection) {
       return collection.order_of_magnitude_donors.size
     },
-    getFilterInfo () {
-      return this.filterDefinitions['1']
+    getFilterInfo (stringi) {
+      return this.foundBiobanks // selectedCollections
     }
   }
 }
