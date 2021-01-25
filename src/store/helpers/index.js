@@ -121,6 +121,10 @@ export const filterCollectionTree = (collectionIds, collections) =>
       return accumulator
     }, [])
 
+export function uniqueElements (value, index, self) {
+  return self.indexOf(value) === index
+}
+
 export default {
 
   createRSQLQuery,
