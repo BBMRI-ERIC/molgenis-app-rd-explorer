@@ -91,8 +91,15 @@ export default {
     })
   },
   SetFilterObjects (state) {
-    Vue.set(state.filterObjects, filterDefinitions)
+    state.filterObjects = filterDefinitions(state)// .map(fd => fd) // .map(fd => fd.name)
+    // Vue.set(state.filterObjects, filterDefinitions)
   },
+
+  // SetFilterObjects (state) {
+  //   filterDefinitions(state).forEach(filterdef => {
+  //     state.filterObjects = filterdef
+  //   })
+  // },
   SetBiobankIds (state, biobankIds) {
     state.biobankIds = biobankIds
   },

@@ -65,7 +65,9 @@ export const newCountryFilterOption = () => {
       countries.push(state.biobanks[key])
     }
     console.log('Country!')
-    console.log(countries[0].country.name)
+    console.log(countries)
+    console.log([...new Set(countries.id)])
+    // const countrySet = new Set(countries)
     resolve(countries.map((obj) => { return { text: `${obj.country.name}`, value: obj.country.id } })
     )
   })

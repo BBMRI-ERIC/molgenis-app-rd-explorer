@@ -68,7 +68,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['showCountryFacet', 'activeFilters', 'filterDefinitions', 'bookmarkMappedToState', 'foundBiobanks', 'loading']),
+    ...mapGetters(['showCountryFacet', 'activeFilters', 'filterDefinitions', 'bookmarkMappedToState', 'foundBiobanks', 'loading', 'filterObjects']),
     search: {
       get () {
         return this.activeFilters.search
@@ -86,14 +86,23 @@ export default {
     },
     filters () {
       console.log('Filters: ')
-      if (state.filterObjects.length === 0) {
-        console.log('Filter set')
-        state.filterObjects = this.filterDefinitions
-        // this.SetFilterObjects(state)
+      if (this.filterObjects.length === 0) {
+        console.log('Filter set zero')
+        // state.filterObjects = this.filterDefinitions
+        console.log(this.filterDefinitions)
+
+        console.log('--')
+        this.SetFilterObjects(state)
       }
-      console.log(state.filterObjects)
+      console.log('filterobject:')
+      // const filter = this.filterObjects
+      // console.log(filter)
+      console.log('---')
+      console.log(this.filterObjects)
+      console.log(this.filterDefinitions)
       return state.filterObjects.filter((facet) => {
         // config option showCountryFacet is used to toggle Country facet
+        console.log(facet.name)
         return !(this.showCountryFacet === false && facet.name === 'country')
       }).filter((item) => item.component)
     }
@@ -101,6 +110,7 @@ export default {
   methods: {
     ...mapMutations(['UpdateFilter', 'SetFilterObjects', 'UpdateCountry']),
     filterChange (name, value) {
+      console.log('hier')
       console.log(name, value)
       if (name === 'country') {
         console.log('CountryFilter')

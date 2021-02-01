@@ -8,6 +8,7 @@ import filterDefinitions from '../utils/filterDefinitions'
 
 export default {
   filterDefinitions,
+  filterObjects: state => state.filterObjects,
   bookmarkMappedToState: state => state.bookmarkMappedToState,
   loading: ({ collectionInfo, biobankIds }) => !(biobankIds && collectionInfo),
   biobanks: ({ collectionInfo, biobankIds, biobanks }, { loading, rsql }) => {
