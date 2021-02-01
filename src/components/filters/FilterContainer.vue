@@ -68,7 +68,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['showCountryFacet', 'activeFilters', 'filterDefinitions', 'bookmarkMappedToState', 'foundBiobanks', 'loading', 'filterObjects']),
+    ...mapGetters(['showCountryFacet', 'activeFilters', 'filterDefinitions', 'bookmarkMappedToState', 'foundBiobanks', 'loading', 'filterObjects', 'biobanks']),
     search: {
       get () {
         return this.activeFilters.search
