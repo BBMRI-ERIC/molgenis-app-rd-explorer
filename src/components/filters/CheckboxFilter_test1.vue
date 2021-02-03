@@ -3,7 +3,7 @@
     <b-form-checkbox-group
       v-model="selection"
       stacked
-      :options="visibleOptions"
+      :options="testOptions"
     />
     <span v-if="bulkOperation">
       <b-link
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'CheckboxFilter',
   props: {
@@ -72,10 +74,12 @@ export default {
       externalUpdate: false,
       selection: [],
       resolvedOptions: [],
-      sliceOptions: this.maxVisibleOptions && this.resolvedOptions && this.maxVisibleOptions < this.resolvedOptions.length
+      sliceOptions: this.maxVisibleOptions && this.resolvedOptions && this.maxVisibleOptions < this.resolvedOptions.length,
+      allOptions: []
     }
   },
   computed: {
+    ...mapGetters(['biobanks']),
     visibleOptions () {
       return this.sliceOptions ? this.resolvedOptions.slice(0, this.maxVisibleOptions) : (typeof this.resolvedOptions === 'function' ? [] : this.resolvedOptions)
     },
@@ -87,7 +91,12 @@ export default {
     },
     toggleSliceText () {
       return this.sliceOptions ? `Show ${this.resolvedOptions.length - this.maxVisibleOptions} more` : 'Show less'
+    },
+    testOptions () {
+      console.log(this.biobanks)
+      return ['A', 'B']
     }
+
   },
   watch: {
     value () {
@@ -111,10 +120,10 @@ export default {
     }
   },
   created () {
-    this.options().then(response => {
-      this.resolvedOptions = response
-    })
-    this.setValue()
+    this.resolvedOptions = ['A']
+    console.log('resolved:')
+    console.log(this.resolvedOptions)
+    // this.setValue()
   },
   methods: {
     toggleSelect () {

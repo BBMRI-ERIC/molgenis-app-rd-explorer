@@ -39,5 +39,6 @@ export default {
     labels: {} // for human readable string
   },
   filterObjects: [],
+  countryList: [],
   filterLabelCache: [] // needed to filter human readable string > can be rewritten to use the collectiondictionary.
 }
