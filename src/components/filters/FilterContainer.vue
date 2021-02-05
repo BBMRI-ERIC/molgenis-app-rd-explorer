@@ -68,7 +68,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['showCountryFacet', 'activeFilters', 'filterDefinitions', 'bookmarkMappedToState', 'foundBiobanks', 'loading', 'filterObjects', 'biobanks']),
+    ...mapGetters(['showCountryFacet', 'activeFilters', 'filterDefinitions', 'bookmarkMappedToState', 'foundBiobanks', 'loading', 'filterObjects', 'biobanks', 'getFoundBiobankIds', 'getFoundCountries', 'foundCountries']),
     search: {
       get () {
         return this.activeFilters.search
@@ -98,11 +98,18 @@ export default {
       // const filter = this.filterObjects
       // console.log(filter)
       console.log('---')
+      console.log(this.getFoundBiobankIds)
+      console.log(this.biobanks)
+      console.log('getfoundcounries')
+      // console.log(this.getFoundCountries)
+      console.log(this.foundCountries)
+      // state.countrylist = this.foundCountries
+      console.log('filterobejcts')
       console.log(this.filterObjects)
       console.log(this.filterDefinitions)
       return state.filterObjects.filter((facet) => {
         // config option showCountryFacet is used to toggle Country facet
-        console.log(facet.name)
+        // console.log(facet.name)
         return !(this.showCountryFacet === false && facet.name === 'country')
       }).filter((item) => item.component)
     }

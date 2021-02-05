@@ -59,17 +59,37 @@ export const newFilterFunc = (testVar) => {
 
 export const newCountryFilterOption = () => {
   return () => new Promise((resolve) => {
+    // const countriess = new Set()
     const countries = []
+    const countryNAME = new Set()
+    const countryID = new Set()
+    var dict = []
     console.log('Biobanks')
+    console.log(state.biobanks)
     for (var key in state.biobanks) {
-      countries.push(state.biobanks[key])
+      countries.push(state.biobanks[key].country)
     }
-    console.log('Country!')
-    console.log(countries)
-    console.log([...new Set(countries.id)])
-    // const countrySet = new Set(countries)
-    resolve(countries.map((obj) => { return { text: `${obj.country.name}`, value: obj.country.id } })
-    )
+    // console.log('Country!')
+    console.log('Bioids')
+    console.log(state.biobankIds.length)
+
+    // const countriess = new Set(countries)
+    countries.forEach(country => {
+      countryNAME.add(country.name)
+      countryID.add(country.id)
+    })
+    const names = [...countryNAME]
+    const ids = [...countryID]
+
+    for (var count in names) {
+      dict.push({ name: names[count], id: ids[count] })
+    }
+
+    console.log('countrylist')
+    console.log(state.countrylist)
+
+    const countryresolve = dict.map((obj) => { return { text: obj.name || obj.id, value: obj.id } })
+    resolve(countryresolve)
   })
 }
 

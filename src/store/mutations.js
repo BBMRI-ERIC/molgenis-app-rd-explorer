@@ -65,7 +65,7 @@ export default {
   },
   UpdateCountry (state, { name, value }) {
     console.log('Hello')
-    console.log(state.biobanks)
+    // console.log(state.biobanks)
     console.log(name)
     console.log(value)
     const filterValues = []
@@ -74,6 +74,8 @@ export default {
     for (const item of value) {
       filterValues.push(item.value)
       filterTexts.push(item.text)
+      console.log('update country')
+      console.log(filterValues)
     }
 
     Vue.set(state.filters.selections, name, [...new Set(filterValues)])
