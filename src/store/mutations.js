@@ -132,6 +132,20 @@ export default {
     }))
     state.collectionInfo = collectionInfo
   },
+  SetCountryList (state, response) {
+    if (response === undefined) {
+      state.collectionInfo = response
+      return
+    }
+    console.log('response:')
+    // console.log(response)
+    const CountryList = []
+    for (var key in response.items) {
+      CountryList.push(response.items[key].data.country.links.self)
+    }
+    console.log(Array.from(new Set(CountryList)))
+    state.countrylist = Array.from(new Set(CountryList))
+  },
   /**
    * Store a single biobank in the state for showing a biobank report
    * @param state

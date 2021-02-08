@@ -78,18 +78,17 @@ export const newCountryFilterOption = () => {
       countryNAME.add(country.name)
       countryID.add(country.id)
     })
-    const names = [...countryNAME]
-    const ids = [...countryID]
+    // const names = [...countryNAME]
+    // const ids = [...countryID]
 
-    for (var count in names) {
-      dict.push({ name: names[count], id: ids[count] })
-    }
-
-    console.log('countrylist')
-    console.log(state.countrylist)
+    // for (var count in names) {
+    //   dict.push({ name: api.get(state.countrylist[count]).then(response => { return resolve(response) }), id: ids[count] })
+    // }
 
     const countryresolve = dict.map((obj) => { return { text: obj.name || obj.id, value: obj.id } })
     resolve(countryresolve)
+    console.log('countrylist')
+    console.log(state.countrylist)
   })
 }
 
