@@ -121,7 +121,7 @@ export default {
     getters
   }) {
     commit('SetCollectionInfo', undefined)
-    let url = '/api/data/eu_bbmri_eric_collections?filter=id,biobank(id,name,label,country),name,label,parent_collection&expand=biobank&size=10000&sort=biobank_label'
+    let url = '/api/data/eu_bbmri_eric_collections?filter=id,biobank(id,name,label),name,country,label,parent_collection&expand=biobank&size=10000&sort=biobank_label'
     if (getters.rsql) {
       url = `${url}&q=${encodeRsqlValue(getters.rsql)}`
     }
@@ -137,29 +137,29 @@ export default {
       }
       )
   },
-  getCountryList ({
-    commit,
-    getters
-  }) {
-    let url = '/api/data/eu_bbmri_eric_biobanks?filter=country(name)&size=10000&sort=id'
-    if (getters.rsql) {
-      url = `${url}&q=${encodeRsqlValue(getters.rsql)}`
-    }
-    api.get(url)
-      .then(response => {
-        commit('SetCountryList', response)
-      },
-      error => {
-        commit('SetError', error)
-      }
-      )
-  },
+  // getCountryList ({
+  //   commit,
+  //   getters
+  // }) {
+  //   let url = '/api/data/eu_bbmri_eric_biobanks?filter=country(name)&size=10000&sort=id'
+  //   if (getters.rsql) {
+  //     url = `${url}&q=${encodeRsqlValue(getters.rsql)}`
+  //   }
+  //   api.get(url)
+  //     .then(response => {
+  //       commit('SetCountryList', response)
+  //     },
+  //     error => {
+  //       commit('SetError', error)
+  //     }
+  //     )
+  // },
   GetBiobankIds ({
     commit,
     getters
   }) {
     commit('SetBiobankIds', undefined)
-    let url = '/api/data/eu_bbmri_eric_biobanks?filter=id&size=10000&sort=name'
+    let url = '/api/data/eu_bbmri_eric_biobanks?filter=id,country&size=10000&sort=name'
     if (getters.biobankRsql) {
       url = `${url}&q=${encodeRsqlValue(getters.biobankRsql)}`
     }
@@ -169,6 +169,7 @@ export default {
           'SetBiobankIds',
           response.items.map(item => item.data.id)
         )
+        commit('SetCountryList', response)
       },
       error => {
         commit('SetError', error)

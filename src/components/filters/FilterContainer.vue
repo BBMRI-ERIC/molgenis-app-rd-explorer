@@ -94,19 +94,19 @@ export default {
         console.log('--')
         this.SetFilterObjects(state)
       }
-      console.log('filterobject:')
-      // const filter = this.filterObjects
-      // console.log(filter)
-      console.log('---')
-      console.log(this.getFoundBiobankIds)
-      console.log(this.biobanks)
-      console.log('getfoundcounries')
-      // console.log(this.getFoundCountries)
-      console.log(this.foundCountries)
-      // state.countrylist = this.foundCountries
-      console.log('filterobejcts')
-      console.log(this.filterObjects)
-      console.log(this.filterDefinitions)
+      // console.log('filterobject:')
+      // // const filter = this.filterObjects
+      // // console.log(filter)
+      // console.log('---')
+      // console.log(this.getFoundBiobankIds)
+      // console.log(this.biobanks)
+      // console.log('getfoundcounries')
+      // // console.log(this.getFoundCountries)
+      // console.log(this.foundCountries)
+      // // state.countrylist = this.foundCountries
+      // console.log('filterobejcts')
+      // console.log(this.filterObjects)
+      // console.log(this.filterDefinitions)
       return state.filterObjects.filter((facet) => {
         // config option showCountryFacet is used to toggle Country facet
         // console.log(facet.name)
@@ -119,13 +119,12 @@ export default {
     filterChange (name, value) {
       console.log('hier')
       console.log(name, value)
-      if (name === 'country') {
-        console.log('CountryFilter')
-        console.log(name, value)
-        this.UpdateCountry({ name, value })
-      } else {
-        this.UpdateFilter({ name, value, router: this.$router })
-      }
+      // if (name === 'country') {
+      //   console.log('CountryFilter')
+      //   console.log(name, value)
+      //   this.UpdateCountry({ name, value })
+      // } else {
+      this.UpdateFilter({ name, value, router: this.$router })
     }
   }
 }

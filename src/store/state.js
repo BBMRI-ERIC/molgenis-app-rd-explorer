@@ -19,6 +19,7 @@ export default {
   collectionInfo: undefined,
   /* A single biobank object which is fetched by ID for showing the BiobankReportCard component */
   biobankReport: undefined,
+  biobankCountries: undefined,
   collectionReport: undefined,
   networkReport: {
     network: undefined,
@@ -32,6 +33,7 @@ export default {
   biobankIdsWithSelectedQuality: [],
   filterIdLabelDictionary: {},
   collectionBiobankDictionary: {},
+  countryDictionary: [],
   collectionDictionary: {},
   selectedCollections: [],
   filters: {
