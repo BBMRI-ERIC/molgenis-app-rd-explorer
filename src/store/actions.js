@@ -292,10 +292,16 @@ export default {
     if (skip === undefined) {
       skip = 0
     }
-    const externalSourcesFilter =
-      getters.externalResourcesFilters.externalSources
-    const diagnosisAvailableFilter =
-      getters.externalResourcesFilters.diagnosisAvailable
+    const externalSourcesFilter = getters.externalResourcesFilters.externalSources
+    const diagnosisAvailableFilter = getters.externalResourcesFilters.diagnosisAvailable
+    const ressourceTypeMapper = {
+      BIOBANK: 'BiobankDataset',
+      REGISTRY: 'PatientRegistryDataset'
+    }
+    const ressourceTypesFilter = getters.externalResourcesFilters.ressourceTypes
+      ? getters.externalResourcesFilters.ressourceTypes.map(type => ressourceTypeMapper[type])
+      : undefined
+
     const currentExternalCatalogResources = getters.externalResources
     if (externalSourcesFilter && diagnosisAvailableFilter) {
       externalSourcesFilter.forEach(source => {
@@ -307,8 +313,10 @@ export default {
               resources: currentExternalCatalogResources[source.id]
             })
           } else {
-            const diagnosisAvailableParam = diagnosisAvailableFilter.join(',')
-            const url = `${EXTERNAL_RESOURCES_API_PATH}/${source.id}?diagnosisAvailable=${diagnosisAvailableParam}&limit=10&skip=${skip}`
+            const url = `${EXTERNAL_RESOURCES_API_PATH}/${source.id}?` +
+              `diagnosisAvailable=${diagnosisAvailableFilter.join(',')}&` +
+              `${ressourceTypesFilter ? `resourceType=${ressourceTypesFilter.join(',')}&` : ''}` +
+              `limit=10&skip=${skip}`
             api.get(url).then(
               response => {
                 commit('AddExternalCatalogResources', {
