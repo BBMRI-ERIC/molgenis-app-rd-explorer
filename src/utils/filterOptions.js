@@ -13,6 +13,8 @@ export const genericFilterOptions = (tableName) => {
   return () => new Promise((resolve) => {
     api.get(`/api/v2/${tableName}`).then(response => {
       const filterOptions = response.items.map((obj) => { return { text: obj.label || obj.name, value: obj.id } })
+      // console.log('generic')
+      // console.log(filterOptions)
       resolve(filterOptions)
     })
   })
@@ -60,35 +62,31 @@ export const newFilterFunc = (testVar) => {
 export const newCountryFilterOption = () => {
   return () => new Promise((resolve) => {
     // const countriess = new Set()
-    const countries = []
-    const countryNAME = new Set()
-    const countryID = new Set()
+    // console.log('biobankCountries')
+    // console.log(state.biobankCountries)
+    // console.log('state.countryDictionary')
+
+    // const countries = []
+    // const countryNAME = new Set()
+    // const countryID = new Set()
     var dict = []
-    console.log('Biobanks')
-    console.log(state.biobanks)
-    for (var key in state.biobanks) {
-      countries.push(state.biobanks[key].country)
+
+    for (var count in state.countryDictionary) {
+      // console.log(count)
+      dict.push({ name: state.countryDictionary[count], id: count })
     }
-    // console.log('Country!')
-    console.log('Bioids')
-    console.log(state.biobankIds.length)
+    console.log('statecoutrydict')
+    console.log(state.countryDictionary)
 
-    // const countriess = new Set(countries)
-    countries.forEach(country => {
-      countryNAME.add(country.name)
-      countryID.add(country.id)
-    })
-    // const names = [...countryNAME]
-    // const ids = [...countryID]
-
-    // for (var count in names) {
-    //   dict.push({ name: api.get(state.countrylist[count]).then(response => { return resolve(response) }), id: ids[count] })
-    // }
-
-    const countryresolve = dict.map((obj) => { return { text: obj.name || obj.id, value: obj.id } })
+    // console.log(state.countryDictionary)
+    console.log(dict)
+    // console.log('dict')
+    // console.log(dict)
+    const countryresolve = dict.map((obj) => { return { text: obj.name, value: obj.id } })
+    // UpdateFilter (state, { name, value, router })
     resolve(countryresolve)
-    console.log('countrylist')
-    console.log(state.countrylist)
+    // console.log('countrylist')
+    // console.log(state.countrylist)
   })
 }
 
@@ -101,8 +99,8 @@ export const newCountryFilterOption = () => {
 //   ]
 // )
 export const options = () => {
-  console.log('options')
-  console.log(state.biobankIds)
+  // console.log('options')
+  // console.log(state.biobankIds)
   return () => new Promise((resolve) => {
     resolve([
       { text: `[ ${state.biobankIds} ]` || 'DNA', value: 'orange' },

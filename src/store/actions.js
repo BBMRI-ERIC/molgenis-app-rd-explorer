@@ -137,6 +137,23 @@ export default {
       }
       )
   },
+  // getCountryList ({
+  //   commit,
+  //   getters
+  // }) {
+  //   let url = '/api/data/eu_bbmri_eric_biobanks?filter=country(name)&size=10000&sort=id'
+  //   if (getters.rsql) {
+  //     url = `${url}&q=${encodeRsqlValue(getters.rsql)}`
+  //   }
+  //   api.get(url)
+  //     .then(response => {
+  //       commit('SetCountryList', response)
+  //     },
+  //     error => {
+  //       commit('SetError', error)
+  //     }
+  //     )
+  // },
   GetBiobankIds ({
     commit,
     getters
