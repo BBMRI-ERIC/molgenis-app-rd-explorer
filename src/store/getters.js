@@ -117,18 +117,18 @@ export default {
     return state.externalResources
   },
   externalResourcesFilters: state => {
+    const activeFilters = state.filters.selections
     const filters = {}
-    if (
-      state.filters.selections.diagnosis_available &&
-      state.filters.selections.diagnosis_available.length > 0
-    ) {
-      filters.diagnosisAvailable =
-        state.filters.selections.diagnosis_available
+
+    if (activeFilters.diagnosis_available && activeFilters.diagnosis_available.length > 0) {
+      filters.diagnosisAvailable = activeFilters.diagnosis_available
     }
-    if (
-      state.filters.selections.external_sources &&
-      state.filters.selections.external_sources.length > 0
-    ) {
+
+    if (activeFilters.ressource_types && activeFilters.ressource_types.length > 0) {
+      filters.ressourceTypes = activeFilters.ressource_types
+    }
+
+    if (activeFilters.external_sources && activeFilters.external_sources.length > 0) {
       filters.externalSources = []
       state.filters.selections.external_sources.forEach((source, index) => {
         filters.externalSources.push({
