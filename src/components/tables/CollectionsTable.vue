@@ -56,7 +56,7 @@
                   Visible:
                 </button> </span>
             <span v-else-if="column === 'order_mag_donors'">{{ getCollectionOrderMagDonors(collection) }}</span>
-            <span v-else-if="column === 'filter'">{{getFilterInfo()}}</span>
+            <span v-else-if="column === 'filter'">{{getFilterInfo(collection)}}</span>
           </td>
         </tr>
         <tr v-if="hasSubCollections(collection)" :key="collection.id">
@@ -109,7 +109,7 @@ export default {
   },
   computed: {
     ...mapGetters(['selectedCollections', 'filterDefinitions', 'activeFilters', 'foundCollectionIds', 'foundBiobanks', 'collectionBiobankDictionary']),
-    ...mapState(['filters']),
+    ...mapState(['filters', 'countryDictionary', 'countrylist']),
     selectedAllCollections: {
       get () {
         return this.parentCollections
@@ -191,8 +191,11 @@ export default {
     getCollectionOrderMagDonors (collection) {
       return collection.order_of_magnitude_donors.size
     },
-    getFilterInfo () {
-      return this.filterDefinitions['6']
+    getFilterInfo (collection) {
+      // console.log('filterinfo', this.countryDictionary)
+      // console.log('filterinfo', collection)
+      return collection.country.name
+      // return this.filterDefinitions['6']
     },
     setFilterInfo () {
       this.filterDefinitions['6'].label = 'Changed Label'

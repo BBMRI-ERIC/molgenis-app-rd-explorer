@@ -117,13 +117,8 @@ export default {
   methods: {
     ...mapMutations(['UpdateFilter', 'SetFilterObjects', 'UpdateCountry']),
     filterChange (name, value) {
-      console.log('hier')
+      console.log('hier - filterChange')
       console.log(name, value)
-      // if (name === 'country') {
-      //   console.log('CountryFilter')
-      //   console.log(name, value)
-      //   this.UpdateCountry({ name, value })
-      // } else {
       this.UpdateFilter({ name, value, router: this.$router })
     }
   }

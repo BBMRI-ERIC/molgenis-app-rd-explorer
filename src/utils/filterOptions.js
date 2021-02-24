@@ -13,9 +13,39 @@ export const genericFilterOptions = (tableName) => {
   return () => new Promise((resolve) => {
     api.get(`/api/v2/${tableName}`).then(response => {
       const filterOptions = response.items.map((obj) => { return { text: obj.label || obj.name, value: obj.id } })
+      console.log('generic')
+      console.log(filterOptions)
+      resolve(filterOptions)
+    })
+  })
+}
+
+export const genericFilterOptions2 = (tableName) => {
+  return () => new Promise((resolve) => {
+    api.get(`/api/v2/${tableName}`).then(response => {
+      // const filterOptions = response.items.map((obj) => { return { text: obj.label || obj.name, value: obj.id } })
       // console.log('generic')
       // console.log(filterOptions)
-      resolve(filterOptions)
+      // resolve(filterOptions)
+
+      var dict = []
+
+      for (var count in state.countryDictionary) {
+        // console.log(count)
+        dict.push({ name: state.countryDictionary[count], id: count })
+      }
+      console.log('statecoutrydict')
+      console.log(state.countryDictionary)
+      console.log(state.countryDictionary.length)
+
+      // console.log(state.countryDictionary)
+      console.log(dict)
+      console.log('over')
+      // console.log('dict')
+      // console.log(dict)
+      const countryresolve = dict.map((obj) => { return { text: obj.name, value: obj.id } })
+      // UpdateFilter (state, { name, value, router })
+      resolve(countryresolve)
     })
   })
 }
@@ -59,36 +89,38 @@ export const newFilterFunc = (testVar) => {
   })
 }
 
-export const newCountryFilterOption = () => {
-  return () => new Promise((resolve) => {
-    // const countriess = new Set()
-    // console.log('biobankCountries')
-    // console.log(state.biobankCountries)
-    // console.log('state.countryDictionary')
+// export const newCountryFilterOption = () => {
+//   return () => new Promise((resolve) => {
+//     // const countriess = new Set()
+//     // console.log('biobankCountries')
+//     // console.log(state.biobankCountries)
+//     // console.log('state.countryDictionary')
 
-    // const countries = []
-    // const countryNAME = new Set()
-    // const countryID = new Set()
-    var dict = []
+//     // const countries = []
+//     // const countryNAME = new Set()
+//     // const countryID = new Set()
+//     var dict = []
 
-    for (var count in state.countryDictionary) {
-      // console.log(count)
-      dict.push({ name: state.countryDictionary[count], id: count })
-    }
-    console.log('statecoutrydict')
-    console.log(state.countryDictionary)
+//     for (var count in state.countryDictionary) {
+//       // console.log(count)
+//       dict.push({ name: state.countryDictionary[count], id: count })
+//     }
+//     console.log('statecoutrydict')
+//     console.log(state.countryDictionary)
+//     console.log(state.countryDictionary.length)
 
-    // console.log(state.countryDictionary)
-    console.log(dict)
-    // console.log('dict')
-    // console.log(dict)
-    const countryresolve = dict.map((obj) => { return { text: obj.name, value: obj.id } })
-    // UpdateFilter (state, { name, value, router })
-    resolve(countryresolve)
-    // console.log('countrylist')
-    // console.log(state.countrylist)
-  })
-}
+//     // console.log(state.countryDictionary)
+//     console.log(dict)
+//     console.log('over')
+//     // console.log('dict')
+//     // console.log(dict)
+//     const countryresolve = dict.map((obj) => { return { text: obj.name, value: obj.id } })
+//     // UpdateFilter (state, { name, value, router })
+//     resolve(countryresolve)
+//     // console.log('countrylist')
+//     // console.log(state.countrylist)
+//   })
+// }
 
 // export const resscourceTypesAvailableFilterOptions = (tableName) => Promise.resolve(
 //   [

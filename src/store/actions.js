@@ -28,10 +28,10 @@ const EXTERNAL_RESOURCES_API_PATH = '/api/ejprd/external_sources'
 
 /* Query Parameters */
 export const COLLECTION_ATTRIBUTE_SELECTOR =
-  'collections(id,description,materials,diagnosis_available,name,type,order_of_magnitude(*),size,sub_collections(*),parent_collection,quality(*),data_categories,order_of_magnitude_donors(*),number_of_donors,timestamp)'
+  'collections(id,country,description,materials,diagnosis_available,name,type,order_of_magnitude(*),size,sub_collections(*),parent_collection,quality(*),data_categories,order_of_magnitude_donors(*),number_of_donors,timestamp)'
 // export const COLLECTION_REPORT_ATTRIBUTE_SELECTOR = '*,diagnosis_available(label),data_use(label),biobank(id,name,juridical_person,country,url,contact),contact(title_before_name,first_name,last_name,title_after_name,email,phone),sub_collections(name,id,sub_collections(*),parent_collection,order_of_magnitude,materials,data_categories)'
 export const COLLECTION_REPORT_ATTRIBUTE_SELECTOR =
-  '*,diagnosis_available(label),biobank(id,name,juridical_person,country,url,contact,description,ressource_types),contact(title_before_name,first_name,last_name,title_after_name,email,phone),sub_collections(name,id,sub_collections(*),parent_collection,order_of_magnitude,materials,data_categories,number_of_donors,order_of_magnitude_donors,timestamp)'
+  '*,diagnosis_available(label),country,biobank(id,name,juridical_person,country,url,contact,description,ressource_types),contact(title_before_name,first_name,last_name,title_after_name,email,phone),sub_collections(name,id,sub_collections(*),parent_collection,order_of_magnitude,materials,data_categories,number_of_donors,order_of_magnitude_donors,timestamp)'
 
 /**/
 
@@ -120,8 +120,14 @@ export default {
     commit,
     getters
   }) {
+    console.log('GetCollectionInfo')
     commit('SetCollectionInfo', undefined)
+    commit('SetCountryList', undefined)
     let url = '/api/data/eu_bbmri_eric_collections?filter=id,biobank(id,name,label),name,country,label,parent_collection&expand=biobank&size=10000&sort=biobank_label'
+    let urlFake = '/api/data/eu_bbmri_eric_biobanks?filter=id,country&size=10000&sort=name'
+    if (getters.biobankRsql) {
+      urlFake = `${urlFake}&q=${encodeRsqlValue(getters.biobankRsql)}`
+    }
     if (getters.rsql) {
       url = `${url}&q=${encodeRsqlValue(getters.rsql)}`
     }
@@ -136,6 +142,7 @@ export default {
         commit('SetError', error)
       }
       )
+    url = urlFake
   },
   // getCountryList ({
   //   commit,
@@ -158,18 +165,23 @@ export default {
     commit,
     getters
   }) {
+    console.log('GetBiobankIds')
     commit('SetBiobankIds', undefined)
+    // commit('SetCountryList', undefined)
+    // commit('SetCollectionInfo', undefined)
     let url = '/api/data/eu_bbmri_eric_biobanks?filter=id,country&size=10000&sort=name'
     if (getters.biobankRsql) {
       url = `${url}&q=${encodeRsqlValue(getters.biobankRsql)}`
     }
     api.get(url).then(
       response => {
+        // console.log(response)
+        // commit('SetCollectionInfo', response)
         commit(
           'SetBiobankIds',
           response.items.map(item => item.data.id)
         )
-        commit('SetCountryList', response)
+        // commit('SetCountryList', response)
       },
       error => {
         commit('SetError', error)

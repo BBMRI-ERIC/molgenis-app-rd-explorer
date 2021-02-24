@@ -41,6 +41,9 @@ export default {
 
     const filterValues = []
     const filterTexts = []
+    console.log('update filter')
+    console.log(value)
+    console.log(value.length)
 
     for (const item of value) {
       filterValues.push(item.value)
@@ -129,12 +132,15 @@ export default {
     //   return
     // }
 
+    console.log('setcolectioninfo')
+    // if (flag === 'GetCollectionInfo') {
     const collectionInfo = response.items.map(item => ({
       collectionId: item.data.id,
       collectionName: item.data.label || item.data.name,
       biobankId: item.data.biobank.data.id,
       isSubcollection: item.data.parent_collection !== undefined
     }))
+    // }
 
     // api.get('item[0].data.country.links.self').then(response => {
     //     response.items.map((obj) => { return { text: obj, value: obj } })
@@ -142,6 +148,29 @@ export default {
     //   })
     // }
 
+    // const CountryList = []
+    // state.countryDictionary = []
+    // // const countries = []
+
+    // for (var key in response.items) {
+    //   CountryList.push(response.items[key].data.country.links.self)
+    // }
+    // // console.log(Array.from(new Set(CountryList)))
+    // state.countrylist = Array.from(new Set(CountryList))
+    // for (var country in state.countrylist) {
+    //   // api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
+    //   api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
+    // }
+    state.collectionInfo = collectionInfo
+  },
+
+  SetCountryList (state, response) {
+    console.log('setycoutnrylist')
+
+    if (response === undefined) {
+      state.countrylist = response
+      return
+    }
     const CountryList = []
     state.countryDictionary = []
     // const countries = []
@@ -155,28 +184,7 @@ export default {
       // api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
       api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
     }
-    state.collectionInfo = collectionInfo
   },
-
-  // SetCountryList (state, response) {
-  //   if (response === undefined) {
-  //     state.collectionInfo = response
-  //     return
-  //   }
-  //   const CountryList = []
-  //   state.countryDictionary = []
-  //   // const countries = []
-
-  //   for (var key in response.items) {
-  //     CountryList.push(response.items[key].data.country.links.self)
-  //   }
-  //   // console.log(Array.from(new Set(CountryList)))
-  //   state.countrylist = Array.from(new Set(CountryList))
-  //   for (var country in state.countrylist) {
-  //     // api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
-  //     api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
-  //   }
-  // },
   /**
    * Store a single biobank in the state for showing a biobank report
    * @param state

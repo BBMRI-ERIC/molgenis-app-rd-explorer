@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { genericFilterOptions, diagnosisAvailableFilterOptions, resscourceTypesAvailableFilterOptions, newCountryFilterOption } from './filterOptions'
+import { genericFilterOptions, genericFilterOptions2, diagnosisAvailableFilterOptions, resscourceTypesAvailableFilterOptions } from './filterOptions'
 
 const filterDefinitions = (state) => [
   {
@@ -86,7 +86,7 @@ const filterDefinitions = (state) => [
     label: 'Countries',
     type: 'checkbox-filter',
     table: 'eu_bbmri_eric_countries',
-    options: newCountryFilterOption(),
+    options: genericFilterOptions2('eu_bbmri_eric_material_types'),
     initiallyCollapsed: !state.route.query.country,
     filters: state.filters.selections.country,
     maxVisibleOptions: 25,
