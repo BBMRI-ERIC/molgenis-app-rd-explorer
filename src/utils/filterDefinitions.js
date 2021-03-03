@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { genericFilterOptions, genericFilterOptions2, diagnosisAvailableFilterOptions, resscourceTypesAvailableFilterOptions } from './filterOptions'
+import { genericFilterOptions, dynamicCountryFilter, diagnosisAvailableFilterOptions, resscourceTypesAvailableFilterOptions } from './filterOptions'
 
 const filterDefinitions = (state) => [
   {
@@ -74,7 +74,7 @@ const filterDefinitions = (state) => [
     label: 'Materials',
     type: 'checkbox-filter',
     table: 'eu_bbmri_eric_material_types',
-    options: genericFilterOptions('eu_bbmri_eric_material_types'),
+    options: genericFilterOptions('eu_bbmri_eric_material_types'), // dynamicMaterialFilter(),
     initiallyCollapsed: !state.route.query.materials,
     filters: state.filters.selections.materials,
     maxVisibleOptions: 25,
@@ -86,7 +86,7 @@ const filterDefinitions = (state) => [
     label: 'Countries',
     type: 'checkbox-filter',
     table: 'eu_bbmri_eric_countries',
-    options: genericFilterOptions2('eu_bbmri_eric_material_types'),
+    options: dynamicCountryFilter(),
     initiallyCollapsed: !state.route.query.country,
     filters: state.filters.selections.country,
     maxVisibleOptions: 25,

@@ -13,39 +13,51 @@ export const genericFilterOptions = (tableName) => {
   return () => new Promise((resolve) => {
     api.get(`/api/v2/${tableName}`).then(response => {
       const filterOptions = response.items.map((obj) => { return { text: obj.label || obj.name, value: obj.id } })
-      console.log('generic')
-      console.log(filterOptions)
+      // console.log('generic')
+      // console.log(filterOptions)
       resolve(filterOptions)
     })
   })
 }
 
-export const genericFilterOptions2 = (tableName) => {
+export const dynamicCountryFilter = () => {
   return () => new Promise((resolve) => {
+    const tableName = 'eu_bbmri_eric_countries'
     api.get(`/api/v2/${tableName}`).then(response => {
-      // const filterOptions = response.items.map((obj) => { return { text: obj.label || obj.name, value: obj.id } })
-      // console.log('generic')
-      // console.log(filterOptions)
-      // resolve(filterOptions)
-
       var dict = []
 
       for (var count in state.countryDictionary) {
-        // console.log(count)
         dict.push({ name: state.countryDictionary[count], id: count })
       }
-      console.log('statecoutrydict')
-      console.log(state.countryDictionary)
-      console.log(state.countryDictionary.length)
-
+      // console.log('statecoutrydict')
       // console.log(state.countryDictionary)
-      console.log(dict)
-      console.log('over')
-      // console.log('dict')
+      // console.log(state.countryDictionary.length)
       // console.log(dict)
+      // console.log('over')
       const countryresolve = dict.map((obj) => { return { text: obj.name, value: obj.id } })
       // UpdateFilter (state, { name, value, router })
       resolve(countryresolve)
+    })
+  })
+}
+
+export const dynamicMaterialFilter = () => {
+  return () => new Promise((resolve) => {
+    const tableName = 'eu_bbmri_eric_material_types'
+    api.get(`/api/v2/${tableName}`).then(response => {
+      var dict = []
+
+      for (var count in state.materialDictionary) {
+        dict.push({ name: state.materialDictionary[count], id: count })
+      }
+      console.log('materialDictionary')
+      console.log(state.materialDictionary)
+      console.log(state.materialDictionary.length)
+      console.log(dict)
+      // console.log('materialDictionary over')
+      const materialsresolve = dict.map((obj) => { return { text: obj.name, value: obj.id } })
+      // UpdateFilter (state, { name, value, router })
+      resolve(materialsresolve)
     })
   })
 }

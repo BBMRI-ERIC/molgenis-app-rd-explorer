@@ -67,24 +67,24 @@ export default {
       Vue.set(state.filters.labels, key, leftoverLabels)
     }
   },
-  UpdateCountry (state, { name, value }) {
-    // console.log('Hello')
-    // // console.log(state.biobanks)
-    // console.log(name)
-    // console.log(value)
-    const filterValues = []
-    const filterTexts = []
+  // UpdateCountry (state, { name, value }) {
+  //   // console.log('Hello')
+  //   // // console.log(state.biobanks)
+  //   // console.log(name)
+  //   // console.log(value)
+  //   const filterValues = []
+  //   const filterTexts = []
 
-    for (const item of value) {
-      filterValues.push(item.value)
-      filterTexts.push(item.text)
-      // console.log('update country')
-      // console.log(filterValues)
-    }
+  //   for (const item of value) {
+  //     filterValues.push(item.value)
+  //     filterTexts.push(item.text)
+  //     // console.log('update country')
+  //     // console.log(filterValues)
+  //   }
 
-    Vue.set(state.filters.selections, name, [...new Set(filterValues)])
-    Vue.set(state.filters.labels, name, [...new Set(filterTexts)])
-  },
+  //   Vue.set(state.filters.selections, name, [...new Set(filterValues)])
+  //   Vue.set(state.filters.labels, name, [...new Set(filterTexts)])
+  // },
   /**
    * Reset all filters in the state
    */
@@ -180,9 +180,34 @@ export default {
     }
     // console.log(Array.from(new Set(CountryList)))
     state.countrylist = Array.from(new Set(CountryList))
+    console.log(state.countrylist)
+    console.log(state.materiallist)
     for (var country in state.countrylist) {
       // api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
       api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
+    }
+  },
+  SetMaterialList (state, response) {
+    console.log('setymateriallist')
+
+    if (response === undefined) {
+      state.materiallist = response
+      return
+    }
+    const MaterialList = []
+    state.materialDictionary = []
+    // const countries = []
+    for (var key in response.items) {
+      MaterialList.push(response.items[key].data.materials.links.self)
+    }
+    // console.log(Array.from(new Set(CountryList)))
+    state.materiallist = Array.from(new Set(MaterialList))
+    console.log(state.materiallist) // aollte array mit links sein, was krieg ich von den links..?!
+    for (var material in state.materiallist) {
+      // api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
+      //       api.get(state.materiallist[material]).then(response => (state.materialDictionary[response.items.data.id] = response.items.data.label))
+
+      api.get(state.materiallist[material]).then(response => (console.log(response)))
     }
   },
   /**

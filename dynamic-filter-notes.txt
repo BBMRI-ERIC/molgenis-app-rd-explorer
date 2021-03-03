@@ -1,0 +1,24 @@
+'''Dynamic Filter notes'''
+
+
+in FilterContainer.vue use the input property of the filters, @input="(value) => filterChange(filter.name, value)"
+in order to wait for input, 
+the filters are pulled from state.filterObjects.filter where they are pulled from the filterDefinitions.js
+from mutations.js use func UpdateFilter (state, { name, value, router }) to update filter.selection and filter.label
+
+in state.js create empty countryDictionary
+in state.js create empty countrylist (used in SetCountryList, but can be done without setting state variabel)
+in state.js create filterObjects
+
+in action.js filter accoring to your wanted attributes
+('/api/data/eu_bbmri_eric_collections?filter=id,biobank(id,name,label),name,country,label,parent_collection&expand=biobank&size=10000&sort=biobank_label')
+get all date and feed it to func SetCountryList in mutations.js
+SetCountryLists gets the current state and the filteroptions
+
+in getCollectionInfo commit 'SetCountryList'
+
+and never ever dare to forget the COLLECTION_ATTRIBUTE_SELECTOR :D  (in action.js)
+und COLLECTION_REPORT_ATTRIBUTE_SELECTOR
+  
+
+

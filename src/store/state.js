@@ -34,6 +34,7 @@ export default {
   filterIdLabelDictionary: {},
   collectionBiobankDictionary: {},
   countryDictionary: [],
+  materialDictionary: [],
   collectionDictionary: {},
   selectedCollections: [],
   filters: {
@@ -42,5 +43,6 @@ export default {
   },
   filterObjects: [],
   countrylist: [],
+  materiallist: [],
   filterLabelCache: [] // needed to filter human readable string > can be rewritten to use the collectiondictionary.
 }
