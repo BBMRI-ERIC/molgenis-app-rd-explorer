@@ -180,8 +180,8 @@ export default {
     }
     // console.log(Array.from(new Set(CountryList)))
     state.countrylist = Array.from(new Set(CountryList))
-    console.log(state.countrylist)
-    console.log(state.materiallist)
+    // console.log(state.countrylist)
+    // console.log(state.materiallist)
     for (var country in state.countrylist) {
       // api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
       api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
@@ -194,21 +194,17 @@ export default {
       state.materiallist = response
       return
     }
-    const MaterialList = []
     state.materialDictionary = []
-    // const countries = []
-    for (var key in response.items) {
-      MaterialList.push(response.items[key].data.materials.links.self)
-    }
-    // console.log(Array.from(new Set(CountryList)))
-    state.materiallist = Array.from(new Set(MaterialList))
-    console.log(state.materiallist) // aollte array mit links sein, was krieg ich von den links..?!
-    for (var material in state.materiallist) {
-      // api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
-      //       api.get(state.materiallist[material]).then(response => (state.materialDictionary[response.items.data.id] = response.items.data.label))
 
-      api.get(state.materiallist[material]).then(response => (console.log(response)))
+    for (var key in response.items) {
+      api.get(response.items[key].data.materials.links.self).then(response => {
+        // const materialsresolve = response.items.map((obj) => [obj.data.id, obj.data.label])
+        for (var item in response.items) {
+          state.materialDictionary[response.items[item].data.id] = response.items[item].data.label
+        }
+      })
     }
+    // console.log(state.materialDictionary)
   },
   /**
    * Store a single biobank in the state for showing a biobank report

@@ -54,25 +54,25 @@ export default {
   foundBiobanks: (_, { biobanks }) => {
     return biobanks.length
   },
-  foundCountries (state, { getFoundCountries }) {
-    console.log('foundcountries')
-    console.log(getFoundCountries)
-    var dict = []
-    const countries = []
-    for (const country of getFoundCountries) {
-    //   // console.log('foundC')
-    //   // console.log(biobanks[biobank])
-      if (country !== 'not available') {
-        countries.push(country.id)
-        dict.push({ name: country.name, id: country.id })
-      }
-    //   countries.push(biobanks[bio].country.id)
-    // }
-    }
-    console.log(new Set(dict.name))
+  // foundCountries (state, { getFoundCountries }) {
+  //   console.log('foundcountries')
+  //   console.log(getFoundCountries)
+  //   var dict = []
+  //   const countries = []
+  //   for (const country of getFoundCountries) {
+  //   //   // console.log('foundC')
+  //   //   // console.log(biobanks[biobank])
+  //     if (country !== 'not available') {
+  //       countries.push(country.id)
+  //       dict.push({ name: country.name, id: country.id })
+  //     }
+  //   //   countries.push(biobanks[bio].country.id)
+  //   // }
+  //   }
+  //   console.log(new Set(dict.name))
 
-    return [...new Set(countries)]
-  },
+  //   return [...new Set(countries)]
+  // },
   foundCollectionIds (state, { getFoundBiobankIds }) {
     // only if there are biobanks, then there are collections. we can't have rogue collections :)
     if (getFoundBiobankIds.length && state.collectionInfo.length) {
