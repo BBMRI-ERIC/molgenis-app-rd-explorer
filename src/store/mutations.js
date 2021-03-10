@@ -2,7 +2,7 @@ import Vue from 'vue'
 import { createBookmark } from '../utils/bookmarkMapper'
 import { fixCollectionTree } from './helpers'
 import filterDefinitions from '../utils/filterDefinitions'
-import api from '@molgenis/molgenis-api-client'
+// import api from '@molgenis/molgenis-api-client'
 
 const negotiatorConfigIds = ['directory', 'bbmri-eric-model']
 
@@ -38,12 +38,14 @@ export default {
       createBookmark(router, state.filters.selections, state.selectedCollections)
       return
     }
+    console.log(state.filterObjects)
 
     const filterValues = []
     const filterTexts = []
     console.log('update filter')
     console.log(value)
     console.log(value.length)
+    console.log(name)
 
     for (const item of value) {
       filterValues.push(item.value)
@@ -53,6 +55,17 @@ export default {
     Vue.set(state.filters.selections, name, [...new Set(filterValues)])
     Vue.set(state.filters.labels, name, [...new Set(filterTexts)])
     createBookmark(router, state.filters.selections, state.selectedCollections)
+
+    // if (name === 'materials') {
+    //   console.log('if material')
+    //   console.log(name, value)
+    //   // state.filterObjects[4].optionsFilter = state.filters.labels
+    // }
+    state.filterObjects[4].optionsFilter = state.filters.labels
+    console.log(state.filterObjects[4].optionsFilter)
+
+    console.log(state.filters.selections)
+    console.log(state.filters.labels)
   },
   UpdateAllFilters (state, selections) {
     state.filters.selections = {}
@@ -97,7 +110,9 @@ export default {
     })
   },
   SetFilterObjects (state) {
-    state.filterObjects = filterDefinitions(state)// .map(fd => fd) // .map(fd => fd.name)
+    state.filterObjects = filterDefinitions(state)
+    console.log('setfilter')
+    console.log(state.filterObjects)// .map(fd => fd) // .map(fd => fd.name)
     // Vue.set(state.filterObjects, filterDefinitions)
   },
 
@@ -164,48 +179,57 @@ export default {
     state.collectionInfo = collectionInfo
   },
 
-  SetCountryList (state, response) {
-    console.log('setycoutnrylist')
+  // SetCountryList (state, response) {
+  //   console.log('setycoutnrylist')
 
-    if (response === undefined) {
-      state.countrylist = response
-      return
-    }
-    const CountryList = []
-    state.countryDictionary = []
-    // const countries = []
+  //   if (response === undefined) {
+  //     state.countrylist = response
+  //     return
+  //   }
+  //   const CountryList = []
+  //   state.countryDictionary = []
+  //   // const countries = []
 
-    for (var key in response.items) {
-      CountryList.push(response.items[key].data.country.links.self)
-    }
-    // console.log(Array.from(new Set(CountryList)))
-    state.countrylist = Array.from(new Set(CountryList))
-    // console.log(state.countrylist)
-    // console.log(state.materiallist)
-    for (var country in state.countrylist) {
-      // api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
-      api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
-    }
-  },
-  SetMaterialList (state, response) {
-    console.log('setymateriallist')
+  //   for (var key in response.items) {
+  //     CountryList.push(response.items[key].data.country.links.self)
+  //   }
+  //   // console.log(Array.from(new Set(CountryList)))
+  //   const countrylist = Array.from(new Set(CountryList))
+  //   // console.log(countrylist.length)
+  //   // console.log(CountryList.length)
+  //   for (var country in countrylist) {
+  //     // api.get(state.countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
+  //     api.get(countrylist[country]).then(response => (state.countryDictionary[response.data.id] = response.data.name))
+  //   }
+  // },
+  // SetMaterialList (state, response) {
+  //   console.log('setymateriallist')
 
-    if (response === undefined) {
-      state.materiallist = response
-      return
-    }
-    state.materialDictionary = []
+  //   if (response === undefined) {
+  //     state.materiallist = response
+  //     return
+  //   }
+  //   const MaterialList = []
+  //   state.materialDictionary = []
 
-    for (var key in response.items) {
-      api.get(response.items[key].data.materials.links.self).then(response => {
-        // const materialsresolve = response.items.map((obj) => [obj.data.id, obj.data.label])
-        for (var item in response.items) {
-          state.materialDictionary[response.items[item].data.id] = response.items[item].data.label
-        }
-      })
-    }
-    // console.log(state.materialDictionary)
-  },
+  //   for (var key in response.items) {
+  //     MaterialList.push(response.items[key].data.materials.links.self)
+  //   }
+  //   // console.log(MaterialList)
+  //   const materiallist = Array.from(new Set(MaterialList))
+  //   // console.log(materiallist.length)
+  //   // console.log(MaterialList.length)
+
+  //   for (var material in materiallist) {
+  //     api.get(materiallist[material]).then(response => {
+  //       // const materialsresolve = response.items.map((obj) => [obj.data.id, obj.data.label])
+  //       for (var item in response.items) {
+  //         state.materialDictionary[response.items[item].data.id] = response.items[item].data.label
+  //       }
+  //     })
+  //   }
+  //   // console.log(state.materialDictionary)
+  // },
   /**
    * Store a single biobank in the state for showing a biobank report
    * @param state

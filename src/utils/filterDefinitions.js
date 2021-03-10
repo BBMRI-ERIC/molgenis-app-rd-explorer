@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { genericFilterOptions, dynamicCountryFilter, dynamicMaterialFilter, diagnosisAvailableFilterOptions, resscourceTypesAvailableFilterOptions } from './filterOptions'
+import { genericFilterOptions, diagnosisAvailableFilterOptions } from './filterOptions'
 
 const filterDefinitions = (state) => [
   {
@@ -9,12 +9,12 @@ const filterDefinitions = (state) => [
     humanReadableString: 'Text search is'
   },
   {
-    component: 'MultiFilter',
+    component: 'CheckboxFilter',
     name: 'ressource_types',
     label: 'Ressource Types',
-    type: 'multi-filter',
+    type: 'checkbox-filter',
     table: 'eu_bbmri_eric_ressource_types',
-    options: resscourceTypesAvailableFilterOptions('eu_bbmri_eric_ressource_types'),
+    options: genericFilterOptions('eu_bbmri_eric_ressource_types'),
     // initiallyCollapsed: true,
     filters: state.filters.selections.ressource_types,
     maxVisibleOptions: 25,
@@ -24,27 +24,27 @@ const filterDefinitions = (state) => [
     headerClass: 'bg-warning text-white',
     all: true
   },
-  {
-    headerClass: 'bg-warning text-white',
-    component: 'CovidNetworkFilter',
-    name: 'covid19network',
-    label: 'COVID-19',
-    initiallyCollapsed: !state.route.query.collection_network || !state.route.query.biobank_network
-  },
-  {
-    headerClass: 'bg-warning text-white',
-    component: 'CovidFilter',
-    name: 'covid19',
-    label: 'COVID-19 Services',
-    type: 'checkbox-filter',
-    table: 'eu_bbmri_eric_COVID_19',
-    options: genericFilterOptions('eu_bbmri_eric_COVID_19'),
-    initiallyCollapsed: !state.route.query.covid19,
-    filters: state.filters.selections.covid19,
-    all: true,
-    maxVisibleOptions: 25,
-    humanReadableString: 'Covid-19 service(s):'
-  },
+  // {
+  //   headerClass: 'bg-warning text-white',
+  //   component: 'CovidNetworkFilter',
+  //   name: 'covid19network',
+  //   label: 'COVID-19',
+  //   initiallyCollapsed: !state.route.query.collection_network || !state.route.query.biobank_network
+  // },
+  // {
+  //   headerClass: 'bg-warning text-white',
+  //   component: 'CovidFilter',
+  //   name: 'covid19',
+  //   label: 'COVID-19 Services',
+  //   type: 'checkbox-filter',
+  //   table: 'eu_bbmri_eric_COVID_19',
+  //   options: genericFilterOptions('eu_bbmri_eric_COVID_19'),
+  //   initiallyCollapsed: !state.route.query.covid19,
+  //   filters: state.filters.selections.covid19,
+  //   all: true,
+  //   maxVisibleOptions: 25,
+  //   humanReadableString: 'Covid-19 service(s):'
+  // },
   {
     component: 'CheckboxFilter',
     name: 'external_sources',
@@ -74,7 +74,8 @@ const filterDefinitions = (state) => [
     label: 'Materials',
     type: 'checkbox-filter',
     table: 'eu_bbmri_eric_material_types',
-    options: dynamicMaterialFilter('eu_bbmri_eric_material_types'), // dynamicMaterialFilter(),
+    options: genericFilterOptions('eu_bbmri_eric_material_types'), // dynamicMaterialFilter(),
+    optionsFilter: state.filters.selections.materials,
     initiallyCollapsed: !state.route.query.materials,
     filters: state.filters.selections.materials,
     maxVisibleOptions: 25,
@@ -86,7 +87,8 @@ const filterDefinitions = (state) => [
     label: 'Countries',
     type: 'checkbox-filter',
     table: 'eu_bbmri_eric_countries',
-    options: dynamicCountryFilter(),
+    options: genericFilterOptions('eu_bbmri_eric_countries'),
+    optionsFilter: state.filters.selections.country,
     initiallyCollapsed: !state.route.query.country,
     filters: state.filters.selections.country,
     maxVisibleOptions: 25,

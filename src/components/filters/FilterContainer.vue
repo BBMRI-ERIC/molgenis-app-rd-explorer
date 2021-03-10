@@ -42,6 +42,7 @@
         @input="(value) => filterChange(filter.name, value)"
         :returnTypeAsObject="true"
         :bulkOperation="true"
+        :optionsFilter="filter.optionsFilter"
       />
     </FilterCard>
   </div>
@@ -118,6 +119,7 @@ export default {
     ...mapMutations(['UpdateFilter', 'SetFilterObjects', 'UpdateCountry']),
     filterChange (name, value) {
       console.log('hier - filterChange')
+      console.log(this.filterObjects)
       console.log(name, value)
       this.UpdateFilter({ name, value, router: this.$router })
     }

@@ -20,47 +20,50 @@ export const genericFilterOptions = (tableName) => {
   })
 }
 
-export const dynamicCountryFilter = () => {
-  return () => new Promise((resolve) => {
-    const tableName = 'eu_bbmri_eric_countries'
-    api.get(`/api/v2/${tableName}`).then(response => {
-      var dict = []
+// export const dynamicCountryFilter = () => {
+//   return () => new Promise((resolve) => {
+//     const tableName = 'eu_bbmri_eric_countries'
+//     api.get(`/api/v2/${tableName}`).then(response => {
+//       var dict = []
 
-      for (var count in state.countryDictionary) {
-        dict.push({ name: state.countryDictionary[count], id: count })
-      }
-      // console.log('statecoutrydict')
-      // console.log(state.countryDictionary)
-      // console.log(state.countryDictionary.length)
-      // console.log(dict)
-      // console.log('over')
-      const countryresolve = dict.map((obj) => { return { text: obj.name, value: obj.id } })
-      // UpdateFilter (state, { name, value, router })
-      resolve(countryresolve)
-    })
+//       for (var count in state.countryDictionary) {
+//         dict.push({ name: state.countryDictionary[count], id: count })
+//       }
+
+//       const countryresolve = dict.map((obj) => { return { text: obj.name, value: obj.id } })
+//       resolve(countryresolve)
+//     })
+//   })
+// }
+
+export const dynamicCountryFilter = (countryresolve) => {
+  return () => new Promise((resolve) => {
+    resolve(['Urine', 'Serum'])
   })
 }
 
-export const dynamicMaterialFilter = () => {
-  return () => new Promise((resolve) => {
-    const tableName = 'eu_bbmri_eric_material_types'
-    api.get(`/api/v2/${tableName}`).then(response => {
-      var dict = []
-
-      for (var count in state.materialDictionary) {
-        dict.push({ name: state.materialDictionary[count], id: count })
-      }
-      console.log('materialDictionary')
-      console.log(state.materialDictionary)
-      console.log(state.materialDictionary.length)
-      console.log(dict)
-      // console.log('materialDictionary over')
-      const materialsresolve = dict.map((obj) => { return { text: obj.name, value: obj.id } })
-      // UpdateFilter (state, { name, value, router })
-      resolve(materialsresolve)
-    })
-  })
-}
+// export const dynamicMaterialFilter = () => {
+//   return () => new Promise((resolve) => {
+//     const tableName = 'eu_bbmri_eric_material_types'
+//     api.get(`/api/v2/${tableName}`).then(response => {
+//       var dict = []
+//       console.log('filteroptions material')
+//       // console.log(response)
+//       for (var count in state.materialDictionary) {
+//         dict.push({ name: state.materialDictionary[count], id: count })
+//       }
+//       // console.log('materialDictionary')
+//       // console.log(Object.keys(state.materialDictionary))
+//       // console.log(Object.values(state.materialDictionary))
+//       // console.log(state.materialDictionary.length)
+//       console.log(dict)
+//       // console.log('materialDictionary over')
+//       const materialsresolve = dict.map((obj) => { return { text: obj.name, value: obj.id } })
+//       // UpdateFilter (state, { name, value, router })
+//       resolve(materialsresolve)
+//     })
+//   })
+// }
 
 /** Specific logic for diagnosis available filter */
 const createDiagnosisLabelQuery = (query) => transformToRSQL({ selector: 'label', comparison: '=like=', arguments: query })

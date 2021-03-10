@@ -136,8 +136,8 @@ export default {
         commit('SetCollectionInfo', response)
         commit('SetDictionaries', response)
         commit('MapQueryToState')
-        commit('SetCountryList', response)
-        commit('SetMaterialList', response)
+        // commit('SetCountryList', response)
+        // commit('SetMaterialList', response)
       },
       error => {
         commit('SetError', error)
