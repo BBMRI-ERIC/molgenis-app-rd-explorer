@@ -202,7 +202,8 @@ export default {
       'selectedCollections',
       'collectionBiobankDictionary',
       'foundCollectionsAsSelection',
-      'selectedNonCommercialCollections'
+      'selectedNonCommercialCollections',
+      'externalResourcesFilters'
     ]),
     ...mapState([
       'isPodium',

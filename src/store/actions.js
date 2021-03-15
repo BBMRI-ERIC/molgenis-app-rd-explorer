@@ -121,7 +121,7 @@ export default {
     getters
   }) {
     commit('SetCollectionInfo', undefined)
-    let url = '/api/data/eu_bbmri_eric_collections?filter=id,biobank(id,name,label),name,label,collaboration_commercial,parent_collection&expand=biobank&size=10000&sort=biobank_label'
+    let url = '/api/data/eu_bbmri_eric_collections?filter=id,biobank(id,name,label),name,label,collaboration_commercial,parent_collection&expand=biobank&size=10000'
     if (getters.rsql) {
       url = `${url}&q=${encodeRsqlValue(getters.rsql)}`
     }
@@ -133,8 +133,7 @@ export default {
       },
       error => {
         commit('SetError', error)
-      }
-    )
+      })
   },
   GetBiobankIds ({
     commit,
