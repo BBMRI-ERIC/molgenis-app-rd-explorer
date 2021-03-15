@@ -25,7 +25,7 @@
                   aria-labelledby="biobank-name"/>
               </router-link>
               <span id="biobank-name">{{ biobank.name }}</span>
-            </h5>            
+            </h5>
             <small v-if="biobank.quality && biobank.quality.length > 0">
               <quality-column
                 :qualities="biobank.quality"
