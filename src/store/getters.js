@@ -38,27 +38,25 @@ export default {
       }
     })
   },
-  getFoundBiobankIds: (_, { biobanks }) =>
-    biobanks.map(b => b.id || b).filter(bid => bid !== undefined),
-  getCollectionsWithBiobankId: state => {
-    if (state.collectionInfo) {
-      return state.collectionInfo.map(colInfo => {
-        return {
-          collectionId: colInfo.collectionId,
-          biobankId: colInfo.biobankId
-        }
-      })
-    }
+  parentCollections: (state) => {
+    const allParentCollections = state.collectionInfo.filter(colInfo => !colInfo.isSubcollection).map(fci => fci.collectionId)
+    let flattenedCollections = []
+    allParentCollections.forEach(function (apc) {
+      flattenedCollections = flattenedCollections.concat(apc)
+    })
+    return flattenedCollections
   },
+  collectionBiobankDictionary: state => state.collectionBiobankDictionary,
+  collectionDictionary: state => state.collectionDictionary,
+  getFoundBiobankIds: (_, { biobanks }) => biobanks.map(b => b.id || b).filter(bid => bid !== undefined),
   foundBiobanks: (_, { biobanks }) => {
     return biobanks.length
   },
-  foundCollectionIds (_, { getFoundBiobankIds, getCollectionsWithBiobankId }) {
+  foundCollectionIds (state, { getFoundBiobankIds }) {
     // only if there are biobanks, then there are collections. we can't have rogue collections :)
-    if (getFoundBiobankIds.length && getCollectionsWithBiobankId.length) {
-      const biobanksWithCollections = groupCollectionsByBiobankId(
-        getCollectionsWithBiobankId
-      )
+    if (getFoundBiobankIds.length && state.collectionInfo.length) {
+      const biobanksWithCollections = groupCollectionsByBiobankId(state.collectionInfo)
+
       let collectionIds = []
       for (const id of getFoundBiobankIds) {
         const collectionsInBiobank = biobanksWithCollections[id]
@@ -70,24 +68,37 @@ export default {
     }
     return []
   },
-  collectionsInPodium (
-    { podiumCollectionIds, collectionInfo, isPodium },
-    { foundCollectionIds }
-  ) {
-    if (
-      isPodium &&
-      podiumCollectionIds &&
-      collectionInfo &&
-      foundCollectionIds
-    ) {
-      const collectionInfoInSelection = collectionInfo.filter(colInfo =>
-        foundCollectionIds.includes(colInfo.collectionId)
-      )
-      const collectionNames = collectionInfoInSelection
-        .filter(colInfo => podiumCollectionIds.includes(colInfo.collectionId))
-        .map(podCols => podCols.collectionName) // Returns only collection names.
+  selectedNonCommercialCollections (state, { selectedCollections }) {
+    const selectedNonCommercialCollections = selectedCollections.map(sc => sc.value).filter(sid => state.nonCommercialCollections.includes(sid))
+    return selectedNonCommercialCollections.length
+  },
+  foundCollectionsAsSelection: (_, { parentCollections, foundCollectionIds, collectionDictionary }) => {
+    const parentCollectionIds = foundCollectionIds.filter(fci => parentCollections.includes(fci))
+    return parentCollectionIds.map(colId => ({ label: collectionDictionary[colId], value: colId }))
+  },
+  collectionsInPodium ({ podiumCollectionIds, collectionInfo, isPodium }, { foundCollectionIds, selectedCollections }) {
+    if (isPodium && podiumCollectionIds && collectionInfo && foundCollectionIds) {
+      const selectedCollectionIds = selectedCollections.map(sc => sc.value)
+      const collectionInfoInSelection = collectionInfo.filter(colInfo => foundCollectionIds.includes(colInfo.collectionId))
+
+      const collectionNames = collectionInfoInSelection.filter(colInfo => podiumCollectionIds
+        .includes(colInfo.collectionId))
+        .map(podCols => ({ label: podCols.collectionName, value: podCols.collectionId }))
+        .filter(cn => selectedCollectionIds.includes(cn.value))
+
       return collectionNames
     } else return []
+  },
+  selectedCollections: state => state.selectedCollections,
+  allCollectionsSelected: (_, { parentCollections, selectedCollections }) => {
+    // if we don't have any selections present in our cart
+    if (selectedCollections.length === 0) return false
+
+    const selectedCollectionIds = selectedCollections.map(sc => sc.value)
+    // parent collections are the collections currently shown based on filters, compared to the cart
+    const allIdsPresentInSelection = parentCollections.every(cid => selectedCollectionIds.includes(cid))
+
+    return allIdsPresentInSelection
   },
   selectedBiobankQuality: state => state.filters.selections.biobank_quality,
   selectedCollectionQuality: state => {
@@ -100,7 +111,7 @@ export default {
   /**
    * Get map of active filters
    */
-  getActiveFilters: state => state.filters.selections,
+  activeFilters: state => state.filters.selections,
   getErrorMessage: state => {
     if (!state.error) {
       return undefined

@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import CollectionsTable from '@/components/tables/CollectionsTable'
 import { shallowMount } from '@vue/test-utils'
 
@@ -70,19 +69,19 @@ describe('components', () => {
 
     describe('html', () => {
       it('should render collection name', () => {
-        expect(wrapper.findAll('tr').at(2).findAll('td').at(0).text()).eq('Short Term Storage Collection')
+        expect(wrapper.findAll('tr').at(2).findAll('td').at(1).text()).toEqual('Short Term Storage Collection')
       })
 
       it('should render collection type', () => {
-        expect(wrapper.findAll('tr').at(2).findAll('td').at(1).text()).eq('Hospital')
+        expect(wrapper.findAll('tr').at(2).findAll('td').at(2).text()).toEqual('Hospital')
       })
 
       it('should render available material types', () => {
-        expect(wrapper.findAll('tr').at(2).findAll('td').at(2).text()).eq('Serum, Tissue (frozen)')
+        expect(wrapper.findAll('tr').at(2).findAll('td').at(3).text()).toEqual('Serum, Tissue (frozen)')
       })
 
       it('should render collection\'s size', () => {
-        expect(wrapper.findAll('tr').at(2).findAll('td').at(4).text()).eq('46000')
+        expect(wrapper.findAll('tr').at(2).findAll('td').at(5).text()).toEqual('46000')
       })
     })
 
@@ -94,15 +93,15 @@ describe('components', () => {
 
     describe('getCollectionSize', () => {
       it('should return size if size is present', () => {
-        expect(CollectionsTable.methods.getCollectionSize({ size: 3, order_of_magnitude: { size: '10.000 - 100.000 Samples' } })).eq(3)
+        expect(CollectionsTable.methods.getCollectionSize({ size: 3, order_of_magnitude: { size: '10.000 - 100.000 Samples' } })).toEqual(3)
       })
 
       it('should return order of magnitude if size is null', () => {
-        expect(CollectionsTable.methods.getCollectionSize({ size: null, order_of_magnitude: { size: '10.000 - 100.000 Samples' } })).eq('10.000 - 100.000 Samples')
+        expect(CollectionsTable.methods.getCollectionSize({ size: null, order_of_magnitude: { size: '10.000 - 100.000 Samples' } })).toEqual('10.000 - 100.000 Samples')
       })
 
       it('should return order of magnitude if size is 0', () => {
-        expect(CollectionsTable.methods.getCollectionSize({ size: 0, order_of_magnitude: { size: '10.000 - 100.000 Samples' } })).eq('10.000 - 100.000 Samples')
+        expect(CollectionsTable.methods.getCollectionSize({ size: 0, order_of_magnitude: { size: '10.000 - 100.000 Samples' } })).toEqual('10.000 - 100.000 Samples')
       })
     })
   })

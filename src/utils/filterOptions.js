@@ -63,3 +63,9 @@ export const ressourceTypesAvailableFilterOptions = (tableName) => {
     })
   })
 }
+
+export const collaborationTypeFilterOptions = () => {
+  return () => new Promise((resolve) => {
+    resolve([{ text: 'Commercial use', value: 'true' }, { text: 'Non-commercial use', value: 'false' }])
+  })
+}
