@@ -295,6 +295,7 @@ export default {
     }
     const externalSourcesFilter = getters.externalResourcesFilters.externalSources
     const diagnosisAvailableFilter = getters.externalResourcesFilters.diagnosisAvailable
+    const countryFilter = getters.externalResourcesFilters.country
     const ressourceTypeMapper = {
       BIOBANK: 'BiobankDataset',
       REGISTRY: 'PatientRegistryDataset'
@@ -317,6 +318,7 @@ export default {
             const url = `${EXTERNAL_RESOURCES_API_PATH}/${source.id}?` +
               `diagnosisAvailable=${diagnosisAvailableFilter.join(',')}&` +
               `${ressourceTypesFilter ? `resourceType=${ressourceTypesFilter.join(',')}&` : ''}` +
+              `${countryFilter ? `country=${countryFilter.join(',')}&` : ''}` +
               `limit=10&skip=${skip}`
             api.get(url).then(
               response => {

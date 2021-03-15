@@ -139,6 +139,10 @@ export default {
       filters.ressourceTypes = activeFilters.ressource_types
     }
 
+    if (activeFilters.country && activeFilters.country.length > 0) {
+      filters.country = activeFilters.country
+    }
+
     if (activeFilters.external_sources && activeFilters.external_sources.length > 0) {
       filters.externalSources = []
       state.filters.selections.external_sources.forEach((source, index) => {
