@@ -143,6 +143,10 @@ export default {
       filters.country = activeFilters.country
     }
 
+    if (activeFilters.search && activeFilters.search.length > 0) {
+      filters.name = activeFilters.search
+    }
+
     if (activeFilters.external_sources && activeFilters.external_sources.length > 0) {
       filters.externalSources = []
       state.filters.selections.external_sources.forEach((source, index) => {
