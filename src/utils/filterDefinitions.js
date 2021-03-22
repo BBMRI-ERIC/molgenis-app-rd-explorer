@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { genericFilterOptions, diagnosisAvailableFilterOptions } from './filterOptions'
+import { genericFilterOptions, diagnosisAvailableFilterOptions, dyMa } from './filterOptions'
 
 const filterDefinitions = (state) => [
   {
@@ -74,8 +74,8 @@ const filterDefinitions = (state) => [
     label: 'Materials',
     type: 'checkbox-filter',
     table: 'eu_bbmri_eric_material_types',
-    options: genericFilterOptions('eu_bbmri_eric_material_types'), // dynamicMaterialFilter(),
-    optionsFilter: state.filters.selections.materials,
+    optionsFilter: ['URINE'], // { text: 'Buffy Coat', value: 'BUFFY_COAT' }, // state.filters.selections.materials,
+    options: dyMa([{ text: 'Buffy Coat', value: 'BUFFY_COAT' }, { text: 'Urine', value: 'URINE' }]), // dynamicMaterialFilter(),
     initiallyCollapsed: !state.route.query.materials,
     filters: state.filters.selections.materials,
     maxVisibleOptions: 25,
@@ -88,7 +88,7 @@ const filterDefinitions = (state) => [
     type: 'checkbox-filter',
     table: 'eu_bbmri_eric_countries',
     options: genericFilterOptions('eu_bbmri_eric_countries'),
-    optionsFilter: state.filters.selections.country,
+    // optionsFilter: [], // state.filters.selections.country,
     initiallyCollapsed: !state.route.query.country,
     filters: state.filters.selections.country,
     maxVisibleOptions: 25,

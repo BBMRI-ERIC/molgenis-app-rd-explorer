@@ -53,7 +53,7 @@
 // import { options, model } from './filterOptions'
 import CovidFilter from '../filters/CovidFilter'
 import CovidNetworkFilter from '../filters/CovidNetworkFilter'
-import state from '../../store/state'
+// import state from '../../store/state'
 // import FilterCard from '../filters/FilterCard_test1'
 // import CheckboxFilter from '../filters/CheckboxFilter_test1'
 import { StringFilter, MultiFilter, NumberFilter, RangeFilter, DateTimeFilter, CheckboxFilter, FilterCard } from '@molgenis-ui/components-library'
@@ -72,7 +72,7 @@ export default {
     ...mapGetters(['showCountryFacet', 'activeFilters', 'filterDefinitions', 'bookmarkMappedToState', 'foundBiobanks', 'loading', 'filterObjects', 'biobanks', 'getFoundBiobankIds', 'getFoundCountries', 'foundCountries']),
     search: {
       get () {
-        return this.activeFilters.search
+        return this.activeFilters.search // state.filters.selections.search
       },
       set (search) {
         if (this.debounce) {
@@ -87,14 +87,20 @@ export default {
     },
     filters () {
       console.log('Filters: ')
-      if (this.filterObjects.length === 0) {
-        console.log('Filter set zero')
-        // state.filterObjects = this.filterDefinitions
-        console.log(this.filterDefinitions)
-
-        console.log('--')
-        this.SetFilterObjects(state)
-      }
+      // if (this.filterObjects.length === 0) {
+      //   console.log('Filter set zero')
+      //   state.filterObjects = this.filterDefinitions
+      // }
+      console.log(this.filterDefinitions)
+      console.log(this.activeFilters)
+      console.log(this.filterDefinitions[4].optionsFilter)
+      console.log('--')
+      console.log(this.filterDefinitions)
+      // console.log(this.filters.selections.materials)
+      console.log('----')
+      // this.SetFilterObjects(state)
+      // console.log(state.filterObjects)
+      // }
       // console.log('filterobject:')
       // // const filter = this.filterObjects
       // // console.log(filter)
@@ -108,9 +114,16 @@ export default {
       // console.log('filterobejcts')
       // console.log(this.filterObjects)
       // console.log(this.filterDefinitions)
-      return state.filterObjects.filter((facet) => {
+      return this.filterDefinitions.filter((facet) => {
         // config option showCountryFacet is used to toggle Country facet
-        // console.log(facet.name)
+        if (facet.name === 'materials') {
+          console.log(Object.keys(facet))
+          facet.optionsFilter.push('Urine') // { text: 'Buffy Coat', value: 'BUFFY_COAT' }
+          // facet.test = ['anja']
+        }
+        console.log('-_-')
+        console.log(facet.name, facet.options, facet.component, facet.optionsFilter)
+
         return !(this.showCountryFacet === false && facet.name === 'country')
       }).filter((item) => item.component)
     }
@@ -119,8 +132,16 @@ export default {
     ...mapMutations(['UpdateFilter', 'SetFilterObjects', 'UpdateCountry']),
     filterChange (name, value) {
       console.log('hier - filterChange')
-      console.log(this.filterObjects)
+      // console.log(this.filterObjects)
+      console.log(this.filterDefinitions)
+      console.log(this.filterDefinitions[4].options)
       console.log(name, value)
+      // console.log(value.length)
+      // console.log(this.filters)
+      // this.filterDefinitions[4].optionsFilter = ['URINE'] // { text: 'Buffy Coat', value: 'BUFFY_COAT' } // value
+      // console.log(this.filterDefinitions[4].optionsFilter)
+
+      console.log('eef')
       this.UpdateFilter({ name, value, router: this.$router })
     }
   }

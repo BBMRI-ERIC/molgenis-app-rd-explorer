@@ -42,6 +42,15 @@ export const dynamicCountryFilter = (countryresolve) => {
   })
 }
 
+export const dyMa = (valueList) => {
+  return () => new Promise((resolve) => {
+    const f = valueList
+    console.log('f')
+    console.log(f)
+    resolve(f)
+  })
+}
+
 // export const dynamicMaterialFilter = () => {
 //   return () => new Promise((resolve) => {
 //     const tableName = 'eu_bbmri_eric_material_types'
