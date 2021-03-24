@@ -91,38 +91,12 @@ export default {
       //   console.log('Filter set zero')
       //   state.filterObjects = this.filterDefinitions
       // }
-      console.log(this.filterDefinitions)
-      console.log(this.activeFilters)
-      console.log(this.filterDefinitions[4].optionsFilter)
-      console.log('--')
-      console.log(this.filterDefinitions)
-      // console.log(this.filters.selections.materials)
-      console.log('----')
-      // this.SetFilterObjects(state)
-      // console.log(state.filterObjects)
-      // }
-      // console.log('filterobject:')
-      // // const filter = this.filterObjects
-      // // console.log(filter)
-      // console.log('---')
-      // console.log(this.getFoundBiobankIds)
-      // console.log(this.biobanks)
-      // console.log('getfoundcounries')
-      // // console.log(this.getFoundCountries)
-      // console.log(this.foundCountries)
-      // // state.countrylist = this.foundCountries
-      // console.log('filterobejcts')
-      // console.log(this.filterObjects)
-      // console.log(this.filterDefinitions)
       return this.filterDefinitions.filter((facet) => {
         // config option showCountryFacet is used to toggle Country facet
         if (facet.name === 'materials') {
           console.log(Object.keys(facet))
-          facet.optionsFilter.push('Urine') // { text: 'Buffy Coat', value: 'BUFFY_COAT' }
-          // facet.test = ['anja']
+          facet.optionsFilter.push('BUFFY_COAT')
         }
-        console.log('-_-')
-        console.log(facet.name, facet.options, facet.component, facet.optionsFilter)
 
         return !(this.showCountryFacet === false && facet.name === 'country')
       }).filter((item) => item.component)
@@ -131,17 +105,6 @@ export default {
   methods: {
     ...mapMutations(['UpdateFilter', 'SetFilterObjects', 'UpdateCountry']),
     filterChange (name, value) {
-      console.log('hier - filterChange')
-      // console.log(this.filterObjects)
-      console.log(this.filterDefinitions)
-      console.log(this.filterDefinitions[4].options)
-      console.log(name, value)
-      // console.log(value.length)
-      // console.log(this.filters)
-      // this.filterDefinitions[4].optionsFilter = ['URINE'] // { text: 'Buffy Coat', value: 'BUFFY_COAT' } // value
-      // console.log(this.filterDefinitions[4].optionsFilter)
-
-      console.log('eef')
       this.UpdateFilter({ name, value, router: this.$router })
     }
   }

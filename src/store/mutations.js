@@ -38,7 +38,7 @@ export default {
       createBookmark(router, state.filters.selections, state.selectedCollections)
       return
     }
-    console.log(state.filterObjects)
+    // console.log(state.filterObjects)
 
     const filterValues = []
     const filterTexts = []
@@ -61,8 +61,8 @@ export default {
     //   console.log(name, value)
     //   // state.filterObjects[4].optionsFilter = state.filters.labels
     // }
-    state.filterObjects[4].optionsFilter = state.filters.labels
-    console.log(state.filterObjects[4].optionsFilter)
+    // state.filterObjects[4].optionsFilter = state.filters.labels
+    // console.log(state.filterObjects[4].optionsFilter)
 
     console.log(state.filters.selections)
     console.log(state.filters.labels)
@@ -110,9 +110,8 @@ export default {
     })
   },
   SetFilterObjects (state) {
-    state.filterObjects = filterDefinitions(state)
-    console.log('setfilter')
-    console.log(state.filterObjects)// .map(fd => fd) // .map(fd => fd.name)
+    // state.filterObjects = filterDefinitions(state)
+    // console.log(state.filterObjects)// .map(fd => fd) // .map(fd => fd.name)
     // Vue.set(state.filterObjects, filterDefinitions)
   },
 
