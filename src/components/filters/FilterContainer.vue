@@ -9,7 +9,7 @@
     >
       <StringFilter name="Search" v-model="search"></StringFilter>
     </FilterCard>
-
+<!--
     <FilterCard
       name="search-adaption"
       label="Search - Adaption"
@@ -20,7 +20,7 @@
       removeFilter="onRemoveFilter"
     >
       <StringFilter name="Search" v-model="search" placeholder="Input - adaption"></StringFilter>
-    </FilterCard>
+    </FilterCard> -->
 
     <FilterCard
       v-for="filter in filters"

@@ -9,6 +9,29 @@ const filterDefinitions = (state) => [
     humanReadableString: 'Text search is'
   },
   {
+    component: 'CheckboxFilter',
+    name: 'external_sources',
+    label: 'External Sources',
+    type: 'checkbox-filter',
+    maxVisibleOptions: 10,
+    table: 'eu_bbmri_eric_external_sources',
+    options: genericFilterOptions('eu_bbmri_eric_external_sources'),
+    initiallyCollapsed: !state.route.query.external_sources,
+    filters: state.filters.selections.external_sources
+  },
+  {
+    component: 'MultiFilter',
+    name: 'diagnosis_available',
+    label: 'Diagnosis available',
+    type: 'multi-filter',
+    initialDisplayItems: 10,
+    maxVisibleOptions: 10,
+    table: 'eu_bbmri_eric_disease_types',
+    options: diagnosisAvailableFilterOptions('eu_bbmri_eric_disease_types'),
+    initiallyCollapsed: !state.route.query.diagnosis_available,
+    humanReadableString: 'Disease type(s):'
+  },
+  {
     component: 'MultiFilter',
     name: 'ressource_types',
     label: 'Ressource Types',
@@ -19,10 +42,22 @@ const filterDefinitions = (state) => [
     filters: state.filters.selections.ressource_types,
     maxVisibleOptions: 25,
     humanReadableString: 'Ressource type(s):',
-    initiallyCollapsed: false,
-    collapsable: false,
-    headerClass: 'bg-warning text-white',
+    initiallyCollapsed: true,
+    collapsable: true,
+    // headerClass: 'bg-warning text-white',
     all: true
+  },
+  {
+    component: 'CheckboxFilter',
+    name: 'country',
+    label: 'Countries',
+    type: 'checkbox-filter',
+    table: 'eu_bbmri_eric_countries',
+    options: genericFilterOptions('eu_bbmri_eric_countries'),
+    initiallyCollapsed: !state.route.query.country,
+    filters: state.filters.selections.country,
+    maxVisibleOptions: 25,
+    humanReadableString: 'Countries:'
   },
   {
     headerClass: 'bg-warning text-white',
@@ -47,29 +82,6 @@ const filterDefinitions = (state) => [
   },
   {
     component: 'CheckboxFilter',
-    name: 'external_sources',
-    label: 'External Sources',
-    type: 'checkbox-filter',
-    maxVisibleOptions: 10,
-    table: 'eu_bbmri_eric_external_sources',
-    options: genericFilterOptions('eu_bbmri_eric_external_sources'),
-    initiallyCollapsed: !state.route.query.external_sources,
-    filters: state.filters.selections.external_sources
-  },
-  {
-    component: 'MultiFilter',
-    name: 'diagnosis_available',
-    label: 'Diagnosis available',
-    type: 'multi-filter',
-    initialDisplayItems: 10,
-    maxVisibleOptions: 10,
-    table: 'eu_bbmri_eric_disease_types',
-    options: diagnosisAvailableFilterOptions('eu_bbmri_eric_disease_types'),
-    initiallyCollapsed: !state.route.query.diagnosis_available,
-    humanReadableString: 'Disease type(s):'
-  },
-  {
-    component: 'CheckboxFilter',
     name: 'materials',
     label: 'Materials',
     type: 'checkbox-filter',
@@ -79,18 +91,6 @@ const filterDefinitions = (state) => [
     filters: state.filters.selections.materials,
     maxVisibleOptions: 25,
     humanReadableString: 'Material type(s):'
-  },
-  {
-    component: 'CheckboxFilter',
-    name: 'country',
-    label: 'Countries',
-    type: 'checkbox-filter',
-    table: 'eu_bbmri_eric_countries',
-    options: genericFilterOptions('eu_bbmri_eric_countries'),
-    initiallyCollapsed: !state.route.query.country,
-    filters: state.filters.selections.country,
-    maxVisibleOptions: 25,
-    humanReadableString: 'Countries:'
   },
   {
     component: 'CheckboxFilter',
@@ -174,18 +174,6 @@ const filterDefinitions = (state) => [
     filters: state.filters.selections.dataType,
     maxVisibleOptions: 25,
     humanReadableString: 'Data type(s):'
-  },
-  {
-    component: 'CheckboxFilter',
-    name: 'ressource_types_checkbox', // Avoid console error
-    label: 'Ressource Types',
-    type: 'checkbox-filter',
-    table: 'eu_bbmri_eric_ressource_types',
-    options: genericFilterOptions('eu_bbmri_eric_ressource_types'),
-    // InitiallyCollapsed: !state.route.query.ressource_types,
-    filters: state.filters.selections.ressource_types,
-    maxVisibleOptions: 25,
-    humanReadableString: 'Ressource type(s):'
   }
 ]
 
